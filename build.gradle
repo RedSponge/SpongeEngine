@@ -14,6 +14,10 @@ buildscript {
 allprojects {
 	apply plugin: 'eclipse'
 	apply plugin: 'idea'
+	ext {
+		shapeDrawerVersion = '2.3.0'
+		formicVersion = '0.1.4'
+	}
 }
 
 configure(subprojects) {

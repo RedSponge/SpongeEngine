@@ -4,7 +4,10 @@
 	<source path="" />
 	<inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
 	<inherits name="com.redsponge.sponge.SpongeGame" />
+	<inherits name="space.earlygrey.shapedrawer"/>
+	<inherits name="formic" />
 	<entry-point class="com.redsponge.sponge.gwt.GwtLauncher" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.redsponge.sponge" />
 	<set-configuration-property name="gdx.assetpath" value="../assets" />
 	<set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
 	<!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->
