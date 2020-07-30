@@ -9,6 +9,7 @@ import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,8 +33,8 @@ public abstract class Entity {
         this.position = pos;
 
         components = new ArrayList<>();
-        toAdd = new HashSet<>();
-        toRemove = new HashSet<>();
+        toAdd = new LinkedHashSet<>();
+        toRemove = new LinkedHashSet<>();
 
         active = true;
         visible = true;
