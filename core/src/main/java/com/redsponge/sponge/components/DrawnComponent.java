@@ -30,7 +30,8 @@ public class DrawnComponent extends Component {
     private float width = 0;
     private float height = 0;
 
-    private boolean flipped = false;
+    private boolean isFlippedX = false;
+    private boolean isFlippedY = false;
     private float rotation = 0;
     private float originX = 0;
     private float originY = 0;
@@ -64,14 +65,16 @@ public class DrawnComponent extends Component {
         float y = getCalculatedY();
         float width = getCalculatedWidth();
         float height = getCalculatedHeight();
+        rendered.flip(isFlippedX, isFlippedY);
         SpongeGame.i().getBatch().draw(rendered, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        rendered.flip(isFlippedX, isFlippedY);
     }
 
     public float getCalculatedX() {
         float xVal;
         switch (positionPolicy) {
             case USE_ENTITY:
-                xVal = getEntity().getX();
+                xVal = getEntity().getLeft();
                 break;
             case USE_XY:
                 xVal = x;
@@ -86,7 +89,7 @@ public class DrawnComponent extends Component {
         float yVal;
         switch (positionPolicy) {
             case USE_ENTITY:
-                yVal = getEntity().getY();
+                yVal = getEntity().getBottom();
                 break;
             case USE_XY:
                 yVal = y;
@@ -148,12 +151,21 @@ public class DrawnComponent extends Component {
         return this;
     }
 
-    public boolean isFlipped() {
-        return flipped;
+    public boolean isFlippedX() {
+        return isFlippedX;
     }
 
-    public DrawnComponent setFlipped(boolean flipped) {
-        this.flipped = flipped;
+    public DrawnComponent setFlippedX(boolean flippedX) {
+        this.isFlippedX = flippedX;
+        return this;
+    }
+
+    public boolean isFlippedY() {
+        return isFlippedY;
+    }
+
+    public DrawnComponent setFlippedY(boolean flippedY) {
+        isFlippedY = flippedY;
         return this;
     }
 

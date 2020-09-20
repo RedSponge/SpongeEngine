@@ -1,0 +1,172 @@
+{
+  "initial": "idle",
+  "prefabs": {
+    "to_attack": {
+      "links": [
+        {
+          "to": "attack_up",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          },
+          "reset_time": true
+        }
+      ]
+    },
+    "to_jump": {
+      "links": [
+        {
+          "to": "jump_up",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_on_ground"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "nodes": {
+    "idle": {
+      "links": [
+        {
+          "prefab": "to_attack"
+        },
+        {
+          "prefab": "to_jump"
+        },
+        {
+          "to": "run",
+          "condition": {
+            "type": "not",
+            "condition": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "x_speed"
+              },
+              "var_b": {
+                "type": "float",
+                "value": 0
+              }
+            }
+          },
+          "reset_time": false
+        }
+      ]
+    },
+    "run": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "x_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          },
+          "reset_time": false
+        },
+        {
+          "prefab": "to_attack"
+        },
+        {
+          "prefab": "to_jump"
+        }
+      ]
+    },
+    "attack_up": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          },
+          "reset_time": false
+        }
+      ]
+    },
+    "jump_up": {
+      "links": [
+        {
+          "to": "jump_down",
+          "condition": {
+            "type": "lesser_than_equals",
+            "var_a": {
+              "type": "variable",
+              "name": "y_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          }
+        },
+        {
+          "prefab": "to_attack"
+        }
+      ]
+    },
+    "jump_down": {
+      "links": [
+        {
+          "to": "jump_up",
+          "condition": {
+            "type": "greater_than",
+            "var_a": {
+              "type": "variable",
+              "name": "y_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          }
+        },
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_on_ground"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        },
+        {
+          "prefab": "to_attack"
+        }
+      ]
+    }
+  }
+}

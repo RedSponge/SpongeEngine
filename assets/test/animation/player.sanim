@@ -1,0 +1,145 @@
+{
+  "atlas": "player.atlas",
+  "animations": {
+    "idle": {
+      "play_mode": "LOOP_PINGPONG",
+      "frames": [
+        {
+          "frame": "idle",
+          "idx": 1,
+          "length": 300
+        },
+        {
+          "frame": "idle",
+          "idx": 3,
+          "length": 200
+        },
+        {
+          "frame": "idle",
+          "idx": 5,
+          "length": 200
+        }
+      ]
+    },
+    "run": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "run",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 3,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 4,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 5,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 6,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 7,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 8,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 9,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 10,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 11,
+          "length": 50
+        },
+        {
+          "frame": "run",
+          "idx": 12,
+          "length": 50
+        }
+      ]
+    },
+    "attack_up": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "attack_up",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "attack_up",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "attack_up",
+          "idx": 3,
+          "length": 50
+        },
+        {
+          "frame": "attack_up",
+          "idx": 4,
+          "length": 50
+        },
+        {
+          "frame": "attack_up",
+          "idx": 5,
+          "length": 250
+        },
+        {
+          "frame": "attack_up",
+          "idx": 10,
+          "length": 50
+        }
+      ]
+    },
+    "jump_up": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "jump_up",
+          "idx": -1,
+          "length": 50
+        }
+      ]
+    },
+    "jump_down": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "jump_down",
+          "idx": -1,
+          "length": 50
+        }
+      ]
+    }
+  }
+}

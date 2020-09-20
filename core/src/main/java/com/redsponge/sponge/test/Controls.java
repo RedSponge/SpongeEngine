@@ -9,7 +9,8 @@ public class Controls {
 
     public static final InputEntry JUMP = new InputEntry().addKey(Keys.SPACE);
 
-    public static final InputAxis HORIZONTAl = new InputAxis(new InputEntry().addKey(Keys.A), new InputEntry().addKey(Keys.D));
+    public static final InputAxis HORIZONTAl = new InputAxis(new InputEntry().addKey(Keys.A).addKey(Keys.LEFT), new InputEntry().addKey(Keys.D).addKey(Keys.RIGHT));
 
-    public static final InputEntry DOWN = new InputEntry().addKey(Keys.S);
+    public static final InputEntry DOWN = new InputEntry().addKey(Keys.S).addKey(Keys.DOWN);
+    public static final InputEntry ATTACK = new InputEntry().addKey(Keys.X);
 }

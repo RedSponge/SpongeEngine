@@ -44,4 +44,9 @@ public class TestScene extends Scene {
     public int getHeight() {
         return 360;
     }
+
+    @Override
+    public String getName() {
+        return "test";
+    }
 }

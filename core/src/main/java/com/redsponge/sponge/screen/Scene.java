@@ -1,10 +1,13 @@
 package com.redsponge.sponge.screen;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.assets.Assets;
+import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.util.Hitbox;
@@ -30,6 +33,8 @@ public abstract class Scene {
     private final Map<Class<?>, List<Entity>> entitiesByType;
     private final Map<Class<?>, List<Component>> componentsByType;
 
+    protected SceneAssets assets;
+
     public Scene() {
         viewport = new FitViewport(getWidth(), getHeight());
         viewport.apply(true);
@@ -39,6 +44,8 @@ public abstract class Scene {
         entities = new ArrayList<>();
         entitiesByType = new HashMap<>();
         componentsByType = new HashMap<>();
+
+        assets = Assets.loadScene(getName());
     }
 
     public void start() {
@@ -215,5 +222,11 @@ public abstract class Scene {
 
     public void dispose() {
 
+    }
+
+    public abstract String getName();
+
+    public SceneAssets getAssets() {
+        return assets;
     }
 }

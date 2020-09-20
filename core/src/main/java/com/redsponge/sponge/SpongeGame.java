@@ -2,6 +2,7 @@ package com.redsponge.sponge;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -28,6 +29,7 @@ public class SpongeGame implements ApplicationListener {
     private SpriteBatch spriteBatch;
     private ShapeDrawer shapeDrawer;
     private Texture shapeDrawerTextures;
+    private AssetManager assetManager;
 
     private Scene scene;
 
@@ -43,6 +45,7 @@ public class SpongeGame implements ApplicationListener {
         startTime = System.currentTimeMillis();
         spriteBatch = new SpriteBatch();
         initializeShapeDrawer();
+        assetManager = new AssetManager();
 
         entityClasses = new HashMap<>();
         componentClasses = new HashMap<>();
@@ -160,5 +163,9 @@ public class SpongeGame implements ApplicationListener {
 
     public ShapeDrawer getShapeDrawer() {
         return shapeDrawer;
+    }
+
+    public AssetManager getAssetManager() {
+        return assetManager;
     }
 }
