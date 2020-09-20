@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.test.TestScene;
+import com.redsponge.sponge.test.GameScene;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -54,12 +54,12 @@ public class SpongeGame implements ApplicationListener {
         scene = null;
 
         init();
-        setScene(new TestScene());
+        setScene(new GameScene());
     }
 
     protected void init() {}
 
-    public void setScene(TestScene scene) {
+    public void setScene(GameScene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();

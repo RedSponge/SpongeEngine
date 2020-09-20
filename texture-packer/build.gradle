@@ -1,0 +1,23 @@
+apply plugin: 'application'
+
+mainClassName = 'com.redsponge.sponge.texturepacker.PackTextures'
+eclipse.project.name = appName + '-tp'
+sourceCompatibility = 8.0
+
+def osName = System.getProperty('os.name').toLowerCase(Locale.ROOT)
+
+dependencies {
+	implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+}
+
+import org.gradle.internal.os.OperatingSystem
+
+run {
+	workingDir = rootProject.file('assets').path
+	setIgnoreExitValue(true)
+	
+	if (OperatingSystem.current() == OperatingSystem.MAC_OS) {
+		// Required to run LWJGL3 Java apps on MacOS
+		jvmArgs += "-XstartOnFirstThread"
+	}
+}

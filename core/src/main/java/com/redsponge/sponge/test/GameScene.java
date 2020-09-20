@@ -7,14 +7,26 @@ import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 
-public class TestScene extends Scene {
+public class GameScene extends Scene {
 
     private StaticBackground bg;
     private Player pl;
 
+    public void toggleWorld() {
+        mode = mode == WorldMode.FIRE ? WorldMode.ICE : WorldMode.FIRE;
+    }
+
+    enum WorldMode {
+        FIRE,
+        ICE
+    }
+
+    private WorldMode mode;
+
     @Override
     public void start() {
         super.start();
+        mode = WorldMode.FIRE;
         add(bg = new StaticBackground());
         add(pl = new Player(new Vector2(100, 100)));
         add(new Block(new Vector2(0, 0), new Hitbox(0, 0, getWidth(), 20)));
@@ -45,8 +57,12 @@ public class TestScene extends Scene {
         return 360;
     }
 
+    public WorldMode getMode() {
+        return mode;
+    }
+
     @Override
     public String getName() {
-        return "test";
+        return "game";
     }
 }

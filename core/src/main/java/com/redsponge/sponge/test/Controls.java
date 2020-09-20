@@ -12,5 +12,6 @@ public class Controls {
     public static final InputAxis HORIZONTAl = new InputAxis(new InputEntry().addKey(Keys.A).addKey(Keys.LEFT), new InputEntry().addKey(Keys.D).addKey(Keys.RIGHT));
 
     public static final InputEntry DOWN = new InputEntry().addKey(Keys.S).addKey(Keys.DOWN);
-    public static final InputEntry ATTACK = new InputEntry().addKey(Keys.X);
+    public static final InputEntry TOGGLE_WORLD = new InputEntry().addKey(Keys.Z);
+    public static final InputEntry POWER = new InputEntry().addKey(Keys.X);
 }
