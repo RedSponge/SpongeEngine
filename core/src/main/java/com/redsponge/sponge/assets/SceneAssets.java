@@ -38,7 +38,7 @@ public class SceneAssets implements Disposable {
         assetManager.finishLoading();
 
         for (SAnimationGroup value : animationMap.values()) {
-            value.parseAnimations();
+            value.parseAnimations(assetManager);
         }
     }
 
@@ -50,8 +50,8 @@ public class SceneAssets implements Disposable {
             Set<FileHandle> animationNodeNames = new HashSet<>();
             for (FileHandle animationFile : animationFiles) {
                 if(animationFile.extension().equals("sanim")) {
-                    SAnimationGroup animations = new SAnimationGroup(assetManager, animationFile, Gdx.files.internal(sceneName + "/texture"));
-                    animations.load();
+                    SAnimationGroup animations = new SAnimationGroup(animationFile, Gdx.files.internal(sceneName + "/texture"));
+                    animations.load(assetManager);
                     animationMap.put(animationFile.nameWithoutExtension(), animations);
                     animationNames.add(animationFile.nameWithoutExtension());
                 } else if(animationFile.extension().equals("animnodes")) {
@@ -100,7 +100,7 @@ public class SceneAssets implements Disposable {
         }
 
         for (SAnimationGroup value : animationMap.values()) {
-            value.unload();
+            value.unload(assetManager);
         }
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.redsponge.sponge.animation.Values.ValueHolder;
 import com.redsponge.sponge.animation.Values.VariableValueHolder;
 
 import java.util.HashMap;
@@ -14,7 +15,10 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
     private String active;
     private SAnimationGroup animations;
 
-    private HashMap<String, Object> suppliedValues;
+    private HashMap<String, Integer> suppliedInts;
+    private HashMap<String, Float> suppliedFloats;
+    private HashMap<String, Boolean> suppliedBools;
+
     private HashMap<String, AnimationNode> animationNodes;
     private HashMap<String, AnimationNode> prefabs;
 
@@ -23,7 +27,9 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
     public AnimationNodeSystem(String initialAnimation, SAnimationGroup animations) {
         this.active = initialAnimation;
         this.animations = animations;
-        this.suppliedValues = new HashMap<>();
+        suppliedFloats = new HashMap<>();
+        suppliedInts = new HashMap<>();
+        suppliedBools = new HashMap<>();
         this.animationNodes = new HashMap<>();
         this.prefabs = new HashMap<>();
     }
@@ -34,9 +40,21 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
         addNodes(jsonFile);
     }
 
-    public <T> void putParam(String name, T value) {
-        suppliedValues.put(name, value);
+    public void putInt(String name, int value) {
+        suppliedInts.put(name, value);
     }
+
+    public void putFloat(String name, float value) {
+        suppliedFloats.put(name, value);
+    }
+
+    public void putBoolean(String name, boolean value) {
+        suppliedBools.put(name, value);
+    }
+
+//    public <T> void putParam(String name, T value) {
+//        suppliedValues.put(name, value);
+//    }
 
     public void putNode(String name, AnimationNode node) {
         animationNodes.put(name, node);
@@ -57,9 +75,13 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
 
 
     @Override
-    public <T> T supply(String variableName) {
-        if(suppliedValues.get(variableName) != null) {
-            return (T) suppliedValues.get(variableName);
+    public <T> T supply(String variableName, Class<T> clazz) {
+        if (Integer.class.equals(clazz)) {
+            return (T) suppliedInts.get(variableName);
+        } else if (Float.class.equals(clazz)) {
+            return (T) suppliedFloats.get(variableName);
+        } else if (Boolean.class.equals(clazz)) {
+            return (T) suppliedBools.get(variableName);
         }
         throw new RuntimeException("Cannot supply variable '"  + variableName + "'");
     }

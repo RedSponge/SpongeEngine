@@ -21,7 +21,7 @@ public interface Values {
 
     @FunctionalInterface
     interface VariableSupplier {
-        <T> T supply(String variableName);
+        <T> T supply(String variableName, Class<T> clazz);
     }
 
     public class VariableValueHolder<T> implements ValueHolder<T> {

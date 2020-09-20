@@ -1,9 +1,14 @@
 package com.redsponge.sponge.test;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent;
@@ -124,6 +129,10 @@ public class Player extends PActor {
         super.added(scene);
         attackAnimations = getScene().getAssets().getAnimationGroup("player");
         System.out.println(attackAnimations);
+        Gdx.app.setLogLevel(Application.LOG_INFO);
+        Gdx.app.log("Test", Boolean.toString(attackAnimation == null));
+        SAnimation sfau = attackAnimations.get("fire_attack_up");
+        Animation<TextureRegion> fau = sfau.getBuiltAnimation();
         attackAnimation = new AnimationComponent(false, false, attackAnimations.get("fire_attack_up").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24- 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
 

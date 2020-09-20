@@ -17,13 +17,11 @@ public class SAnimationGroup {
     private Map<String, SAnimation> containedAnimations;
     private TextureAtlas atlas;
     private FileHandle resourceDir;
-    private AssetManager assetManager;
     private String animText;
     private boolean loaded;
     private String atlasName;
 
-    public SAnimationGroup(AssetManager assetManager, FileHandle animFile, FileHandle resourceDir) {
-        this.assetManager = assetManager;
+    public SAnimationGroup(FileHandle animFile, FileHandle resourceDir) {
         this.resourceDir = resourceDir;
         this.animText = animFile.readString();
 
@@ -33,14 +31,14 @@ public class SAnimationGroup {
         this.atlasName = value.getString("atlas");
     }
 
-    public void load() {
+    public void load(AssetManager assetManager) {
         if(loaded) return;
         loaded = true;
 
         assetManager.load(resourceDir.child(atlasName).path(), TextureAtlas.class);
     }
 
-    public void parseAnimations() {
+    public void parseAnimations(AssetManager assetManager) {
         if(!loaded) {
             throw new RuntimeException("Trying to parse non-loaded animation!");
         }
@@ -70,7 +68,7 @@ public class SAnimationGroup {
         return containedAnimations.get(idle);
     }
 
-    public void unload() {
+    public void unload(AssetManager assetManager) {
         assetManager.unload(resourceDir.child(atlasName).path());
     }
 }
