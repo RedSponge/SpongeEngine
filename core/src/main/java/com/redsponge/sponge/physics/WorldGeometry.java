@@ -7,10 +7,11 @@ import java.util.List;
 
 public abstract class WorldGeometry extends Entity {
 
-    private Vector2 remainder;
+    private final Vector2 remainder;
 
     public WorldGeometry(Vector2 pos) {
         super(pos);
+        remainder = new Vector2();
     }
 
     public void moveX(float amount) {

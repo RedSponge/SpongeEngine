@@ -26,7 +26,7 @@ public class GameScene extends Scene {
     @Override
     public void start() {
         super.start();
-        mode = WorldMode.FIRE;
+        mode = WorldMode.ICE;
         add(bg = new StaticBackground());
         add(pl = new Player(new Vector2(100, 100)));
         add(new Block(new Vector2(0, 0), new Hitbox(0, 0, getWidth(), 20)));
@@ -49,12 +49,12 @@ public class GameScene extends Scene {
 
     @Override
     public int getWidth() {
-        return 640;
+        return 480;
     }
 
     @Override
     public int getHeight() {
-        return 360;
+        return 270;
     }
 
     public WorldMode getMode() {

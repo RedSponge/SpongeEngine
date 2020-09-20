@@ -10,6 +10,9 @@ public class StaticBackground extends Entity {
 
     private Color colour;
 
+    public static final Color hotColour = new Color(0.5f, 0.2f, 0.1f, 1.0f);
+    public static final Color coldColour = new Color(0.1f, 0.2f, 0.5f, 1.0f);
+
     public StaticBackground() {
         super(new Vector2(0, 0));
         colour = Color.DARK_GRAY;
@@ -18,7 +21,7 @@ public class StaticBackground extends Entity {
     @Override
     public void render() {
         super.render();
-        colour = ((GameScene)getScene()).getMode() == WorldMode.FIRE ? Color.ORANGE : Color.BLUE;
+        colour = ((GameScene)getScene()).getMode() == WorldMode.FIRE ? hotColour : coldColour;
         int x = (int) getScene().viewport.getCamera().position.x - getScene().getWidth() / 2;
         int y = (int) getScene().viewport.getCamera().position.y - getScene().getHeight() / 2;
         SpongeGame.i().getShapeDrawer().filledRectangle(x, y, getScene().getWidth(), getScene().getHeight(), colour);

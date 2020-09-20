@@ -42,4 +42,8 @@ public class AnimationComponent extends DrawnComponent {
     public Animation<TextureRegion> getAnimation() {
         return animation;
     }
+
+    public boolean isCompleted() {
+        return animation.isAnimationFinished(time);
+    }
 }
