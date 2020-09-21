@@ -9,6 +9,7 @@ public class AnimationStreamComponent extends AnimationComponent {
     private Runnable onAnimationSwitch;
     private boolean resetNextAnimationTime;
     private boolean doSkip;
+    private boolean noNextAnimation;
 
     public AnimationStreamComponent(boolean active, boolean visible, Animation<TextureRegion> animation) {
         super(active, visible, animation);
@@ -16,11 +17,20 @@ public class AnimationStreamComponent extends AnimationComponent {
 
     @Override
     public void update(float delta) {
-        if(nextAnimation != null) {
-            if(animation.isAnimationFinished(time) || doSkip) {
-                setAnimation(nextAnimation, resetNextAnimationTime);
-                nextAnimation = null;
-                if(onAnimationSwitch != null) {
+        if(nextAnimation != null || noNextAnimation) {
+            if(isCompleted() || doSkip) {
+                System.out.println("Switch animation!");
+                if(nextAnimation != null) {
+                    setAnimation(nextAnimation, resetNextAnimationTime);
+                    nextAnimation = null;
+                } else if(noNextAnimation) {
+                    setVisible(false);
+                    setActive(false);
+                    noNextAnimation = false;
+                } else {
+                    throw new RuntimeException("Tried entering next animation when it's null and noNextAnimation is not set - this should never happen!");
+                }
+                if (onAnimationSwitch != null) {
                     onAnimationSwitch.run();
                 }
             }
@@ -62,5 +72,9 @@ public class AnimationStreamComponent extends AnimationComponent {
     public AnimationStreamComponent setDoSkip(boolean doSkip) {
         this.doSkip = doSkip;
         return this;
+    }
+
+    public void setNoNextAnimation(boolean noNextAnimation) {
+        this.noNextAnimation = noNextAnimation;
     }
 }

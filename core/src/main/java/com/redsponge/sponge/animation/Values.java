@@ -19,14 +19,13 @@ public interface Values {
         }
     }
 
-    @FunctionalInterface
     interface VariableSupplier {
-        <T> T supply(String variableName, Class<T> clazz);
+        <T> T supply(String variableName);
     }
 
-    public class VariableValueHolder<T> implements ValueHolder<T> {
-        private VariableSupplier supplier;
-        private String variableName;
+    class VariableValueHolder<T> implements ValueHolder<T> {
+        protected VariableSupplier supplier;
+        protected String variableName;
 
         public VariableValueHolder(VariableSupplier supplier, String variableName) {
             this.supplier = supplier;

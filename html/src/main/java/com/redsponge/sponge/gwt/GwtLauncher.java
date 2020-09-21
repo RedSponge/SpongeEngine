@@ -31,7 +31,6 @@ public class GwtLauncher extends GwtApplication {
 				Window.enableScrolling(false);
 				Window.setMargin("0");
 				Window.addResizeHandler(new ResizeListener());
-				cfg.preferFlash = false;
 				return cfg;
 			}
 

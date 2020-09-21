@@ -1,4 +1,4 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -10,7 +10,7 @@ import com.redsponge.sponge.util.Hitbox;
 public class GameScene extends Scene {
 
     private StaticBackground bg;
-    private Player pl;
+    private IcePlayer pl;
 
     public void toggleWorld() {
         mode = mode == WorldMode.FIRE ? WorldMode.ICE : WorldMode.FIRE;
@@ -28,7 +28,7 @@ public class GameScene extends Scene {
         super.start();
         mode = WorldMode.ICE;
         add(bg = new StaticBackground());
-        add(pl = new Player(new Vector2(100, 100)));
+        add(pl = new IcePlayer(new Vector2(100, 100)));
         add(new Block(new Vector2(0, 0), new Hitbox(0, 0, getWidth(), 20)));
         add(new Block(new Vector2(-2, 0), new Hitbox(0, 0, 1, 1000)));
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));

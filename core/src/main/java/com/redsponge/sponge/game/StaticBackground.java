@@ -1,10 +1,10 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.entity.Entity;
-import com.redsponge.sponge.test.GameScene.WorldMode;
+import com.redsponge.sponge.game.GameScene.WorldMode;
 
 public class StaticBackground extends Entity {
 

@@ -1,4 +1,4 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.physics.PSolid;

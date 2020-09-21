@@ -105,6 +105,7 @@ public class SceneAssets implements Disposable {
     }
 
     public SAnimationGroup getAnimationGroup(String animationGroup) {
+        Gdx.app.log("SA", animationMap.toString());
         return animationMap.get(animationGroup);
     }
 

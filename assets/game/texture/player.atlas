@@ -1,149 +1,247 @@
 
 player.png
-size: 1024,512
+size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 fire_down
+  rotate: false
+  xy: 2, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+fire_down
+  rotate: false
+  xy: 2, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+fire_down
+  rotate: false
+  xy: 132, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+fire_down
+  rotate: false
+  xy: 2, 540
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+fire_down
+  rotate: false
+  xy: 132, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 5
+fire_side
+  rotate: false
+  xy: 262, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+fire_side
+  rotate: false
+  xy: 2, 410
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+fire_side
+  rotate: false
+  xy: 132, 540
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+fire_side
+  rotate: false
+  xy: 262, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+fire_side
+  rotate: false
+  xy: 392, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 5
+fire_up
   rotate: false
   xy: 2, 280
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 1
-fire_down
+fire_up
+  rotate: false
+  xy: 132, 410
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+fire_up
+  rotate: false
+  xy: 262, 540
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+fire_up
+  rotate: false
+  xy: 392, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+fire_up
+  rotate: false
+  xy: 522, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 5
+ice
   rotate: false
   xy: 2, 150
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-fire_down
+  index: 1
+ice
   rotate: false
   xy: 132, 280
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
+  index: 2
+ice
+  rotate: false
+  xy: 262, 410
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
   index: 3
-fire_down
+ice
+  rotate: false
+  xy: 392, 540
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+ice
+  rotate: false
+  xy: 522, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 5
+ice_begin
+  rotate: false
+  xy: 652, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+ice_slowfall
   rotate: false
   xy: 2, 20
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-fire_down
+  index: 1
+ice_slowfall
   rotate: false
   xy: 132, 150
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 5
-fire_side
+  index: 2
+ice_slowfall
   rotate: false
   xy: 262, 280
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
+  index: 3
+ice_slowfall
+  rotate: false
+  xy: 392, 410
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+ice_spike_begin
+  rotate: false
+  xy: 522, 540
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
   index: 1
-fire_side
+ice_spike_begin
+  rotate: false
+  xy: 652, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+ice_spike_begin
+  rotate: false
+  xy: 782, 800
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+ice_spike_begin
   rotate: false
   xy: 132, 20
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
-fire_side
+  index: 4
+ice_spike_begin
   rotate: false
   xy: 262, 150
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
-fire_side
+  index: 5
+ice_spike_fall
   rotate: false
   xy: 392, 280
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
-fire_side
-  rotate: false
-  xy: 262, 20
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 5
-fire_up
-  rotate: false
-  xy: 392, 150
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
   index: 1
-fire_up
+ice_spike_fall
   rotate: false
-  xy: 522, 280
+  xy: 522, 410
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 2
-fire_up
+ice_spike_fall
   rotate: false
-  xy: 392, 20
+  xy: 652, 540
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 3
-fire_up
+ice_spike_fall
   rotate: false
-  xy: 522, 150
+  xy: 782, 670
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: 4
-fire_up
-  rotate: false
-  xy: 652, 280
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 5
-ice
-  rotate: false
-  xy: 522, 20
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 1
-ice
-  rotate: false
-  xy: 652, 150
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 2
-ice
-  rotate: false
-  xy: 782, 280
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 3
-ice
-  rotate: false
-  xy: 652, 20
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 4
-ice
-  rotate: false
-  xy: 782, 150
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: 5
 player
   rotate: false
   xy: 2, 2

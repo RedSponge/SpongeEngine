@@ -1,4 +1,4 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;

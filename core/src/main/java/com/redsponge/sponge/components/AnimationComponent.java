@@ -7,6 +7,7 @@ public class AnimationComponent extends DrawnComponent {
 
     protected float time;
     protected Animation<TextureRegion> animation;
+    protected float speed = 1;
 
     public AnimationComponent(boolean active, boolean visible, Animation<TextureRegion> animation) {
         super(active, visible, animation.getKeyFrame(0));
@@ -16,7 +17,8 @@ public class AnimationComponent extends DrawnComponent {
     @Override
     public void update(float delta) {
         super.update(delta);
-        this.time += delta;
+        this.time += delta * speed;
+        time = Math.max(time, 0);
         this.setRendered(animation.getKeyFrame(time));
     }
 
@@ -44,6 +46,14 @@ public class AnimationComponent extends DrawnComponent {
     }
 
     public boolean isCompleted() {
-        return animation.isAnimationFinished(time);
+        if(speed > 0) {
+            return animation.isAnimationFinished(time);
+        } else {
+            return time <= 0;
+        }
+    }
+
+    public void setAnimationSpeed(float speed) {
+        this.speed = speed;
     }
 }

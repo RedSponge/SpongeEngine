@@ -1,5 +1,6 @@
 package com.redsponge.sponge;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -12,10 +13,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.test.GameScene;
+import com.redsponge.sponge.game.GameScene;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -54,6 +56,10 @@ public class SpongeGame implements ApplicationListener {
         scene = null;
 
         init();
+        Gdx.app.setLogLevel(Application.LOG_INFO);
+        Gdx.app.log("Hello", Arrays.toString(Gdx.files.internal("game/animation").list()));
+        Gdx.app.log("Hello", String.valueOf(Gdx.files.internal("game/animation").isDirectory()));
+        Gdx.app.log("Hello", String.valueOf(Gdx.files.internal("game/animation").child("player.sanim").exists()));
         setScene(new GameScene());
     }
 
