@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.redsponge.sponge.animation.Values.VariableValueHolder;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.HashMap;
 

@@ -10,6 +10,7 @@ import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
+import com.redsponge.sponge.particles.Particle;
 import com.redsponge.sponge.util.Hitbox;
 
 import java.util.ArrayList;
@@ -59,12 +60,18 @@ public abstract class Scene {
                 entity.update(delta);
             }
         }
+        for (Particle value : getAssets().getParticles().values()) {
+            value.update(delta);
+        }
     }
     public void render() {
         for (Entity entity : entities) {
             if(entity.isVisible()) {
                 entity.render();
             }
+        }
+        for (Particle value : getAssets().getParticles().values()) {
+            value.render();
         }
     }
 

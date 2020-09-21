@@ -115,10 +115,11 @@ public class IcePlayer extends PActor {
         if(Controls.TOGGLE_WORLD.isJustPressed()) {
             ((GameScene)getScene()).toggleWorld();
         }
+
         if(Controls.DEBUG.isJustPressed()) {
         }
 
-        if(Controls.POWER.isJustPressed() && !isPowerActive()) {
+        if(Controls.POWER.isJustPressed() && !isPowerActive() && !onGround) {
             beginPower();
         }
         if(!Controls.POWER.isPressed()) {
@@ -144,6 +145,7 @@ public class IcePlayer extends PActor {
             attackAnimation.setVisible(false);
             attackAnimation.setActive(false);
             powerAfterEffectTime.setValue(0.3f);
+            getScene().getAssets().getParticle("ice_particle").spawnEffect(getX() + 4, getY() - 30);
             //TODO: spike bam particles
         } else if(isSpikePrepping) {
             System.out.println("Prep out");
@@ -204,6 +206,7 @@ public class IcePlayer extends PActor {
         }
 
         vel.x = UMath.approach(vel.x, Controls.HORIZONTAL.get() * maxRun, vx * delta);
+        if(isSpikeFalling || isSpikePrepping) vel.x = 0;
     }
 
 

@@ -4,16 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.physics.JumpThru;
+import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 
 public class GameScene extends Scene {
 
     private StaticBackground bg;
-    private IcePlayer pl;
+    private PActor pl;
 
     public void toggleWorld() {
+
         mode = mode == WorldMode.FIRE ? WorldMode.ICE : WorldMode.FIRE;
+        buildWorld();
+    }
+
+    private void buildWorld() {
+        if(pl != null) remove(pl);
+        Vector2 pos = new Vector2(100, 100);
+        pl = mode == WorldMode.FIRE ? new FirePlayer(pos) : new IcePlayer(pos);
+        add(pl);
     }
 
     enum WorldMode {
@@ -27,13 +37,15 @@ public class GameScene extends Scene {
     public void start() {
         super.start();
         mode = WorldMode.ICE;
+
         add(bg = new StaticBackground());
-        add(pl = new IcePlayer(new Vector2(100, 100)));
         add(new Block(new Vector2(0, 0), new Hitbox(0, 0, getWidth(), 20)));
         add(new Block(new Vector2(-2, 0), new Hitbox(0, 0, 1, 1000)));
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
-        add(new SteamColumn(new Vector2(200, 0), 32, 240));
+        add(new SteamColumn(new Vector2(400, 0), 32, 240));
+
+        buildWorld();
     }
 
     @Override
