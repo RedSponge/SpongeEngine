@@ -179,65 +179,72 @@ ice_slowfall
   orig: 128, 128
   offset: 0, 0
   index: 4
-ice_spike_begin
+ice_slowfall
   rotate: false
   xy: 522, 540
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
+  index: 5
 ice_spike_begin
   rotate: false
   xy: 652, 670
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
+  index: 1
 ice_spike_begin
   rotate: false
   xy: 782, 800
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
+  index: 2
 ice_spike_begin
   rotate: false
   xy: 132, 20
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 4
+  index: 3
 ice_spike_begin
   rotate: false
   xy: 262, 150
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 5
-ice_spike_fall
+  index: 4
+ice_spike_begin
   rotate: false
   xy: 392, 280
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 1
+  index: 5
 ice_spike_fall
   rotate: false
   xy: 522, 410
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 2
+  index: 1
 ice_spike_fall
   rotate: false
   xy: 652, 540
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
-  index: 3
+  index: 2
 ice_spike_fall
   rotate: false
   xy: 782, 670
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+ice_spike_fall
+  rotate: false
+  xy: 262, 20
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

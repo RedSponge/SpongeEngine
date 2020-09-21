@@ -33,6 +33,7 @@ public class GameScene extends Scene {
         add(new Block(new Vector2(-2, 0), new Hitbox(0, 0, 1, 1000)));
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
+        add(new SteamColumn(new Vector2(200, 0), 32, 240));
     }
 
     @Override

@@ -3,6 +3,11 @@ package com.redsponge.sponge.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.entity.Entity;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class PActor extends Entity {
 
     private Vector2 remainder;
@@ -10,11 +15,18 @@ public class PActor extends Entity {
 
     private Vector2 tmp;
 
+    private TriggerHandler onTrigger;
+
+    private Set<PTrigger> enteredTriggers;
+    private Set<PTrigger> tmpEnteredTriggers;
+
     public PActor(Vector2 pos) {
         super(pos);
         remainder = new Vector2();
         movedByGeometry = new Vector2();
         tmp = new Vector2();
+        enteredTriggers = new HashSet<>();
+        tmpEnteredTriggers = new HashSet<>();
     }
 
     public boolean groundCheck() {
@@ -60,6 +72,8 @@ public class PActor extends Entity {
         boolean byGeometry = carrier != null || pusher != null;
 
         while(move != 0) {
+            checkTriggers(tmp.set(sign, 0));
+
             PSolid hit = first(PSolid.class, tmp.set(sign, 0));
             if(hit != null) {
                 Collision c = new Collision(new Vector2(sign, 0), Math.abs(amount), Math.abs(amount - move), hit, pusher);
@@ -75,6 +89,28 @@ public class PActor extends Entity {
         }
 
         return false;
+    }
+
+    private void checkTriggers(Vector2 dir) {
+        List<PTrigger> collidedTriggers = all(new ArrayList<>(), dir, PTrigger.class);
+
+        tmpEnteredTriggers.clear();
+        tmpEnteredTriggers.addAll(enteredTriggers);
+
+        for (PTrigger trigger : collidedTriggers) {
+            if(!enteredTriggers.contains(trigger)) {
+                enteredTriggers.add(trigger);
+                Trigger t = new Trigger(trigger, true);
+                if (onTrigger != null) onTrigger.onTrigger(t);
+            }
+            tmpEnteredTriggers.remove(trigger);
+        }
+        for (PTrigger tmpEnteredTrigger : tmpEnteredTriggers) {
+            enteredTriggers.remove(tmpEnteredTrigger);
+
+            Trigger t = new Trigger(tmpEnteredTrigger, false);
+            if(onTrigger != null) onTrigger.onTrigger(t);
+        }
     }
 
     public boolean moveY(float amount, CollisionHandler onCollision) {
@@ -105,6 +141,8 @@ public class PActor extends Entity {
         boolean byGeometry = pusher != null || carrier != null;
 
         while(move != 0) {
+            checkTriggers(tmp.set(0, sign));
+
             WorldGeometry hit = first(PSolid.class, tmp.set(0, sign));
             if(hit == null && sign == -1) {
                 hit = firstOutside(JumpThru.class, tmp.set(0, sign));
@@ -142,5 +180,14 @@ public class PActor extends Entity {
 
     public Vector2 getMovedByGeometry() {
         return movedByGeometry;
+    }
+
+    public TriggerHandler getOnTrigger() {
+        return onTrigger;
+    }
+
+    public PActor setOnTrigger(TriggerHandler onTrigger) {
+        this.onTrigger = onTrigger;
+        return this;
     }
 }

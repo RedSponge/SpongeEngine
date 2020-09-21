@@ -19,6 +19,8 @@ import com.redsponge.sponge.components.TimedAction;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
+import com.redsponge.sponge.physics.PTrigger;
+import com.redsponge.sponge.physics.Trigger;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.UMath;
 
@@ -63,6 +65,7 @@ public class IcePlayer extends PActor {
     private boolean isSlowFalling;
     private boolean isSpikeFalling;
     private boolean isSpikePrepping;
+    private int inSteamCount;
 
     public IcePlayer(Vector2 pos) {
         super(pos);
@@ -85,8 +88,9 @@ public class IcePlayer extends PActor {
         Gdx.app.setLogLevel(Application.LOG_INFO);
         attackAnimations = getScene().getAssets().getAnimationGroup("player");
         Gdx.app.log("Test", Boolean.toString(attackAnimation == null));
-        attackAnimation = new AnimationStreamComponent(false, false, attackAnimations.get("slow_fall_begin").getBuiltAnimation());
+        attackAnimation = new AnimationStreamComponent(false, false, attackAnimations.get("slow_fall").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24 - 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
+        setOnTrigger(this::onTrigger);
 
         add(drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("player.atlas").findRegion("player")));
         add(attackAnimation);
@@ -134,19 +138,20 @@ public class IcePlayer extends PActor {
     }
 
     private void endPower() {
-        attackAnimation.setOnAnimationSwitch(null);
         if(isSlowFalling) {
-            attackAnimation.setAnimation(attackAnimations.get("slow_fall_begin").getBuiltAnimation(), true);
-            attackAnimation.setNextAnimation(null);
-            attackAnimation.setNoNextAnimation(true);
+            attackAnimation.setVisible(false);
         } else if(isSpikeFalling) {
             attackAnimation.setVisible(false);
             attackAnimation.setActive(false);
+            powerAfterEffectTime.setValue(0.3f);
             //TODO: spike bam particles
         } else if(isSpikePrepping) {
+            System.out.println("Prep out");
             attackAnimation.setAnimationSpeed(-1);
             attackAnimation.setNextAnimation(null);
             attackAnimation.setNoNextAnimation(true);
+            attackAnimation.setOnAnimationSwitch(() -> attackAnimation.setAnimationSpeed(1));
+            powerAfterEffectTime.setValue(0.3f);
         }
         isSlowFalling = false;
         isSpikePrepping = false;
@@ -154,6 +159,8 @@ public class IcePlayer extends PActor {
     }
 
     private void beginPower() {
+        attackAnimation.setAnimationSpeed(1);
+        attackAnimation.setOnAnimationSwitch(null);
         if(Controls.VERTICAL.get() == -1) {
             beginSpike();
         } else {
@@ -168,8 +175,8 @@ public class IcePlayer extends PActor {
     private void beginSlowfall() {
         System.out.println("SLOWFALL");
         isSlowFalling = true;
-        attackAnimation.setAnimation(attackAnimations.get("slow_fall_begin").getBuiltAnimation(), true);
-        attackAnimation.setNextAnimation(attackAnimations.get("slow_fall").getBuiltAnimation());
+        vel.y = -0.1f;
+        attackAnimation.setAnimation(attackAnimations.get("slow_fall").getBuiltAnimation());
     }
 
     private void beginSpike() {
@@ -225,14 +232,21 @@ public class IcePlayer extends PActor {
             if(powerAfterEffectTime.isActive()) powerMultiplier = 0.1f;
             else powerMultiplier = 1;
 
-            float slowFallMultiplier;
-            if(isSlowFalling && vel.y < 0) slowFallMultiplier = 0.01f;
-            else slowFallMultiplier = 1;
+            float slowFallMultiplier = 1;
+//            if(isSlowFalling && vel.y < 0 && inSteamCount == 0) slowFallMultiplier = 0.01f;
+//            else slowFallMultiplier = 1;
 
             float spikeFallMultiplier;
             if(isSpikePrepping) spikeFallMultiplier = 0;
             else if(isSpikeFalling) spikeFallMultiplier = 3;
             else spikeFallMultiplier = 1;
+            if(isSlowFalling && inSteamCount == 0 && vel.y < 0) {
+                vel.y /= 1.5f;
+                if(vel.y > -10) vel.y = -10;
+            }
+
+            if(inSteamCount > 0) vel.y += 30;
+            if(vel.y > 150) vel.y = 150;
 
             vel.y = UMath.approach(vel.y, maxFall, gravity * spikeFallMultiplier * powerMultiplier * multiplier * delta * slowFallMultiplier);
         }
@@ -249,6 +263,9 @@ public class IcePlayer extends PActor {
     private void collideX(Collision collision) {
         vel.x = 0;
         zeroRemainderX();
+        if(collision.stopper instanceof PTrigger) {
+            System.out.println("TRIGGER");
+        }
     }
 
     private void collideY(Collision collision) {
@@ -260,6 +277,16 @@ public class IcePlayer extends PActor {
         } else {
             vel.y = 0;
             zeroRemainderY();
+        }
+    }
+
+    private void onTrigger(Trigger t) {
+        if(t.trigger instanceof SteamColumn) {
+            if(t.isEnter) {
+                inSteamCount++;
+            } else {
+                inSteamCount--;
+            }
         }
     }
 

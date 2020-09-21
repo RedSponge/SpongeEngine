@@ -121,16 +121,6 @@
         }
       ]
     },
-    "slow_fall_begin": {
-      "play_mode": "NORMAL",
-      "frames": [
-        {
-          "frame": "ice_begin",
-          "length": 100,
-          "idx": -1
-        }
-      ]
-    },
     "slow_fall": {
       "play_mode": "LOOP",
       "frames": [
@@ -153,6 +143,11 @@
           "frame": "ice_slowfall",
           "length": 200,
           "idx": 4
+        },
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 5
         }
       ]
     },
