@@ -194,7 +194,7 @@ public abstract class Entity {
     }
 
     public void setBottom(int bottom) {
-        position.x = bottom - hitbox.getBottom();
+        position.y = bottom - hitbox.getBottom();
     }
 
     public boolean check(Vector2 point) {

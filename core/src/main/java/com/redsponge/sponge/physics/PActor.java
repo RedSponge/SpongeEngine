@@ -149,7 +149,7 @@ public class PActor extends Entity {
             }
 
             if(hit != null) {
-                Collision col = new Collision(tmp.set(Vector2.X).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
+                Collision col = new Collision(tmp.set(Vector2.Y).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) {
                     onCollision.onCollision(col);
                 }

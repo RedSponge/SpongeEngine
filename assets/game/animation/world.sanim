@@ -1,0 +1,16 @@
+{
+  "atlas": "world.atlas",
+  "animations": {
+    "melter": {
+      "play_mode": "LOOP",
+      "frames": [
+        {"frame":  "melter", "idx":  1, "length": 50},
+        {"frame":  "melter", "idx":  2, "length": 50},
+        {"frame":  "melter", "idx":  3, "length": 50},
+        {"frame":  "melter", "idx":  4, "length": 50},
+        {"frame":  "melter", "idx":  5, "length": 50},
+        {"frame":  "melter", "idx":  6, "length": 50},
+      ]
+    }
+  }
+}

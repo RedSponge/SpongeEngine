@@ -62,6 +62,7 @@ public class FirePlayer extends PActor {
     private AnimationComponent attackAnimation;
     private SAnimationGroup attackAnimations;
     private int facing;
+    private boolean spawnedDetector = true;
 
 
     private enum Attack {
@@ -71,6 +72,13 @@ public class FirePlayer extends PActor {
                 player.vel.y = fireUpBoostPower;
                 player.vel.x /= 10;
             }
+
+            @Override
+            void spawnFireDetector(FirePlayer player) {
+                player.getScene().add(new FireDetector(
+                        new Vector2(player.getLeft() + 2, player.getBottom() - 26)
+                        , 12, 26));
+            }
         },
         FIRE_SIDE("fire_attack_side") {
             @Override
@@ -79,15 +87,31 @@ public class FirePlayer extends PActor {
                 player.vel.y = 50;
                 player.blockChangeFacingTime.setValue(0.4f);
             }
+
+            @Override
+            void spawnFireDetector(FirePlayer player) {
+                super.spawnFireDetector(player);
+                player.getScene().add(new FireDetector(new Vector2(player.facing > 0 ? player.getRight() : player.getLeft() - 40, player.getBottom() - 8), 40, 32));
+            }
         },
         FIRE_UP("fire_attack_up") {
             @Override
             void apply(FirePlayer player) {
                 player.vel.y = -fireUpBoostPower;
             }
+
+            @Override
+            void spawnFireDetector(FirePlayer player) {
+                player.getScene().add(new FireDetector(
+                        new Vector2(player.getLeft() - 8, player.getTop())
+                        , 32, 48));
+            }
         }
         ;
         abstract void apply(FirePlayer player);
+        void spawnFireDetector(FirePlayer player) {
+
+        }
         private final String animation;
 
         Attack(String animation) {
@@ -161,6 +185,10 @@ public class FirePlayer extends PActor {
         if(Controls.POWER.isJustPressed() && !powerCooldownTime.isActive()) {
             beginPower();
         }
+        if(/*powerCooldownTime.getValue() <= 0.3f && */!spawnedDetector) {
+            currentAttack.spawnFireDetector(this);
+            spawnedDetector = true;
+        }
 
         if(!blockChangeFacingTime.isActive() && Controls.HORIZONTAL.get() != 0) {
             drawn.setFlippedX(Controls.HORIZONTAL.get() < 0);
@@ -195,6 +223,7 @@ public class FirePlayer extends PActor {
         attackAnimation.update(0);
         attackAnimation.setActive(true);
         attackAnimation.setVisible(true);
+        spawnedDetector = false;
     }
 
     private void updateVX(float delta) {
@@ -260,6 +289,13 @@ public class FirePlayer extends PActor {
         } else {
             vel.y = 0;
             zeroRemainderY();
+        }
+        if(collision.stopper instanceof IceBlock) {
+            System.out.println(collision.dir);
+            if(collision.dir.y == -1.0) {
+                System.out.println("B");
+                setBottom(collision.stopper.getTop());
+            }
         }
     }
 

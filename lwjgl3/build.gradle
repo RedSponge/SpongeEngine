@@ -18,6 +18,8 @@ dependencies {
 import org.gradle.internal.os.OperatingSystem
 
 run {
+	dependsOn (":texture-packer:run")
+
 	workingDir = rootProject.file('assets').path
 	setIgnoreExitValue(true)
 	
