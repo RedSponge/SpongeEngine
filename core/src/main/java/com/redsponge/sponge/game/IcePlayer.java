@@ -302,4 +302,8 @@ public class IcePlayer extends PActor {
     public boolean isPowerActive() {
         return isSlowFalling || isSpikePrepping || isSpikeFalling;
     }
+
+    public Vector2 getVelocity() {
+        return vel;
+    }
 }

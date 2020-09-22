@@ -49,7 +49,7 @@ public class FirePlayer extends PActor {
     private static final float accelAirMultiplier = 0.8f;
     private static final float maxJumpMemoryTime = 0.1f;
 
-    private static final float fireUpBoostPower = 300;
+    private static final float fireUpBoostPower = 200;
     private static final float powerAccelMultiplier = 0.1f;
     private static final float powerCooldown = 0.4f;
 
@@ -63,6 +63,14 @@ public class FirePlayer extends PActor {
     private SAnimationGroup attackAnimations;
     private int facing;
     private boolean spawnedDetector = true;
+
+    public Vector2 getVelocity() {
+        return vel;
+    }
+
+    public TimedAction getJumpGraceTime() {
+        return jumpGraceTime;
+    }
 
 
     private enum Attack {
@@ -83,7 +91,7 @@ public class FirePlayer extends PActor {
         FIRE_SIDE("fire_attack_side") {
             @Override
             void apply(FirePlayer player) {
-                player.vel.x = -200 * player.facing;
+                player.vel.x = -100 * player.facing;
                 player.vel.y = 50;
                 player.blockChangeFacingTime.setValue(0.4f);
             }
@@ -91,7 +99,7 @@ public class FirePlayer extends PActor {
             @Override
             void spawnFireDetector(FirePlayer player) {
                 super.spawnFireDetector(player);
-                player.getScene().add(new FireDetector(new Vector2(player.facing > 0 ? player.getRight() : player.getLeft() - 40, player.getBottom() - 8), 40, 32));
+                player.getScene().add(new FireDetector(new Vector2(player.facing > 0 ? player.getRight() : player.getLeft() - 24, player.getBottom() + 2), 24, 14));
             }
         },
         FIRE_UP("fire_attack_up") {
@@ -103,8 +111,8 @@ public class FirePlayer extends PActor {
             @Override
             void spawnFireDetector(FirePlayer player) {
                 player.getScene().add(new FireDetector(
-                        new Vector2(player.getLeft() - 8, player.getTop())
-                        , 32, 48));
+                        new Vector2(player.getLeft(), player.getTop())
+                        , 16, 48));
             }
         }
         ;
@@ -287,15 +295,16 @@ public class FirePlayer extends PActor {
             moveY(-1, this::collideY);
             collision.stopper.setCollidable(true);
         } else {
+
             vel.y = 0;
             zeroRemainderY();
         }
         if(collision.stopper instanceof IceBlock) {
-            System.out.println(collision.dir);
-            if(collision.dir.y == -1.0) {
-                System.out.println("B");
-                setBottom(collision.stopper.getTop());
-            }
+//            System.out.println(collision.dir);
+//            if(collision.dir.y == -1.0 && ((IceBlock) collision.stopper).isActivelyMelting()) {
+//                vel.y = 0;
+//                setBottom(collision.stopper.getTop() + 2);
+//            }
         }
     }
 

@@ -26,14 +26,17 @@ public class IceBlock extends PSolid {
     private Animation<TextureRegion> melterAnimation;
 
     private int maxHeight;
+    private boolean isHorizontal;
 
     private static final float maxMeltTime = .5f;
     private float stayMeltTime;
     private float renderHeight;
+    private boolean lastActivelyMelting;
 
-    public IceBlock(Vector2 pos, Hitbox hitbox) {
+    public IceBlock(Vector2 pos, Hitbox hitbox, boolean isHorizontal) {
         super(pos, hitbox);
-        this.maxHeight = hitbox.getHeight();
+        this.maxHeight = isHorizontal ? hitbox.getWidth() : hitbox.getHeight();
+        this.isHorizontal = isHorizontal;
     }
 
     @Override
@@ -66,20 +69,42 @@ public class IceBlock extends PSolid {
             meltTime = Math.max(meltTime, 0);
         }
         Interpolation i = isMelting ? Interpolation.exp5In : Interpolation.exp5Out;
-        renderHeight = Math.max(i.apply(1 - meltTime / maxMeltTime) * maxHeight, 2);
-        setHeight((int) renderHeight);
-        if(isActivelyMelting()) {
-            melterPatch.setRegion(melterAnimation.getKeyFrame(meltTime));
+        renderHeight = (int) Math.max(i.apply(1 - meltTime / maxMeltTime) * maxHeight, 2);
+        if(!isHorizontal) {
+            setHeight((int) renderHeight);
+            if (isActivelyMelting()) {
+                melterPatch.setRegion(melterAnimation.getKeyFrame(meltTime));
+                if (((GameScene) getScene()).getPlayer().isRiding(this)) {
+                    ((GameScene) getScene()).getPlayer().setBottom(getTop() + 1);
+                    ((FirePlayer) ((GameScene) getScene()).getPlayer()).getJumpGraceTime().setValue(0.5f);
+                }
+            } else if (lastActivelyMelting && !isActivelyMelting()) {
+                if (((GameScene) getScene()).getPlayer().isRiding(this)) {
+                    ((GameScene) getScene()).getPlayer().setBottom(getTop() + 1);
+//                ((FirePlayer)((GameScene) getScene()).getPlayer()).getVelocity().y = 120;
+                }
+                System.out.println("Ello");
+            }
+            lastActivelyMelting = isActivelyMelting();
+//            setCollidable(!isMelting);
+        } else {
+            setWidth((int) renderHeight);
+            if(check(((GameScene)getScene()).getPlayer())) {
+                ((GameScene) getScene()).getPlayer().setLeft(getRight());
+            }
+            lastActivelyMelting = isActivelyMelting();
+//            setCollidable(!isMelting);
         }
     }
 
     @Override
     public void render() {
         super.render();
-        blockPatch.draw(SpongeGame.i().getBatch(), getX(), getY(), getWidth(), renderHeight);
-        if(isActivelyMelting()) {
-            melterPatch.draw(SpongeGame.i().getBatch(), getX() - 2, getY() + renderHeight - 10, getWidth() + 4, 16);
-        }
+        blockPatch.getColor().a = Math.max(renderHeight / maxHeight, 0.4f);
+        blockPatch.draw(SpongeGame.i().getBatch(), getX(), getY(), getWidth(), getHeight());
+//        if(isActivelyMelting()) {
+//            melterPatch.draw(SpongeGame.i().getBatch(), getX() - 2, getY() + renderHeight - 10, getWidth() + 4, 16);
+//        }
     }
 
     public boolean isActivelyMelting() {
@@ -87,7 +112,7 @@ public class IceBlock extends PSolid {
     }
 
     public void reMelt() {
-        stayMeltTime = 3;
+        stayMeltTime = 1.5f;
     }
 
     public boolean isReforming() {

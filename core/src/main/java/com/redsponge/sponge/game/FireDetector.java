@@ -6,27 +6,30 @@ import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.PActor;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 public class FireDetector extends PActor {
 
     private int sign = 1;
+    private boolean done;
+    private Set<IceBlock> blocks;
 
     public FireDetector(Vector2 pos, int width, int height) {
         super(pos);
         getHitbox().set(0, 0, width, height);
+        blocks = new HashSet<>();
     }
 
     @Override
     public void update(float delta) {
-        super.update(delta);
-        moveX(sign, this::check);
-        sign *= -1;
-        removeSelf();
-    }
-
-    private void check(Collision collision) {
-        if(collision.stopper instanceof IceBlock) {
-            ((IceBlock) collision.stopper).reMelt();
+        for (IceBlock iceBlock : all(new ArrayList<>(), IceBlock.class)) {
+            if(check(iceBlock)) {
+                iceBlock.reMelt();
+            }
         }
+        removeSelf();
     }
 
     @Override

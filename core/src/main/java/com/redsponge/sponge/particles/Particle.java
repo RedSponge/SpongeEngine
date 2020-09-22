@@ -79,4 +79,12 @@ public class Particle implements Disposable {
             effect = null;
         }
     }
+
+    public ParticleEffect getParticleEffect() {
+        return effect;
+    }
+
+    public void setParticleEffect(ParticleEffect particleEffect) {
+        this.effect = particleEffect;
+    }
 }
