@@ -215,15 +215,13 @@ public class FirePlayer extends PActor {
         powerAfterEffectTime.setValue(0.3f);
         powerCooldownTime.setValue(powerCooldown);
 
-        if(((GameScene)getScene()).getMode() == WorldMode.FIRE) {
-            int vertical = Controls.VERTICAL.get();
-            if (vertical > 0) {
-                currentAttack = Attack.FIRE_DOWN;
-            } else if (vertical < 0) {
-                currentAttack = Attack.FIRE_UP;
-            } else {
-                currentAttack = Attack.FIRE_SIDE;
-            }
+        int vertical = Controls.VERTICAL.get();
+        if (vertical > 0) {
+            currentAttack = Attack.FIRE_DOWN;
+        } else if (vertical < 0) {
+            currentAttack = Attack.FIRE_UP;
+        } else {
+            currentAttack = Attack.FIRE_SIDE;
         }
         currentAttack.apply(this);
 

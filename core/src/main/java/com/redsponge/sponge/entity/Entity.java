@@ -2,6 +2,7 @@ package com.redsponge.sponge.entity;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.game.Fireball;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.UVector;
@@ -300,7 +301,13 @@ public abstract class Entity {
 
     public void drawHitbox(ShapeDrawer sr) {
         Hitbox hitbox = getSceneHitbox();
-        sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
+        if(this instanceof Fireball) {
+            System.out.println(hitbox.getLeft());
+            sr.rectangle(hitbox.getLeft() + 30, hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
+            sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.RED);
+        } else {
+            sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
+        }
     }
 
 

@@ -291,6 +291,9 @@ public class IcePlayer extends PActor {
                 inSteamCount--;
             }
         }
+        if(t.trigger instanceof Killer) {
+            System.out.println("DEATH");
+        }
     }
 
     @Override

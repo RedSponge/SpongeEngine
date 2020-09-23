@@ -11,6 +11,17 @@
         {"frame":  "melter", "idx":  5, "length": 50},
         {"frame":  "melter", "idx":  6, "length": 50},
       ]
+    },
+    "fireball":{
+      "play_mode": "LOOP",
+      "frames": [
+        {"frame":  "fireball", "idx":  1, "length": 100},
+        {"frame":  "fireball", "idx":  2, "length": 100},
+        {"frame":  "fireball", "idx":  3, "length": 100},
+        {"frame":  "fireball", "idx":  4, "length": 100},
+        {"frame":  "fireball", "idx":  5, "length": 100},
+        {"frame":  "fireball", "idx":  6, "length": 100},
+      ]
     }
   }
 }

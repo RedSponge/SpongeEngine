@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ray3k.tenpatch.TenPatchDrawable;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.physics.PSolid;
+import com.redsponge.sponge.physics.TriggerHandler;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 
@@ -102,9 +103,10 @@ public class IceBlock extends PSolid {
         super.render();
         blockPatch.getColor().a = Math.max(renderHeight / maxHeight, 0.4f);
         blockPatch.draw(SpongeGame.i().getBatch(), getX(), getY(), getWidth(), getHeight());
-//        if(isActivelyMelting()) {
-//            melterPatch.draw(SpongeGame.i().getBatch(), getX() - 2, getY() + renderHeight - 10, getWidth() + 4, 16);
-//        }
+    }
+
+    public void onTrigger(TriggerHandler t) {
+
     }
 
     public boolean isActivelyMelting() {

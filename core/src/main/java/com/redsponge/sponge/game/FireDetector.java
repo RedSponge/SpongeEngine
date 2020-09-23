@@ -35,7 +35,6 @@ public class FireDetector extends PActor {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().setColor(Color.ORANGE);
-        SpongeGame.i().getShapeDrawer().rectangle(getX(), getY(), getWidth(), getHeight());
+        SpongeGame.i().getShapeDrawer().rectangle(getX(), getY(), getWidth(), getHeight(), Color.ORANGE);
     }
 }
