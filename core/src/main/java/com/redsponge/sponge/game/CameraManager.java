@@ -21,6 +21,8 @@ public class CameraManager extends Entity {
     private float yFrom;
     private int yTo;
 
+    private static final float maxTime = 0.5f;
+
     public CameraManager() {
         super(new Vector2());
     }
@@ -29,16 +31,19 @@ public class CameraManager extends Entity {
     public void added(Scene scene) {
         super.added(scene);
         try {
-            mm = all(new ArrayList<>(), MapManager.class).get(0);
+            mm = getScene().first(MapManager.class);
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Couldn't find mm yet");
         }
     }
 
+    public void setMM(MapManager mm) {
+        this.mm = mm;
+    }
+
     @Override
     public boolean check(Entity other) {
         return true;
-//        return super.check(other);
     }
 
     private int getPlayerY() {
@@ -59,7 +64,6 @@ public class CameraManager extends Entity {
         maxLevel = mm.getMapHeight() / chopSize;
         int current = getPlayerY() / chopSize;
         if(current != yLevel) {
-//            yFrom = yLevel * chopSize;
             yTo = current * chopSize;
             yFrom = getScene().viewport.getCamera().position.y;
             yLevel = current;
@@ -68,6 +72,10 @@ public class CameraManager extends Entity {
         transformationTime += delta;
         float maxTime = 0.5f;
 
-        getScene().viewport.getCamera().position.y = Interpolation.exp5.apply(yFrom, yTo + 135, Math.min(transformationTime / maxTime, 1));
+        getScene().viewport.getCamera().position.y = Interpolation.exp5Out.apply(yFrom, yTo + getScene().getHeight() / 2f, Math.min(transformationTime / maxTime, 1));
+    }
+
+    public boolean isTransitioning() {
+        return transformationTime / maxTime < 1;
     }
 }

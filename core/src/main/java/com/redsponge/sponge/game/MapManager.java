@@ -6,8 +6,10 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
@@ -27,12 +29,19 @@ public class MapManager extends Entity {
     private List<Entity> addedEntities;
 
     private TiledMapRenderer tmr;
+    private boolean loaded;
 
     public MapManager() {
         super(new Vector2());
     }
 
-    public void load(String file) {
+    public void load(String file)
+    {
+        if(entities != null) {
+            for (Entity entity : entities) {
+                entity.removeSelf();
+            }
+        }
         if(map != null) {
             map.dispose();
             map = null;
@@ -41,6 +50,7 @@ public class MapManager extends Entity {
         tmr = new OrthogonalTiledMapRenderer(map, SpongeGame.i().getBatch());
         entities = new ArrayList<>();
         addedEntities = new ArrayList<>();
+        loaded = false;
     }
 
     private void parseMap() {
@@ -62,9 +72,17 @@ public class MapManager extends Entity {
                     ((GameScene)getScene()).setPlayer(p);
                     entities.add(p);
                 } break;
+                case "fireball_line": {
+                    FireballLine line = new FireballLine(new Vector2(r.x, r.y), new Vector2(r.width, r.height), rmo.getProperties().get("density", Integer.class), new Vector2(1, 0), rmo.getProperties().get("speed", Float.class));
+                    entities.add(line);
+                } break;
+                case "death": {
+                    entities.add(new DeathBox(new Vector2(r.x, r.y), (int) r.width, (int) r.height));
+                } break;
 
             }
         }
+        loaded = true;
         addedEntities.addAll(entities);
     }
 
@@ -79,6 +97,9 @@ public class MapManager extends Entity {
     @Override
     public void update(float delta) {
         super.update(delta);
+        if(!loaded) {
+            parseMap();
+        }
         for (Entity solid : addedEntities) {
             getScene().add(solid);
         }
@@ -88,13 +109,23 @@ public class MapManager extends Entity {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getBatch().end();
+//        SpongeGame.i().getBatch().end();
         tmr.setView((OrthographicCamera) getScene().viewport.getCamera());
-        tmr.render();
-        SpongeGame.i().getBatch().begin();
+        tmr.renderTileLayer((TiledMapTileLayer) map.getLayers().get("Background"));
+//        SpongeGame.i().getBatch().begin();
     }
+
+    public void renderForeground() {
+        tmr.setView((OrthographicCamera) getScene().viewport.getCamera());
+        tmr.renderTileLayer((TiledMapTileLayer) map.getLayers().get("Mask"));
+    }
+
 
     public int getMapHeight() {
         return map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
+    }
+
+    public void reset() {
+
     }
 }

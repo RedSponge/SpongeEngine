@@ -2,13 +2,10 @@ package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
-import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.util.Hitbox;
-
-import java.util.ArrayList;
 
 public class GameScene extends Scene {
 
@@ -16,6 +13,8 @@ public class GameScene extends Scene {
     private PActor pl;
 
     private MapManager mm;
+    private CameraManager cm;
+    private boolean restartRequired;
 
     public void toggleWorld() {
 
@@ -43,6 +42,14 @@ public class GameScene extends Scene {
         return mm;
     }
 
+    public CameraManager getCameraManager() {
+        return cm;
+    }
+
+    public void restartLevel() {
+        restartRequired = true;
+    }
+
     enum WorldMode {
         FIRE,
         ICE
@@ -53,11 +60,11 @@ public class GameScene extends Scene {
     @Override
     public void start() {
         super.start();
-        mode = WorldMode.ICE;
+        mode = WorldMode.FIRE;
 
         add(bg = new StaticBackground());
         add(mm = new MapManager());
-        add(new CameraManager());
+        add(cm = new CameraManager());
 
         mm.load("game/map/fire_test.tmx");
 
@@ -66,6 +73,12 @@ public class GameScene extends Scene {
 
     @Override
     public void update(float delta) {
+        if(restartRequired) {
+            mm.load("game/map/fire_test.tmx");
+            cm.setMM(mm);
+            restartRequired = false;
+        }
+        AnimatedTiledMapTile.updateAnimationBaseTime();
         super.update(delta);
     }
 
@@ -74,6 +87,7 @@ public class GameScene extends Scene {
         Gdx.gl.glClearColor(0, 0, 0, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.render();
+        mm.renderForeground();
     }
 
     @Override

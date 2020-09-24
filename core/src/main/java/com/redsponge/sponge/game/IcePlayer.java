@@ -98,6 +98,10 @@ public class IcePlayer extends PActor {
 
     @Override
     public void update(float delta) {
+        if(((GameScene)getScene()).getCameraManager().isTransitioning()) {
+            vel.y = UMath.clamp(vel.y, -50, 50);
+            return;
+        }
         super.update(delta);
 
         onGround = groundCheck();
@@ -117,9 +121,10 @@ public class IcePlayer extends PActor {
         }
 
         if(Controls.DEBUG.isJustPressed()) {
+            ((GameScene)getScene()).restartLevel();
         }
 
-        if(Controls.POWER.isJustPressed() && !isPowerActive() && !onGround) {
+        if(Controls.POWER.isJustPressed() && !isPowerActive()) {
             beginPower();
         }
         if(!Controls.POWER.isPressed()) {
@@ -136,6 +141,11 @@ public class IcePlayer extends PActor {
                 UMath.lerp(iceWorldCooldownColor.g, Color.WHITE.g, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 UMath.lerp(iceWorldCooldownColor.b, Color.WHITE.b, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 1);
+    }
+
+    @Override
+    public void squish(Collision collision) {
+        ((GameScene)getScene()).restartLevel();
     }
 
     private void endPower() {
@@ -279,6 +289,7 @@ public class IcePlayer extends PActor {
             collision.stopper.setCollidable(true);
         } else {
             vel.y = 0;
+            jumpMemoryTime.setValue(0);
             zeroRemainderY();
         }
     }
@@ -293,6 +304,7 @@ public class IcePlayer extends PActor {
         }
         if(t.trigger instanceof Killer) {
             System.out.println("DEATH");
+            ((GameScene)getScene()).restartLevel();
         }
     }
 
