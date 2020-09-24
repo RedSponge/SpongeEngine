@@ -73,7 +73,8 @@ public class MapManager extends Entity {
                     entities.add(p);
                 } break;
                 case "fireball_line": {
-                    FireballLine line = new FireballLine(new Vector2(r.x, r.y), new Vector2(r.width, r.height), rmo.getProperties().get("density", Integer.class), new Vector2(1, 0), rmo.getProperties().get("speed", Float.class));
+                    System.out.println(r);
+                    FireballLine line = new FireballLine(new Vector2(r.x, r.y), new Vector2(r.width, r.height), rmo.getProperties().get("density", Integer.class), new Vector2(rmo.getProperties().get("velX", Float.class), rmo.getProperties().get("velY", Float.class)), rmo.getProperties().get("speed", Float.class));
                     entities.add(line);
                 } break;
                 case "death": {

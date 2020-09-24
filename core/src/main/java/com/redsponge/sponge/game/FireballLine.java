@@ -14,24 +14,32 @@ public class FireballLine extends Entity {
 
     private float minFireballX;
     private float maxFireballX;
+
+    private float minFireballY;
+    private float maxFireballY;
+
     private float time;
 
     public FireballLine(Vector2 pos, Vector2 size, int density, Vector2 direction, float speed) {
         super(pos);
         this.speed = speed;
-        getHitbox().set((int) pos.x, (int) pos.y, (int) size.x, (int) size.y);
+        getHitbox().set(0, 0, (int) size.x, (int) size.y);
         this.density = density;
         this.direction = direction;
         fireballs = new LinkedList<>();
         this.minFireballX = getX() - 10;
         this.maxFireballX = getRight() + 4;
+        this.minFireballY = getY() - 10;
+        this.maxFireballY = getTop() + 10;
+        System.out.println(minFireballX + " " + maxFireballX + " " + minFireballY + " " + maxFireballY);
     }
 
     private void spawnFireballs() {
-        float spacing = (maxFireballX - minFireballX) / density;
+        float spacingX = (maxFireballX - minFireballX) / density;
+        float spacingY = (maxFireballY - minFireballY) / density;
 //        fireballs.add(new Fireball(new Vector2(minFireballX, getY())));
         for (int i = 0; i < ((int) density); i++) {
-            fireballs.add(new Fireball(new Vector2(minFireballX - i * spacing, getY())));
+            fireballs.add(new Fireball(new Vector2(minFireballX + i * spacingX * direction.x, minFireballY + i * spacingY * direction.y)));
         }
         for (Fireball fireball : fireballs) {
             getScene().add(fireball);
@@ -45,10 +53,22 @@ public class FireballLine extends Entity {
             spawnFireballs();
         }
         time += delta;
+        float vx = speed * delta * direction.x;
+        float vy = speed * delta * direction.y;
         for (Fireball fireball : fireballs) {
-            fireball.moveX(speed * delta);
+            fireball.moveX(vx);
+            fireball.moveY(vy);
             if(fireball.getX() > maxFireballX) {
                 fireball.setX(minFireballX);
+            }
+            if(fireball.getX() < minFireballX) {
+                fireball.setX(maxFireballX);
+            }
+            if(fireball.getY() > maxFireballY) {
+                fireball.setY(minFireballY);
+            }
+            if(fireball.getY() < minFireballY) {
+                fireball.setY(maxFireballY);
             }
         }
     }
