@@ -301,13 +301,7 @@ public abstract class Entity {
 
     public void drawHitbox(ShapeDrawer sr) {
         Hitbox hitbox = getSceneHitbox();
-        if(this instanceof Fireball) {
-            System.out.println(hitbox.getLeft());
-            sr.rectangle(hitbox.getLeft() + 30, hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
-            sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.RED);
-        } else {
-            sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
-        }
+        sr.rectangle(hitbox.getLeft(), hitbox.getBottom(), hitbox.getWidth(), hitbox.getHeight(), Color.WHITE);
     }
 
 
