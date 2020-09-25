@@ -279,10 +279,12 @@ public class IcePlayer extends PActor {
         if(collision.stopper instanceof PTrigger) {
             System.out.println("TRIGGER");
         }
+        checkButton(collision);
     }
 
     private void collideY(Collision collision) {
         endPower();
+        checkButton(collision);
         if(collision.stopper instanceof JumpThru && !forceDownTime.isRunning() && vel.y < 0) {
             collision.stopper.setCollidable(false);
             moveY(-1, this::collideY);
@@ -291,6 +293,14 @@ public class IcePlayer extends PActor {
             vel.y = 0;
             jumpMemoryTime.setValue(0);
             zeroRemainderY();
+        }
+    }
+
+    private void checkButton(Collision collision) {
+        if(collision.stopper instanceof Button) {
+            if(((Button) collision.stopper).getOrientation().getHitDirection().equals(collision.dir)) {
+                ((Button) collision.stopper).setOn(true);
+            }
         }
     }
 

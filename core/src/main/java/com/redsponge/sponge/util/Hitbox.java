@@ -136,18 +136,20 @@ public class Hitbox {
         return Stringf.format("[%d, %d, %d, %d]", x, y, width, height);
     }
 
-    public void set(Hitbox other) {
+    public Hitbox set(Hitbox other) {
         this.x = other.x;
         this.y = other.y;
         this.width = other.width;
         this.height = other.height;
+        return this;
     }
 
-    public void set(int x, int y, int width, int height) {
+    public Hitbox set(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        return this;
     }
 
     public Rectangle getRectangle() {

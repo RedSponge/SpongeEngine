@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.entity.Component;
+import com.redsponge.sponge.game.Button;
 
 public class DrawnComponent extends Component {
 

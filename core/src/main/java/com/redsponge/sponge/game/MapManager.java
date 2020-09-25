@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.entity.Entity;
+import com.redsponge.sponge.game.Button.Orientation;
 import com.redsponge.sponge.physics.PSolid;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
@@ -80,6 +81,12 @@ public class MapManager extends Entity {
                 case "death": {
                     entities.add(new DeathBox(new Vector2(r.x, r.y), (int) r.width, (int) r.height));
                 } break;
+                case "button": {
+                    entities.add(new Button(new Vector2(r.x, r.y), Orientation.valueOf(rmo.getProperties().get("orientation", String.class).toUpperCase()), rmo.getProperties().get("connection", String.class)));
+                } break;
+                case "door": {
+                    entities.add(new SolidDoor(new Vector2(r.x, r.y), (int) r.width, (int) r.height, rmo.getProperties().get("orientation").equals("vertical"), rmo.getProperties().get("connection", String.class)));
+                }
 
             }
         }

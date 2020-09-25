@@ -79,6 +79,7 @@ public class GameScene extends Scene {
             restartRequired = false;
         }
         AnimatedTiledMapTile.updateAnimationBaseTime();
+        Connections.prepCache();
         super.update(delta);
     }
 

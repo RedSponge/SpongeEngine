@@ -313,7 +313,7 @@ public abstract class Entity {
         return visible;
     }
 
-    public boolean isActive() {
+    public boolean isOn() {
         return active;
     }
 

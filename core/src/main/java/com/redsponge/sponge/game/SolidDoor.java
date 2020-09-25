@@ -1,8 +1,10 @@
 package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.ray3k.tenpatch.TenPatchDrawable;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.physics.PSolid;
@@ -18,14 +20,19 @@ public class SolidDoor extends Entity {
     private boolean isToggled;
     private float doorTime;
     private static final float maxDoorTime = 0.3f;
+    private String connection;
 
-    public SolidDoor(Vector2 pos, int width, int height, boolean isVertical) {
+    private TenPatchDrawable doorDrawable;
+
+    public SolidDoor(Vector2 pos, int width, int height, boolean isVertical, String connection) {
         super(pos);
+        this.connection = connection;
         getHitbox().set(0, 0, width, height);
         this.isVertical = isVertical;
 
         initSolids();
     }
+
 
     private void initSolids() {
         int origin = isVertical ? getY() : getX();
@@ -52,6 +59,7 @@ public class SolidDoor extends Entity {
         if(Controls.DEBUG.isJustPressed()) {
             isToggled = !isToggled;
         }
+        isToggled = Connections.isActive(connection);
         updateDoorParts(delta);
         super.update(delta);
     }
@@ -73,6 +81,7 @@ public class SolidDoor extends Entity {
     public void added(Scene scene) {
         super.added(scene);
         shouldAddSolids = true;
+        doorDrawable = new TenPatchDrawable(new int[] {3, 13}, new int[] {3, 13}, true, scene.getAssets().<TextureAtlas>get("world.atlas").findRegion("door_fire"));
     }
 
     @Override
@@ -84,6 +93,7 @@ public class SolidDoor extends Entity {
 
     @Override
     public void render() {
-        SpongeGame.i().getShapeDrawer().filledRectangle(getX(),getY(),getWidth(),getHeight(), Color.GREEN);
+        doorDrawable.draw(SpongeGame.i().getBatch(), a.getX(), a.getY(), a.getWidth(), a.getHeight());
+        doorDrawable.draw(SpongeGame.i().getBatch(), b.getX(), b.getY(), b.getWidth(), b.getHeight());
     }
 }

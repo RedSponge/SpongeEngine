@@ -1,6 +1,5 @@
 package com.redsponge.sponge.screen;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -19,7 +18,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListSet;
 
 public abstract class Scene {
 
@@ -57,7 +55,7 @@ public abstract class Scene {
     public void update(float delta) {
         updateLists();
         for (Entity entity : entities) {
-            if(entity.isActive()) {
+            if(entity.isOn()) {
                 entity.update(delta);
             }
         }
