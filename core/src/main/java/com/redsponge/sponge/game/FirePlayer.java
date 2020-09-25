@@ -18,6 +18,7 @@ import com.redsponge.sponge.components.TimedAction;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
+import com.redsponge.sponge.physics.Trigger;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.game.GameScene.WorldMode;
 import com.redsponge.sponge.util.UMath;
@@ -91,7 +92,7 @@ public class FirePlayer extends PActor {
         FIRE_SIDE("fire_attack_side") {
             @Override
             void apply(FirePlayer player) {
-                player.vel.x = -100 * player.facing;
+                player.vel.x = -200 * player.facing;
                 player.vel.y = 50;
                 player.blockChangeFacingTime.setValue(0.4f);
             }
@@ -159,6 +160,7 @@ public class FirePlayer extends PActor {
         Animation<TextureRegion> fau = sfau.getBuiltAnimation();
         attackAnimation = new AnimationComponent(false, false, attackAnimations.get("fire_attack_up").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24- 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
+        setOnTrigger(this::onTrigger);
 
         add(drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("player.atlas").findRegion("player")));
         add(attackAnimation);
@@ -303,6 +305,13 @@ public class FirePlayer extends PActor {
 //                vel.y = 0;
 //                setBottom(collision.stopper.getTop() + 2);
 //            }
+        }
+    }
+
+    private void onTrigger(Trigger t) {
+        if(t.trigger instanceof Killer) {
+            System.out.println("DEATH");
+            ((GameScene)getScene()).restartLevel();
         }
     }
 

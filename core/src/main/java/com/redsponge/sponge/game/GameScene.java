@@ -60,13 +60,13 @@ public class GameScene extends Scene {
     @Override
     public void start() {
         super.start();
-        mode = WorldMode.FIRE;
+        mode = WorldMode.ICE;
 
         add(bg = new StaticBackground());
         add(mm = new MapManager());
         add(cm = new CameraManager());
 
-        mm.load("game/map/fire_test.tmx");
+        mm.load("game/map/ice_test.tmx");
 
         buildWorld();
     }
@@ -74,7 +74,7 @@ public class GameScene extends Scene {
     @Override
     public void update(float delta) {
         if(restartRequired) {
-            mm.load("game/map/fire_test.tmx");
+            mm.load("game/map/ice_test.tmx");
             cm.setMM(mm);
             restartRequired = false;
         }

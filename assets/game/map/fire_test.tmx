@@ -122,7 +122,7 @@
   <object id="125" x="272" y="1344" width="176" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="Elements">
-  <object id="32" x="240" y="1136">
+  <object id="32" x="48" y="80">
    <properties>
     <property name="type" value="ice_player_spawn"/>
    </properties>

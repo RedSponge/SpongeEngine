@@ -79,10 +79,4 @@ public class PSolid extends WorldGeometry {
         }
         return into;
     }
-
-    @Override
-    public void render() {
-        super.render();
-//        drawHitbox(SpongeGame.i().getShapeDrawer());
-    }
 }

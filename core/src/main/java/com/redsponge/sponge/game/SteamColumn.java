@@ -28,7 +28,6 @@ public class SteamColumn extends PTrigger {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     @Override
