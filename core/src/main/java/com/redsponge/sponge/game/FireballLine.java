@@ -35,11 +35,11 @@ public class FireballLine extends Entity {
     }
 
     private void spawnFireballs() {
-        float spacingX = (maxFireballX - minFireballX) / density;
-        float spacingY = (maxFireballY - minFireballY) / density;
+        float spacingX = (maxFireballX - minFireballX) / density * Math.abs(direction.x);
+        float spacingY = (maxFireballY - minFireballY) / density * Math.abs(direction.y);
 //        fireballs.add(new Fireball(new Vector2(minFireballX, getY())));
         for (int i = 0; i < ((int) density); i++) {
-            fireballs.add(new Fireball(new Vector2(minFireballX + i * spacingX * direction.x, minFireballY + i * spacingY * direction.y)));
+            fireballs.add(new Fireball(new Vector2(minFireballX + i * spacingX, minFireballY + i * spacingY)));
         }
         for (Fireball fireball : fireballs) {
             getScene().add(fireball);

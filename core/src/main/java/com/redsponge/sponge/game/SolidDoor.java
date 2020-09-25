@@ -85,10 +85,10 @@ public class SolidDoor extends Entity {
     }
 
     @Override
-    public void removed() {
+    public void removeSelf() {
         a.removeSelf();
         b.removeSelf();
-        super.removed();
+        super.removeSelf();
     }
 
     @Override

@@ -283,7 +283,6 @@ public class IcePlayer extends PActor {
     }
 
     private void collideY(Collision collision) {
-        endPower();
         checkButton(collision);
         if(collision.stopper instanceof JumpThru && !forceDownTime.isRunning() && vel.y < 0) {
             collision.stopper.setCollidable(false);
@@ -292,6 +291,9 @@ public class IcePlayer extends PActor {
         } else {
             vel.y = 0;
             jumpMemoryTime.setValue(0);
+            if(collision.dir.y < 0) {
+                endPower();
+            }
             zeroRemainderY();
         }
     }
