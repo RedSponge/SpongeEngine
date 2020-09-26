@@ -2,6 +2,7 @@ package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -21,10 +22,8 @@ public class IceBlock extends PSolid {
     };
 
     private TenPatchDrawable blockPatch;
-    private TenPatchDrawable melterPatch;
     private float meltTime;
     private boolean isMelting;
-    private Animation<TextureRegion> melterAnimation;
 
     private int maxHeight;
     private boolean isHorizontal;
@@ -43,14 +42,10 @@ public class IceBlock extends PSolid {
     @Override
     public void added(Scene scene) {
         super.added(scene);
-        melterAnimation = scene.getAssets().getAnimationGroup("world").get("melter").getBuiltAnimation();
 
         blockPatch = new TenPatchDrawable(new int[] {
             1, 14
-        }, new int[] {1, 9}, true, new TextureRegion(scene.getAssets().<Texture>get("iceblock.png")));
-        melterPatch = new TenPatchDrawable(new int[] {
-                1, 14,
-        }, new int[] {}, true, null);
+        }, new int[] {1, 9}, true, new TextureRegion(scene.getAssets().<TextureAtlas>get("world.atlas").findRegion("melting_block", 1)));
     }
 
     public void toggleMelt() {
@@ -74,24 +69,28 @@ public class IceBlock extends PSolid {
         if(!isHorizontal) {
             setHeight((int) renderHeight);
             if (isActivelyMelting()) {
-                melterPatch.setRegion(melterAnimation.getKeyFrame(meltTime));
                 if (((GameScene) getScene()).getPlayer().isRiding(this)) {
-                    ((GameScene) getScene()).getPlayer().setBottom(getTop() + 1);
+                    setCollidable(false);
+                    ((GameScene) getScene()).getPlayer().moveToY(getY() + getHeight()+ 5);
+                    setCollidable(true);
                     ((FirePlayer) ((GameScene) getScene()).getPlayer()).getJumpGraceTime().setValue(0.5f);
                 }
             } else if (lastActivelyMelting && !isActivelyMelting()) {
                 if (((GameScene) getScene()).getPlayer().isRiding(this)) {
-                    ((GameScene) getScene()).getPlayer().setBottom(getTop() + 1);
+                    setCollidable(false);
+                    ((GameScene) getScene()).getPlayer().moveToY(getY() + getHeight() + 5);
+                    setCollidable(true);
 //                ((FirePlayer)((GameScene) getScene()).getPlayer()).getVelocity().y = 120;
                 }
-                System.out.println("Ello");
             }
             lastActivelyMelting = isActivelyMelting();
 //            setCollidable(!isMelting);
         } else {
             setWidth((int) renderHeight);
             if(check(((GameScene)getScene()).getPlayer())) {
-                ((GameScene) getScene()).getPlayer().setLeft(getRight());
+                setCollidable(false);
+                ((GameScene) getScene()).getPlayer().moveToX(getRight() + 5);
+                setCollidable(true);
             }
             lastActivelyMelting = isActivelyMelting();
 //            setCollidable(!isMelting);
@@ -103,6 +102,7 @@ public class IceBlock extends PSolid {
         super.render();
         blockPatch.getColor().a = Math.max(renderHeight / maxHeight, 0.4f);
         blockPatch.draw(SpongeGame.i().getBatch(), getX(), getY(), getWidth(), getHeight());
+        SpongeGame.i().getShapeDrawer().rectangle(getX(), getY(), getWidth(), getHeight());
     }
 
     public void onTrigger(TriggerHandler t) {

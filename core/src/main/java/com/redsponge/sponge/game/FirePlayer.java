@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -153,11 +154,7 @@ public class FirePlayer extends PActor {
     public void added(Scene scene) {
         super.added(scene);
         Gdx.app.setLogLevel(Application.LOG_INFO);
-        attackAnimations = getScene().getAssets().getAnimationGroup("player");
-        System.out.println(attackAnimations);
-        Gdx.app.log("Test", Boolean.toString(attackAnimation == null));
-        SAnimation sfau = attackAnimations.get("fire_attack_up");
-        Animation<TextureRegion> fau = sfau.getBuiltAnimation();
+        attackAnimations = getScene().getAssets().getAnimationGroup("player_attacks");
         attackAnimation = new AnimationComponent(false, false, attackAnimations.get("fire_attack_up").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24- 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
         setOnTrigger(this::onTrigger);
@@ -290,28 +287,17 @@ public class FirePlayer extends PActor {
     }
 
     private void collideY(Collision collision) {
-        if(collision.stopper instanceof JumpThru && !forceDownTime.isRunning() && vel.y < 0) {
-            collision.stopper.setCollidable(false);
-            moveY(-1, this::collideY);
-            collision.stopper.setCollidable(true);
-        } else {
-
-            vel.y = 0;
-            zeroRemainderY();
-        }
-        if(collision.stopper instanceof IceBlock) {
-//            System.out.println(collision.dir);
-//            if(collision.dir.y == -1.0 && ((IceBlock) collision.stopper).isActivelyMelting()) {
-//                vel.y = 0;
-//                setBottom(collision.stopper.getTop() + 2);
-//            }
-        }
+        vel.y = 0;
+        zeroRemainderY();
     }
 
     private void onTrigger(Trigger t) {
         if(t.trigger instanceof Killer) {
             System.out.println("DEATH");
             ((GameScene)getScene()).restartLevel();
+        }
+        if(t.trigger instanceof WinBox) {
+            ((GameScene)getScene()).win();
         }
     }
 

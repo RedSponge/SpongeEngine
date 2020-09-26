@@ -51,6 +51,7 @@ public class SAnimationGroup {
         containedAnimations = new HashMap<>();
         JsonValue animations = value.get("animations");
         for (JsonValue animation : animations) {
+            System.out.println(animation);
             PlayMode playMode = PlayMode.valueOf(animation.getString("play_mode"));
 
             Array<SFrame<TextureRegion>> frames = new Array<>();

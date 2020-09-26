@@ -65,7 +65,7 @@ public class SpongeGame implements ApplicationListener {
 
     protected void init() {}
 
-    public void setScene(GameScene scene) {
+    public void setScene(Scene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();

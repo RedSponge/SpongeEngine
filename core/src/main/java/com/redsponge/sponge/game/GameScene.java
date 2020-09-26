@@ -1,9 +1,13 @@
 package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
 
@@ -15,6 +19,11 @@ public class GameScene extends Scene {
     private MapManager mm;
     private CameraManager cm;
     private boolean restartRequired;
+    private boolean won;
+    private float winTime;
+    private static final float maxWinTime = 0.5f;
+
+    private ScalingViewport sv;
 
     public void toggleWorld() {
 
@@ -50,6 +59,11 @@ public class GameScene extends Scene {
         restartRequired = true;
     }
 
+    public void win() {
+        won = true;
+        winTime = 0;
+    }
+
     enum WorldMode {
         FIRE,
         ICE
@@ -67,8 +81,8 @@ public class GameScene extends Scene {
         add(cm = new CameraManager());
 
         mm.load("game/map/ice_test.tmx");
-
         buildWorld();
+        sv = new ScalingViewport(Scaling.fill, 1, 1);
     }
 
     @Override
@@ -81,6 +95,12 @@ public class GameScene extends Scene {
         AnimatedTiledMapTile.updateAnimationBaseTime();
         Connections.prepCache();
         super.update(delta);
+        if(won) {
+            winTime += delta;
+            if(winTime > maxWinTime) {
+                SpongeGame.i().setScene(new WinScene());
+            }
+        }
     }
 
     @Override
@@ -89,6 +109,9 @@ public class GameScene extends Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.render();
         mm.renderForeground();
+        sv.apply();
+        SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
+        SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
     }
 
     @Override
@@ -108,5 +131,11 @@ public class GameScene extends Scene {
     @Override
     public String getName() {
         return "game";
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        super.resize(width, height);
+        sv.update(width, height, true);
     }
 }

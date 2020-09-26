@@ -318,6 +318,9 @@ public class IcePlayer extends PActor {
             System.out.println("DEATH");
             ((GameScene)getScene()).restartLevel();
         }
+        if(t.trigger instanceof WinBox) {
+            ((GameScene)getScene()).win();
+        }
     }
 
     @Override

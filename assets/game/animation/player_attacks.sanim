@@ -1,0 +1,210 @@
+{
+  "atlas": "player.atlas",
+  "animations": {
+    "fire_attack_up": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "fire_up",
+          "length": 50,
+          "idx": 1
+        },
+        {
+          "frame": "fire_up",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "fire_up",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "fire_up",
+          "length": 100,
+          "idx": 4
+        },
+        {
+          "frame": "fire_up",
+          "length": 50,
+          "idx": 5
+        }
+      ]
+    },
+    "fire_attack_down": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "fire_down",
+          "length": 50,
+          "idx": 1
+        },
+        {
+          "frame": "fire_down",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "fire_down",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "fire_down",
+          "length": 100,
+          "idx": 4
+        },
+        {
+          "frame": "fire_down",
+          "length": 50,
+          "idx": 5
+        }
+      ]
+    },
+    "fire_attack_side": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "fire_side",
+          "length": 50,
+          "idx": 1
+        },
+        {
+          "frame": "fire_side",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "fire_side",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "fire_side",
+          "length": 100,
+          "idx": 4
+        },
+        {
+          "frame": "fire_side",
+          "length": 50,
+          "idx": 5
+        }
+      ]
+    },
+    "ice_power": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "ice",
+          "length": 50,
+          "idx": 1
+        },
+        {
+          "frame": "ice",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "ice",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "ice",
+          "length": 100,
+          "idx": 4
+        },
+        {
+          "frame": "ice",
+          "length": 50,
+          "idx": 5
+        }
+      ]
+    },
+    "slow_fall": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 1
+        },
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 2
+        },
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 3
+        },
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 4
+        },
+        {
+          "frame": "ice_slowfall",
+          "length": 200,
+          "idx": 5
+        }
+      ]
+    },
+    "spike_begin": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "ice_spike_begin",
+          "length": 25,
+          "idx": 1
+        },
+        {
+          "frame": "ice_spike_begin",
+          "length": 25,
+          "idx": 2
+        },
+        {
+          "frame": "ice_spike_begin",
+          "length": 25,
+          "idx": 3
+        },
+        {
+          "frame": "ice_spike_begin",
+          "length": 50,
+          "idx": 4
+        },
+        {
+          "frame": "ice_spike_begin",
+          "length": 100,
+          "idx": 5
+        }
+      ]
+    },
+    "spike_loop": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "ice_spike_fall",
+          "length": 100,
+          "idx": 1
+        },
+        {
+          "frame": "ice_spike_fall",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "ice_spike_fall",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "ice_spike_fall",
+          "length": 100,
+          "idx": 4
+        }
+      ]
+    }
+  }
+}

@@ -329,7 +329,7 @@
   </object>
   <object id="130" x="208" y="1344" width="64" height="16">
    <properties>
-    <property name="type" value="win_box"/>
+    <property name="type" value="win"/>
    </properties>
   </object>
   <object id="131" x="208" y="1184" width="64" height="160">
