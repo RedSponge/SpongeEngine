@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.game.light.Lighting;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
 
@@ -24,6 +25,8 @@ public class GameScene extends Scene {
     private static final float maxWinTime = 0.5f;
 
     private ScalingViewport sv;
+
+    private Lighting lighting;
 
     public PActor getPlayer() {
         return pl;
@@ -51,8 +54,16 @@ public class GameScene extends Scene {
     }
 
     enum WorldMode {
-        FIRE,
-        ICE
+        FIRE("game/map/fire_test.tmx"),
+        ICE("game/map/ice_test.tmx")
+
+        ;
+
+        String file;
+
+        WorldMode(String file) {
+            this.file = file;
+        }
     }
 
     private WorldMode mode;
@@ -60,20 +71,21 @@ public class GameScene extends Scene {
     @Override
     public void start() {
         super.start();
+        lighting = new Lighting();
         mode = WorldMode.ICE;
 
         add(bg = new StaticBackground());
         add(mm = new MapManager());
         add(cm = new CameraManager());
 
-        mm.load("game/map/ice_test.tmx");
+        mm.load(mode.file);
         sv = new ScalingViewport(Scaling.fill, 1, 1);
     }
 
     @Override
     public void update(float delta) {
         if(restartRequired) {
-            mm.load("game/map/ice_test.tmx");
+            mm.load(mode.file);
             cm.setMM(mm);
             restartRequired = false;
         }
@@ -90,16 +102,20 @@ public class GameScene extends Scene {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0, 0, 0, 1.0f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        super.render();
-        mm.renderForeground();
+
+//        Gdx.gl.glClearColor(0, 0, 0, 1.0f);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//        super.render();
+//        mm.renderForeground();
         SpongeGame.i().getBatch().end();
 
-        sv.apply();
+        lighting.test();
+
         SpongeGame.i().getBatch().begin();
-        SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
-        SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
+        sv.apply();
+//        SpongeGame.i().getBatch().begin();
+//        SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
+//        SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
     }
 
     @Override
@@ -125,5 +141,12 @@ public class GameScene extends Scene {
     public void resize(int width, int height) {
         super.resize(width, height);
         sv.update(width, height, true);
+        lighting.resize(width, height);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        lighting.dispose();
     }
 }
