@@ -1,6 +1,20 @@
 {
   "initial": "idle",
   "prefabs": {
+    "to_jump": {
+      "to": "jump_up",
+      "condition": {
+        "type": "equals",
+        "var_a": {
+          "type": "variable",
+          "name": "is_on_ground"
+        },
+        "var_b": {
+          "type": "boolean",
+          "value": false
+        }
+      }
+    }
   },
   "nodes": {
     "idle": {
@@ -22,6 +36,9 @@
             }
           },
           "reset_time": false
+        },
+        {
+          "prefab": "to_jump"
         }
       ]
     },
@@ -43,6 +60,27 @@
           "reset_time": false
         }
       ]
+    },
+    "jump_up": {
+      "links": [
+        {
+          "to": "jump_down",
+          "condition": {
+            "type": "lesser_than",
+            "var_a": {
+              "type": "variable",
+              "name": "y_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    "jump_down": {
+      "links": []
     }
   }
 }

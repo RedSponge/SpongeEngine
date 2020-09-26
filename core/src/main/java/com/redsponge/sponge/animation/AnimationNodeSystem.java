@@ -15,10 +15,6 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
     private String active;
     private SAnimationGroup animations;
 
-//    private HashMap<String, Integer> suppliedInts;
-//    private HashMap<String, Float> suppliedFloats;
-//    private HashMap<String, Boolean> suppliedBools;
-
     private HashMap<String, Serializable> suppliedValues;
 
     private HashMap<String, AnimationNode> animationNodes;

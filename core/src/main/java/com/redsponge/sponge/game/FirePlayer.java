@@ -165,6 +165,7 @@ public class FirePlayer extends PActor {
 
         add(drawn = new AnimationComponent(true, true, playerAnimations.getActiveAnimation()));
         add(attackAnimation);
+        drawn.setScaleX(1.5f).setScaleY(1.5f);
     }
 
     @Override
@@ -212,7 +213,9 @@ public class FirePlayer extends PActor {
                 UMath.lerp(fireWorldCooldownColor.b, Color.WHITE.b, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 1);
 
-        playerAnimations.putValue("speed_x", vel.x);
+        playerAnimations.putValue("x_speed", (float) Controls.HORIZONTAL.get());
+        playerAnimations.putValue("y_speed", vel.y);
+        playerAnimations.putValue("is_on_ground", onGround);
         playerAnimations.update();
         drawn.setAnimation(playerAnimations.getActiveAnimation());
         drawn.update(0);
