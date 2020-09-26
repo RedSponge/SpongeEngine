@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.redsponge.sponge.animation.Values.VariableSupplier;
 import com.redsponge.sponge.animation.Values.VariableValueHolder;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class AnimationNodeSystem implements Values.VariableSupplier {
+public class AnimationNodeSystem implements VariableSupplier {
 
     private String active;
     private SAnimationGroup animations;
@@ -26,9 +27,6 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
         this.active = initialAnimation;
         this.animations = animations;
         suppliedValues = new HashMap<>();
-//        suppliedFloats = new HashMap<>();
-//        suppliedInts = new HashMap<>();
-//        suppliedBools = new HashMap<>();
         this.animationNodes = new HashMap<>();
         this.prefabs = new HashMap<>();
     }
@@ -38,18 +36,6 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
         this.connectedFile = jsonFile;
         addNodes(jsonFile);
     }
-
-//    public void putValue(String name, int value) {
-//        suppliedInts.put(name, value);
-//    }
-//
-//    public void putValue(String name, float value) {
-//        suppliedFloats.put(name, value);
-//    }
-//
-//    public void putValue(String name, boolean value) {
-//        suppliedBools.put(name, value);
-//    }
 
 
     @Override
@@ -100,13 +86,14 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
     public AnimationNodeSystem copy() {
         AnimationNodeSystem system = new AnimationNodeSystem(active, animations);
         system.addNodes(connectedFile);
-//        for (String s : animationNodes.keySet()) {
-//            system.animationNodes.put(s, animationNodes.get(s));
-//        }
         return system;
     }
 
     public SAnimationGroup getAnimationGroup() {
         return animations;
+    }
+
+    public String getActiveName() {
+        return active;
     }
 }

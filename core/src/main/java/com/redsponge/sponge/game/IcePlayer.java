@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.components.AnimationComponent;
@@ -57,7 +58,7 @@ public class IcePlayer extends PActor {
     // endregion
 
     private boolean onGround;
-    private DrawnComponent drawn;
+    private AnimationComponent drawn;
     private AnimationStreamComponent attackAnimation;
     private SAnimationGroup attackAnimations;
     private int facing;
@@ -66,6 +67,7 @@ public class IcePlayer extends PActor {
     private boolean isSpikeFalling;
     private boolean isSpikePrepping;
     private int inSteamCount;
+    private AnimationNodeSystem playerAnimations;
 
     public IcePlayer(Vector2 pos) {
         super(pos);
@@ -86,13 +88,16 @@ public class IcePlayer extends PActor {
     public void added(Scene scene) {
         super.added(scene);
         Gdx.app.setLogLevel(Application.LOG_INFO);
-        attackAnimations = getScene().getAssets().getAnimationGroup("player");
+        attackAnimations = getScene().getAssets().getAnimationGroup("player_attacks");
         Gdx.app.log("Test", Boolean.toString(attackAnimation == null));
         attackAnimation = new AnimationStreamComponent(false, false, attackAnimations.get("slow_fall").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24 - 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
         setOnTrigger(this::onTrigger);
 
-        add(drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("player.atlas").findRegion("player")));
+        playerAnimations = scene.getAssets().getAnimationNodeSystemInstance("ice_player");
+
+        add(drawn = new AnimationComponent(true, true, playerAnimations.getActiveAnimation()));
+        drawn.setScaleX(1.5f).setScaleY(1.5f);
         add(attackAnimation);
     }
 
@@ -116,9 +121,6 @@ public class IcePlayer extends PActor {
         moveX(vel.x * delta, this::collideX);
         moveY(vel.y * delta, this::collideY);
 
-        if(Controls.TOGGLE_WORLD.isJustPressed()) {
-            ((GameScene)getScene()).toggleWorld();
-        }
 
         if(Controls.DEBUG.isJustPressed()) {
             ((GameScene)getScene()).restartLevel();
@@ -141,6 +143,14 @@ public class IcePlayer extends PActor {
                 UMath.lerp(iceWorldCooldownColor.g, Color.WHITE.g, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 UMath.lerp(iceWorldCooldownColor.b, Color.WHITE.b, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 1);
+
+        playerAnimations.putValue("x_speed", (float) Controls.HORIZONTAL.get());
+        playerAnimations.putValue("y_speed", vel.y);
+        playerAnimations.putValue("is_on_ground", onGround);
+
+        playerAnimations.update();
+        drawn.setAnimation(playerAnimations.getActiveAnimation());
+        drawn.update(0);
     }
 
     @Override
@@ -326,7 +336,6 @@ public class IcePlayer extends PActor {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
     }
 
     public boolean isPowerActive() {

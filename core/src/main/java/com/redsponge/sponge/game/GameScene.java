@@ -25,20 +25,6 @@ public class GameScene extends Scene {
 
     private ScalingViewport sv;
 
-    public void toggleWorld() {
-
-        mode = mode == WorldMode.FIRE ? WorldMode.ICE : WorldMode.FIRE;
-        buildWorld();
-    }
-
-    private void buildWorld() {
-
-    }
-
-    private void initWorld() {
-
-    }
-
     public PActor getPlayer() {
         return pl;
     }
@@ -81,7 +67,6 @@ public class GameScene extends Scene {
         add(cm = new CameraManager());
 
         mm.load("game/map/ice_test.tmx");
-        buildWorld();
         sv = new ScalingViewport(Scaling.fill, 1, 1);
     }
 
@@ -109,7 +94,10 @@ public class GameScene extends Scene {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         super.render();
         mm.renderForeground();
+        SpongeGame.i().getBatch().end();
+
         sv.apply();
+        SpongeGame.i().getBatch().begin();
         SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
         SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
     }

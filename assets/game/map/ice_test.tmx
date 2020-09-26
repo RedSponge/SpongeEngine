@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="2020.09.22" orientation="orthogonal" renderorder="right-down" width="30" height="102" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="65">
+<map version="1.4" tiledversion="2020.09.22" orientation="orthogonal" renderorder="right-down" width="30" height="102" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="66">
  <tileset firstgid="1" source="ice_tilemap.tsx"/>
  <layer id="1" name="Background" width="30" height="102">
   <data encoding="csv">
@@ -31,9 +31,9 @@
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
-11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
-11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
-11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
+11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,15,13,
+11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,12,12,12,13,
+11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,22,22,25,13,
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
 11,12,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,11,13,
@@ -131,9 +131,10 @@
   <object id="59" x="144" y="544" width="272" height="48"/>
   <object id="61" x="448" y="-224" width="32" height="768"/>
   <object id="62" x="0" y="-224" width="48" height="768"/>
+  <object id="65" x="400" y="448" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="3" name="Elements">
-  <object id="2" x="428.53" y="523.076">
+  <object id="2" x="94.5303" y="1567.08">
    <properties>
     <property name="type" value="fire_player_spawn"/>
    </properties>

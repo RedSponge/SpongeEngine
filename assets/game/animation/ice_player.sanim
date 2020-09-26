@@ -5,12 +5,12 @@
       "play_mode": "LOOP",
       "frames": [
         {
-          "frame": "idle",
+          "frame": "ice_idle",
           "idx": 1,
           "length": 300
         },
         {
-          "frame": "idle",
+          "frame": "ice_idle",
           "idx": 2,
           "length": 300
         }
@@ -20,22 +20,22 @@
       "play_mode": "LOOP_PINGPONG",
       "frames": [
         {
-          "frame": "run",
+          "frame": "ice_run",
           "idx": 1,
           "length": 100
         },
         {
-          "frame": "run",
+          "frame": "ice_run",
           "idx": 2,
           "length": 50
         },
         {
-          "frame": "run",
+          "frame": "ice_run",
           "idx": 3,
           "length": 50
         },
         {
-          "frame": "run",
+          "frame": "ice_run",
           "idx": 4,
           "length": 100
         }
@@ -65,7 +65,7 @@
       "play_mode": "NORMAL",
       "frames": [
         {
-          "frame": "player_fire_down",
+          "frame": "ice_spike_down",
           "length": 100,
           "idx": -1
         }
@@ -75,7 +75,7 @@
       "play_mode": "NORMAL",
       "frames": [
         {
-          "frame": "jump_up",
+          "frame": "ice_jump_up",
           "idx": -1,
           "length": 100
         }
@@ -85,7 +85,7 @@
       "play_mode": "NORMAL",
       "frames": [
         {
-          "frame": "jump_down",
+          "frame": "ice_jump_down",
           "idx": -1,
           "length": 100
         }

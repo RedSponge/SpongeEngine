@@ -188,9 +188,6 @@ public class FirePlayer extends PActor {
         moveX(vel.x * delta, this::collideX);
         moveY(vel.y * delta, this::collideY);
 
-        if(Controls.TOGGLE_WORLD.isJustPressed()) {
-            ((GameScene)getScene()).toggleWorld();
-        }
         if(Controls.DEBUG.isJustPressed()) {
         }
 
@@ -216,6 +213,7 @@ public class FirePlayer extends PActor {
         playerAnimations.putValue("x_speed", (float) Controls.HORIZONTAL.get());
         playerAnimations.putValue("y_speed", vel.y);
         playerAnimations.putValue("is_on_ground", onGround);
+
         playerAnimations.update();
         drawn.setAnimation(playerAnimations.getActiveAnimation());
         drawn.update(0);
@@ -316,6 +314,5 @@ public class FirePlayer extends PActor {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
     }
 }
