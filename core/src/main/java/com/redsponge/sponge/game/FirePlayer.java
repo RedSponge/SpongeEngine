@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.components.AnimationComponent;
@@ -60,11 +61,13 @@ public class FirePlayer extends PActor {
     // endregion
 
     private boolean onGround;
-    private DrawnComponent drawn;
+    private AnimationComponent drawn;
     private AnimationComponent attackAnimation;
     private SAnimationGroup attackAnimations;
     private int facing;
     private boolean spawnedDetector = true;
+
+    private AnimationNodeSystem playerAnimations;
 
     public Vector2 getVelocity() {
         return vel;
@@ -158,8 +161,9 @@ public class FirePlayer extends PActor {
         attackAnimation = new AnimationComponent(false, false, attackAnimations.get("fire_attack_up").getBuiltAnimation());
         attackAnimation.setOffsetX(-24 - 32).setOffsetY(-24- 32).setPositionPolicy(PositionPolicy.USE_ENTITY).setSizePolicy(SizePolicy.USE_REGION);
         setOnTrigger(this::onTrigger);
+        playerAnimations = scene.getAssets().getAnimationNodeSystemInstance("player");
 
-        add(drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("player.atlas").findRegion("player")));
+        add(drawn = new AnimationComponent(true, true, playerAnimations.getActiveAnimation()));
         add(attackAnimation);
     }
 
@@ -207,6 +211,11 @@ public class FirePlayer extends PActor {
                 UMath.lerp(fireWorldCooldownColor.g, Color.WHITE.g, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 UMath.lerp(fireWorldCooldownColor.b, Color.WHITE.b, (powerCooldown - powerCooldownTime.getValue()) / powerCooldown),
                 1);
+
+        playerAnimations.putValue("speed_x", vel.x);
+        playerAnimations.update();
+        drawn.setAnimation(playerAnimations.getActiveAnimation());
+        drawn.update(0);
     }
 
     private void beginPower() {

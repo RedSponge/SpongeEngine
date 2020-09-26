@@ -1,0 +1,48 @@
+{
+  "initial": "idle",
+  "prefabs": {
+  },
+  "nodes": {
+    "idle": {
+      "links": [
+        {
+          "to": "run",
+          "condition": {
+            "type": "not",
+            "condition": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "x_speed"
+              },
+              "var_b": {
+                "type": "float",
+                "value": 0
+              }
+            }
+          },
+          "reset_time": false
+        }
+      ]
+    },
+    "run": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "x_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          },
+          "reset_time": false
+        }
+      ]
+    }
+  }
+}
