@@ -2,7 +2,7 @@
   "atlas": "player.atlas",
   "animations": {
     "idle": {
-      "play_mode": "NORMAL",
+      "play_mode": "LOOP",
       "frames": [
         {
           "frame": "idle",

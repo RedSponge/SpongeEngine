@@ -305,28 +305,28 @@ player_fire_up
   orig: 10, 13
   offset: 0, 0
   index: -1
-walk
+run
   rotate: false
   xy: 912, 915
   size: 10, 13
   orig: 10, 13
   offset: 0, 0
   index: 1
-walk
+run
   rotate: false
   xy: 924, 930
   size: 10, 13
   orig: 10, 13
   offset: 0, 0
   index: 2
-walk
+run
   rotate: false
   xy: 392, 265
   size: 10, 13
   orig: 10, 13
   offset: 0, 0
   index: 3
-walk
+run
   rotate: false
   xy: 404, 280
   size: 10, 13
