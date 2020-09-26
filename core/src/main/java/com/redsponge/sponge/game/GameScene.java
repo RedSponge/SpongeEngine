@@ -3,12 +3,15 @@ package com.redsponge.sponge.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.TextureArray;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.game.light.Lighting;
+import com.redsponge.sponge.game.light.PointLight;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
 
@@ -53,6 +56,12 @@ public class GameScene extends Scene {
         winTime = 0;
     }
 
+    PointLight mouseLight;
+
+    public Lighting getLighting() {
+        return lighting;
+    }
+
     enum WorldMode {
         FIRE("game/map/fire_test.tmx"),
         ICE("game/map/ice_test.tmx")
@@ -71,7 +80,9 @@ public class GameScene extends Scene {
     @Override
     public void start() {
         super.start();
-        lighting = new Lighting();
+        mouseLight = new PointLight(0, 0, 32, 32, assets.<TextureAtlas>get("lights.atlas").findRegion("point/feathered"));
+        lighting = new Lighting(viewport);
+        lighting.addLight(mouseLight);
         mode = WorldMode.ICE;
 
         add(bg = new StaticBackground());
@@ -98,24 +109,28 @@ public class GameScene extends Scene {
                 SpongeGame.i().setScene(new WinScene());
             }
         }
+
+        Vector2 mousePos = viewport.unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
+        mouseLight.setX(mousePos.x);
+        mouseLight.setY(mousePos.y);
+
+//        lighting.drawLights();
     }
 
     @Override
     public void render() {
-
-//        Gdx.gl.glClearColor(0, 0, 0, 1.0f);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        super.render();
-//        mm.renderForeground();
+        Gdx.gl.glClearColor(0, 0, 0, 1.0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render();
+        mm.renderForeground();
         SpongeGame.i().getBatch().end();
 
-        lighting.test();
+//        lighting.drawOnScreen();
 
-        SpongeGame.i().getBatch().begin();
         sv.apply();
-//        SpongeGame.i().getBatch().begin();
-//        SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
-//        SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
+        SpongeGame.i().getBatch().begin();
+        SpongeGame.i().getBatch().setProjectionMatrix(sv.getCamera().combined);
+        SpongeGame.i().getShapeDrawer().filledRectangle(0, 0, 1, 1, new Color(0, 0, 0, winTime / maxWinTime));
     }
 
     @Override

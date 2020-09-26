@@ -18,6 +18,22 @@ public class PointLight implements Light {
 
     @Override
     public void render(SpriteBatch batch) {
-        batch.draw(region, x, y, w, h);
+        batch.draw(region, x - w / 2f, y - h / 2f, w, h);
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getY() {
+        return y;
     }
 }

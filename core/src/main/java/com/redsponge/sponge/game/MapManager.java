@@ -15,6 +15,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.game.Button.Orientation;
+import com.redsponge.sponge.game.outro.OutroFirePlayer;
+import com.redsponge.sponge.game.outro.OutroIcePlayer;
+import com.redsponge.sponge.game.outro.StartTalkingTrigger;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PSolid;
 import com.redsponge.sponge.screen.Scene;
@@ -101,7 +104,16 @@ public class MapManager extends Entity {
                 } break;
                 case "win": {
                     entities.add(new WinBox(new Vector2(r.x, r.y), r.width, r.height));
-                }
+                } break;
+                case "outro_fire_spawn": {
+                    entities.add(new OutroFirePlayer(new Vector2(r.x, r.y)));
+                } break;
+                case "outro_start_talking": {
+                    entities.add(new StartTalkingTrigger(new Vector2(r.x, r.y), r.width, r.height));
+                } break;
+                case "outro_ice_spawn": {
+                    entities.add(new OutroIcePlayer(new Vector2(r.x, r.y)));
+                } break;
 
             }
         }

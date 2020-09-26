@@ -63,6 +63,5 @@ public class JumpThru extends WorldGeometry {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().line(getPositionf().x, getPositionf().y, getPositionf().x + getWidth(), getPositionf().y, Color.YELLOW);
     }
 }

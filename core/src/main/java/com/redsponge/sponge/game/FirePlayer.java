@@ -3,31 +3,27 @@ package com.redsponge.sponge.game;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
-import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.components.AnimationComponent;
-import com.redsponge.sponge.components.DrawnComponent;
 import com.redsponge.sponge.components.DrawnComponent.PositionPolicy;
 import com.redsponge.sponge.components.DrawnComponent.SizePolicy;
 import com.redsponge.sponge.components.TimedAction;
+import com.redsponge.sponge.game.light.Light;
+import com.redsponge.sponge.game.light.PointLight;
 import com.redsponge.sponge.physics.Collision;
-import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.physics.Trigger;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.game.GameScene.WorldMode;
 import com.redsponge.sponge.util.UMath;
 
 public class FirePlayer extends PActor {
 
     private Vector2 vel;
+
+    private PointLight pointLight;
 
     private final TimedAction jumpGraceTime;
     private final TimedAction varJumpTime;
@@ -156,6 +152,9 @@ public class FirePlayer extends PActor {
     @Override
     public void added(Scene scene) {
         super.added(scene);
+        pointLight = new PointLight(0, 0, 32, 32, scene.getAssets().<TextureAtlas>get("lights.atlas").findRegion("point/feathered"));
+        ((GameScene)scene).getLighting().addLight(pointLight);
+
         Gdx.app.setLogLevel(Application.LOG_INFO);
         attackAnimations = getScene().getAssets().getAnimationGroup("player_attacks");
         attackAnimation = new AnimationComponent(false, false, attackAnimations.get("fire_attack_up").getBuiltAnimation());
@@ -217,6 +216,9 @@ public class FirePlayer extends PActor {
         playerAnimations.update();
         drawn.setAnimation(playerAnimations.getActiveAnimation());
         drawn.update(0);
+
+        pointLight.setX(getX());
+        pointLight.setY(getY());
     }
 
     private void beginPower() {
@@ -309,6 +311,12 @@ public class FirePlayer extends PActor {
         if(t.trigger instanceof WinBox) {
             ((GameScene)getScene()).win();
         }
+    }
+
+    @Override
+    public void removed() {
+        ((GameScene)getScene()).getLighting().removeLight(pointLight);
+        super.removed();
     }
 
     @Override

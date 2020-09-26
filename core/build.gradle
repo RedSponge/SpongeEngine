@@ -8,4 +8,5 @@ dependencies {
 	api "com.github.tommyettinger:formic:$formicVersion"
 
 	compile 'com.github.raeleus.TenPatch:tenpatch:5.0.0'
+	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
 }

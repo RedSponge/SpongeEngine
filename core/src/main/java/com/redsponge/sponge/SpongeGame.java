@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.redsponge.sponge.game.WinScene;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.game.GameScene;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -60,7 +61,7 @@ public class SpongeGame implements ApplicationListener {
         Gdx.app.log("Hello", Arrays.toString(Gdx.files.internal("game/animation").list()));
         Gdx.app.log("Hello", String.valueOf(Gdx.files.internal("game/animation").isDirectory()));
         Gdx.app.log("Hello", String.valueOf(Gdx.files.internal("game/animation").child("player.sanim").exists()));
-        setScene(new GameScene());
+        setScene(new WinScene());
     }
 
     protected void init() {}

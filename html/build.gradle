@@ -34,6 +34,8 @@ dependencies {
 	implementation "space.earlygrey:shapedrawer:$shapeDrawerVersion:sources"
 	implementation "com.github.tommyettinger:formic:$formicVersion:sources"
 	compile 'com.github.raeleus.TenPatch:tenpatch:5.0.0:sources'
+	api "com.github.tommyettinger:regexodus:$regExodusVersion:sources"
+	api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion:sources"
 }
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
