@@ -45,7 +45,7 @@ public abstract class Scene {
         entitiesByType = new HashMap<>();
         componentsByType = new HashMap<>();
 
-        assets = Assets.loadScene(getName());
+        assets = Assets.get().loadScene(getName());
     }
 
     public void start() {

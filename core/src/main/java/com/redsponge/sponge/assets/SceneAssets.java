@@ -22,9 +22,12 @@ public class SceneAssets implements Disposable {
     private HashMap<String, SAnimationGroup> animationMap;
     private HashMap<String, AnimationNodeSystem> animationNodeSystemMap;
 
-    SceneAssets(AssetManager assetManager, String sceneName) {
+    private AssetMap assetMap;
+
+    SceneAssets(AssetManager assetManager, String sceneName, AssetMap assetMap) {
         this.assetManager = assetManager;
         this.sceneName = sceneName;
+        this.assetMap = assetMap;
         this.nameMap = new HashMap<>();
         this.animationMap = new HashMap<>();
         this.animationNodeSystemMap = new HashMap<>();
@@ -45,7 +48,7 @@ public class SceneAssets implements Disposable {
     private void loadAnimations(FileHandle mainFolder) {
         if(mainFolder.child("animation").exists()) {
             FileHandle animationDir = mainFolder.child("animation");
-            FileHandle[] animationFiles = animationDir.list();
+            FileHandle[] animationFiles = assetMap.list(animationDir);
             Set<String> animationNames = new HashSet<>();
             Set<FileHandle> animationNodeNames = new HashSet<>();
             for (FileHandle animationFile : animationFiles) {
@@ -73,7 +76,7 @@ public class SceneAssets implements Disposable {
     private void loadTextures(FileHandle mainFolder) {
         if(mainFolder.child("texture").exists()) {
             FileHandle textureFileDir = mainFolder.child("texture");
-            FileHandle[] textureFiles = textureFileDir.list();
+            FileHandle[] textureFiles = assetMap.list(textureFileDir);
             // TODO: more
             for (FileHandle textureFile : textureFiles) {
                 System.out.println(textureFile);
@@ -91,7 +94,7 @@ public class SceneAssets implements Disposable {
         FileHandle mainFolder = Gdx.files.internal(sceneName);
         if(mainFolder.child("texture").exists()) {
             FileHandle textureFileDir = mainFolder.child("texture");
-            FileHandle[] textureFiles = textureFileDir.list();
+            FileHandle[] textureFiles = assetMap.list(textureFileDir);
             // TODO: more
             for (FileHandle textureFile : textureFiles) {
                 System.out.println(textureFile);
