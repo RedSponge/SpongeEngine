@@ -6,3 +6,7 @@ dependencies {
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "com.github.tommyettinger:formic:$formicVersion"
 }
+
+task createDirStructureDescriptor {
+
+}
