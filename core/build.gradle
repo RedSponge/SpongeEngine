@@ -7,6 +7,27 @@ dependencies {
 	api "com.github.tommyettinger:formic:$formicVersion"
 }
 
-task createDirStructureDescriptor {
+task prepareFiles {
+	doLast {
+		File f = new File("../assets");
 
+		StringBuilder sb = new StringBuilder()
+		parseFile(sb, f);
+		String output = sb.toString().replace("..\\assets\\", "");
+		File outputFile = new File("../assets/files.txt");
+		if (!outputFile.exists()) outputFile.createNewFile()
+		outputFile.write(String.join("\n", output.split("\n").drop(1)));
+		println("Prepared files.txt")
+	}
 }
+
+static void parseFile(StringBuilder sb, File file) {
+	if(file.isDirectory()) {
+		sb.append(file.path).append(":").append(Arrays.toString(file.list())).append('\n')
+		for(File f : file.listFiles()) {
+			parseFile(sb, f);
+		}
+	}
+}
+
+compileJava.dependsOn prepareFiles

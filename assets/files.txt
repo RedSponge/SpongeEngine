@@ -1,0 +1,6 @@
+test:[animation, music, particle, sound, texture]
+test\animation:[player.animnodes, player.sanim]
+test\music:[]
+test\particle:[]
+test\sound:[]
+test\texture:[hello.png, player.atlas, player.png]

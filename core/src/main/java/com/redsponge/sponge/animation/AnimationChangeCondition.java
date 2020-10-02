@@ -1,10 +1,8 @@
 package com.redsponge.sponge.animation;
 
 import com.redsponge.sponge.animation.Values.ValueHolder;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable.BinaryOp.Or;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public interface AnimationChangeCondition {
