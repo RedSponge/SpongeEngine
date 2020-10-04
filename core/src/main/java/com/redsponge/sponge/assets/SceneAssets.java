@@ -2,9 +2,11 @@ package com.redsponge.sponge.assets;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.animation.SAnimationGroup;
@@ -23,6 +25,7 @@ public class SceneAssets implements Disposable {
     private HashMap<String, AnimationNodeSystem> animationNodeSystemMap;
 
     private AssetMap assetMap;
+    private Array<FileHandle> loadedFiles;
 
     SceneAssets(AssetManager assetManager, String sceneName, AssetMap assetMap) {
         this.assetManager = assetManager;
@@ -31,17 +34,29 @@ public class SceneAssets implements Disposable {
         this.nameMap = new HashMap<>();
         this.animationMap = new HashMap<>();
         this.animationNodeSystemMap = new HashMap<>();
+        this.loadedFiles = new Array<>();
     }
 
     public void load() {
         FileHandle mainFolder = Gdx.files.internal(sceneName);
         loadTextures(mainFolder);
         loadAnimations(mainFolder);
+        loadSounds(mainFolder);
 
         assetManager.finishLoading();
 
         for (SAnimationGroup value : animationMap.values()) {
             value.parseAnimations();
+        }
+    }
+
+    private void loadSounds(FileHandle mainFolder) {
+        if(mainFolder.child("sound").exists()) {
+            FileHandle soundDir = mainFolder.child("sound");
+            FileHandle[] soundFiles = assetMap.list(soundDir);
+            for (FileHandle soundFile : soundFiles) {
+                assetManager.load(soundFile.path(), Sound.class);
+            }
         }
     }
 
@@ -77,9 +92,7 @@ public class SceneAssets implements Disposable {
         if(mainFolder.child("texture").exists()) {
             FileHandle textureFileDir = mainFolder.child("texture");
             FileHandle[] textureFiles = assetMap.list(textureFileDir);
-            // TODO: more
             for (FileHandle textureFile : textureFiles) {
-                System.out.println(textureFile);
                 if(textureFile.extension().equals("atlas")) {
                     assetManager.load(textureFile.path(), TextureAtlas.class);
                 } else {
@@ -92,6 +105,14 @@ public class SceneAssets implements Disposable {
 
     public void unload() {
         FileHandle mainFolder = Gdx.files.internal(sceneName);
+        unloadTextures(mainFolder);
+
+        for (SAnimationGroup value : animationMap.values()) {
+            value.unload();
+        }
+    }
+
+    private void unloadTextures(FileHandle mainFolder) {
         if(mainFolder.child("texture").exists()) {
             FileHandle textureFileDir = mainFolder.child("texture");
             FileHandle[] textureFiles = assetMap.list(textureFileDir);
@@ -100,10 +121,6 @@ public class SceneAssets implements Disposable {
                 System.out.println(textureFile);
                 assetManager.unload(textureFile.name());
             }
-        }
-
-        for (SAnimationGroup value : animationMap.values()) {
-            value.unload();
         }
     }
 

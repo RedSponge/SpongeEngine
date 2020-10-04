@@ -5,18 +5,22 @@ dependencies {
 	api "com.badlogicgames.gdx:gdx:$gdxVersion"
 	api "space.earlygrey:shapedrawer:$shapeDrawerVersion"
 	api "com.github.tommyettinger:formic:$formicVersion"
+
+	compile ("com.badlogicgames.gdx:gdx-tools:$gdxVersion") {
+		exclude group: 'com.badlogicgames.gdx', module: 'gdx-backend-lwjgl'
+	}
 }
 
 task prepareFiles {
 	doLast {
-		File f = new File("../assets");
+		File f = new File("../assets")
 
 		StringBuilder sb = new StringBuilder()
-		parseFile(sb, f);
-		String output = sb.toString().replace("..\\assets\\", "");
-		File outputFile = new File("../assets/files.txt");
+		parseFile(sb, f)
+		String output = sb.toString().replace("..\\assets\\", "")
+		File outputFile = new File("../assets/files.txt")
 		if (!outputFile.exists()) outputFile.createNewFile()
-		outputFile.write(String.join("\n", output.split("\n").drop(1)));
+		outputFile.write(String.join("\n", output.split("\n").drop(1)))
 		println("Prepared files.txt")
 	}
 }
@@ -25,7 +29,7 @@ static void parseFile(StringBuilder sb, File file) {
 	if(file.isDirectory()) {
 		sb.append(file.path).append(":").append(Arrays.toString(file.list())).append('\n')
 		for(File f : file.listFiles()) {
-			parseFile(sb, f);
+			parseFile(sb, f)
 		}
 	}
 }
