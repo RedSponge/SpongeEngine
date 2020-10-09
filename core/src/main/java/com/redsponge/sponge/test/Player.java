@@ -56,7 +56,6 @@ public class Player extends PActor {
         //animations = getScene().getAssets().getAnimationGroup("player");
         system = getScene().getAssets().getAnimationNodeSystemInstance("player");
 //        system.addNodes(Gdx.files.internal("test/animation/player.animnodes"));
-
         add(drawn = new AnimationComponent(true, true, system.getActiveAnimation()));
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
         drawn.setOffsetX(-8);

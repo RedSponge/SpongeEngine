@@ -11,8 +11,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
+import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.test.TestScene;
+import com.redsponge.sponge.util.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
 import java.util.ArrayList;
@@ -43,6 +45,7 @@ public class SpongeGame implements ApplicationListener {
     @Override
     public final void create() {
         startTime = System.currentTimeMillis();
+        Logger.beginLog();
         spriteBatch = new SpriteBatch();
         initializeShapeDrawer();
         assetManager = new AssetManager();
@@ -53,6 +56,7 @@ public class SpongeGame implements ApplicationListener {
         instance = this;
         scene = null;
 
+        Logger.info(this, "Initializing Game");
         init();
         setScene(new TestScene());
     }
@@ -112,9 +116,15 @@ public class SpongeGame implements ApplicationListener {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             return;
         }
-        final float delta = Gdx.graphics.getDeltaTime();
-        scene.update(delta);
-        renderScene(scene);
+        try {
+            final float delta = Gdx.graphics.getDeltaTime();
+            scene.update(delta);
+            renderScene(scene);
+        } catch (Throwable th) {
+
+            Logger.error(this, th);
+            Gdx.app.exit();
+        }
     }
 
     private void renderScene(Scene scene) {
@@ -143,8 +153,11 @@ public class SpongeGame implements ApplicationListener {
 
     @Override
     public void dispose() {
+        Logger.debug(this, "Disposing Game");
+        if(scene != null) scene.dispose();
         spriteBatch.dispose();
         shapeDrawerTextures.dispose();
+        Assets.get().dispose();
     }
 
     public List<Class<?>> getEntityClasses(Class<?> entity) {

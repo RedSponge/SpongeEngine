@@ -221,7 +221,7 @@ public abstract class Scene {
     }
 
     public void dispose() {
-
+        Assets.get().unloadScene(getName());
     }
 
     public abstract String getName();

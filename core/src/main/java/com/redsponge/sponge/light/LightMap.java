@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.redsponge.sponge.util.Logger;
 
 public class LightMap implements Disposable {
 

@@ -70,7 +70,6 @@ public class SAnimation {
         time = getByPlaymode(time);
         int begin = 0;
         int end = timeStamps.length;
-        System.out.println(Arrays.toString(timeStamps));
         while(begin != end && begin != end - 1) {
             int idx = (begin + end) / 2;
             if(timeStamps[idx] > time) {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.redsponge.sponge.util.Logger;
 
 public class CommonAssets {
 
@@ -24,16 +25,28 @@ public class CommonAssets {
 
     public void load(AssetManager am) {
         if(isLoaded) {
-
+            Logger.warn(this, "Tried to load already loaded CommonAssets!");
+            return;
         }
         am.load(Constants.LIGHT_ATLAS);
+        isLoaded = true;
+        
+        Logger.debug(this, "Loaded Common Assets");
     }
 
     public void fillFields(AssetManager am) {
+        Logger.debug(this, "Filling fields of CommonAssets");
         lightTextures = am.get(Constants.LIGHT_ATLAS);
     }
 
     public void unload(AssetManager am) {
+        if(!isLoaded) {
+            Logger.warn(this, "Tried to unload not-loaded CommonAssets!");
+            return;
+        }
         am.unload(Constants.LIGHT_ATLAS.fileName);
+        isLoaded = false;
+
+        Logger.debug(this, "Unloaded Common Assets");
     }
 }

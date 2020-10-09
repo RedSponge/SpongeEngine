@@ -41,7 +41,6 @@ public class AnimationNode {
                 throw new RuntimeException("Unknown prefab '" + link.getString("prefab") + "'!");
             }
             prefab.changes.forEach((a, b) -> {
-                System.out.println(a + " " + b);
                 changes.put(a, b);
             });
         } else {

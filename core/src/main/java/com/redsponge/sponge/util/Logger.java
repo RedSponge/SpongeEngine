@@ -20,8 +20,8 @@ public class Logger {
     private static FileHandle logFile;
 
     private static final DateFormat FORMAT = new SimpleDateFormat("HH:mm:ss");
-    private static final DateFormat FILE_FORMAT = new SimpleDateFormat("ssmmHH-ddMMyy");
-    private static int logLevel;
+    private static final DateFormat FILE_FORMAT = new SimpleDateFormat("dd-MM-yy-HH-mm-ss");
+    private static int logLevel = INFO;
 
     public static void setLogLevel(int logLevel) {
         Logger.logLevel = logLevel;
@@ -32,23 +32,73 @@ public class Logger {
     }
 
     public static void beginLog() {
-        logFile = Gdx.files.local(FILE_FORMAT.format(new Date()) + ".log");
+
+        logFile = Gdx.files.local("logs/"  +FILE_FORMAT.format(new Date()) + ".log");
+        Logger.info(Logger.class, "Began logging on file", logFile.path());
     }
 
-    //public static void
+    //region INSTANCE METHODS
+
+    public static void debug(Object from, Object... toLog) {
+        logUnderLevel(DEBUG, from.getClass(), toLog);
+    }
+
+    public static void info(Object from, Object... toLog) {
+        logUnderLevel(INFO, from.getClass(), toLog);
+    }
+
+    public static void warn(Object from, Object... toLog) {
+        logUnderLevel(WARN, from.getClass(), toLog);
+    }
+
+    public static void error(Object from, Object... toLog) {
+        logUnderLevel(ERROR, from.getClass(), toLog);
+    }
+
+    public static void error(Object from, Throwable thrown) {
+        error(from, UJava.getStackTrace(thrown));
+    }
+
+    // endregion
+
+    // region CLASS METHODS
+    public static void debug(Class<?> from, Object... toLog) {
+        logUnderLevel(DEBUG, from, toLog);
+    }
+
+    public static void info(Class<?> from, Object... toLog) {
+        logUnderLevel(INFO, from, toLog);
+    }
+
+    public static void warn(Class<?> from, Object... toLog) {
+        logUnderLevel(WARN, from, toLog);
+    }
+
+    public static void error(Class<?> from, Object... toLog) {
+        logUnderLevel(ERROR, from, toLog);
+    }
+
+    public static void error(Class<?> from, Throwable thrown) {
+        error(from, UJava.getStackTrace(thrown));
+    }
+    // endregion`
+
 
     private static void logUnderLevel(int level, Class<?> from, Object... toLog) {
         StringBuilder sb = new StringBuilder();
         for (Object o : toLog) {
             sb.append(o).append(" ");
         }
-        String tag = FORMAT.format(new Date(TimeUtils.millis())) + "] [" + from.getSimpleName() + "] [" + LOG_TITLES[level-1];
+        String tag = LOG_TITLES[level] + "] [" + FORMAT.format(new Date(TimeUtils.millis())) + "] [" + from.getSimpleName();
         String message = sb.toString();
         if(logLevel <= level) {
-            Gdx.app.log(tag, message);
+            if(level == ERROR) {
+                Gdx.app.error(tag, message);
+            } else {
+                Gdx.app.log(tag, message);
+            }
         }
-
-
+        logFile.writeString("[" + tag + "] " + message + '\n', true);
     }
 
 }
