@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.screen.Scene;
@@ -46,6 +47,7 @@ public class SpongeGame implements ApplicationListener {
     @Override
     public final void create() {
         startTime = System.currentTimeMillis();
+        ShaderProgram.pedantic = false;
         Logger.beginLog();
         spriteBatch = new SpriteBatch();
         initializeShapeDrawer();
