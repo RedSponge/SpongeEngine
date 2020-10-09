@@ -5,12 +5,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import java.util.HashMap;
 
-public class LightMaps implements Disposable {
+public class LightSystem implements Disposable {
 
     private final HashMap<LightBlending, LightMap> maps;
     private final FitViewport viewport;
 
-    public LightMaps(FitViewport viewport) {
+    public LightSystem(FitViewport viewport) {
         this.viewport = viewport;
         maps = new HashMap<>();
     }

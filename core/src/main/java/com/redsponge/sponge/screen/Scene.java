@@ -1,8 +1,5 @@
 package com.redsponge.sponge.screen;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.SpongeGame;
@@ -10,6 +7,7 @@ import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
+import com.redsponge.sponge.light.LightSystem;
 import com.redsponge.sponge.util.Hitbox;
 
 import java.util.ArrayList;
@@ -32,6 +30,8 @@ public abstract class Scene {
 
     protected SceneAssets assets;
 
+    private LightSystem lightSystem;
+
     public Scene() {
         viewport = new FitViewport(getWidth(), getHeight());
         viewport.apply(true);
@@ -43,6 +43,7 @@ public abstract class Scene {
         componentsByType = new HashMap<>();
 
         assets = Assets.get().loadScene(getName());
+        this.lightSystem = new LightSystem(viewport);
     }
 
     public void start() {
