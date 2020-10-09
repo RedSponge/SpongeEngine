@@ -1,5 +1,6 @@
 package com.redsponge.sponge.components;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.redsponge.sponge.SpongeGame;
@@ -38,9 +39,12 @@ public class DrawnComponent extends Component {
     private float scaleX = 1;
     private float scaleY = 1;
 
+    private final Color color;
+
     public DrawnComponent(boolean active, boolean visible, TextureRegion rendered) {
         super(active, visible);
         this.rendered = rendered;
+        this.color = Color.WHITE.cpy();
     }
 
     public DrawnComponent(boolean active, boolean visible, Texture rendered) {
@@ -66,6 +70,7 @@ public class DrawnComponent extends Component {
         float width = getCalculatedWidth();
         float height = getCalculatedHeight();
         rendered.flip(isFlippedX, isFlippedY);
+        SpongeGame.i().getBatch().setColor(color);
         SpongeGame.i().getBatch().draw(rendered, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
         rendered.flip(isFlippedX, isFlippedY);
     }
@@ -266,5 +271,9 @@ public class DrawnComponent extends Component {
     public DrawnComponent setSizePolicy(SizePolicy sizePolicy) {
         this.sizePolicy = sizePolicy;
         return this;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }

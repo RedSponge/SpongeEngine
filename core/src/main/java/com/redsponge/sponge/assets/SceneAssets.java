@@ -140,7 +140,7 @@ public class SceneAssets implements Disposable {
             // TODO: more
             for (FileHandle textureFile : textureFiles) {
                 Logger.debug(this, "Unloading Texture", textureFile);
-                assetManager.unload(textureFile.name());
+                assetManager.unload(nameMap.get(textureFile.name()));
             }
         }
     }

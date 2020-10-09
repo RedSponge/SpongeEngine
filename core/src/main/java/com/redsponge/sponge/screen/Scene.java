@@ -24,9 +24,6 @@ public abstract class Scene {
     public final FitViewport viewport;
     private float startTime;
 
-    protected SpriteBatch batch;
-    protected ShapeRenderer shapeRenderer;
-
     private final Set<Entity> toAdd;
     private final Set<Entity> toRemove;
     private final List<Entity> entities;
