@@ -20,7 +20,8 @@ public class CommonAssets {
         public static final String[] SHADERS = {
                 "passthrough",
                 "invert",
-                "greyscale"
+                "greyscale",
+                "simpleblur"
         };
     }
 

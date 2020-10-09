@@ -29,8 +29,8 @@ public class TestScene extends Scene {
         add(new JumpThru(new Vector2(100, 50), 100));
 
         this.pipeline = new PostProcessingPipeline(viewport);
-        pipeline.addEffect(new ShaderEffect("invert"));
-        pipeline.addEffect(new ShaderEffect("greyscale"));
+        pipeline.addEffect(new ShaderEffect("simpleblur"));
+//        pipeline.addEffect(new ShaderEffect("greyscale"));
 //        lightMap = new LightMap(viewport, new Color(0, 0, 0, 0), LightBlending.ADDITIVE);
 //        PointLight pl = new PointLight(100, 100, 32, Assets.get().getCommon().getLightTextures().findRegion("point/feathered"));
 //        pl.getColor().a = 0.1f;
