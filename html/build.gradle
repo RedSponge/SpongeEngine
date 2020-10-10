@@ -23,6 +23,7 @@ gwt {
 
 	compiler.strict = true
 	compiler.disableCastChecking = true
+	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
 
 dependencies {
@@ -37,7 +38,7 @@ dependencies {
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
 
-gretty.httpPort = 8080
+gretty.httpPort = 2938
 gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
 gretty.contextPath = "/"
 gretty.portPropertiesFileName = "TEMP_PORTS.properties"

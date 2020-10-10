@@ -13,6 +13,10 @@ public class ShaderEffect implements PostProcessingEffect {
         shaderProgram = Assets.get().getCommon().getShader(shaderName);
     }
 
+    public ShaderEffect(ShaderProgram shaderProgram) {
+        this.shaderProgram = shaderProgram;
+    }
+
     @Override
     public void process(SpriteBatch batch, TextureRegion buffer) {
         batch.setShader(shaderProgram);

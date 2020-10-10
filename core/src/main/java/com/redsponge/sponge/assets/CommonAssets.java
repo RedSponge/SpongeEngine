@@ -21,7 +21,8 @@ public class CommonAssets {
                 "passthrough",
                 "invert",
                 "greyscale",
-                "simpleblur"
+                "blur_horizontal",
+                "blur_vertical"
         };
     }
 

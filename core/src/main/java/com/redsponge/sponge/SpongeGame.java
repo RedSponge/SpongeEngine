@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -40,6 +41,8 @@ public class SpongeGame implements ApplicationListener {
     private Map<Class<?>, List<Class<?>>> entityClasses;
     private Map<Class<?>, List<Class<?>>> componentClasses;
 
+    private FPSLogger fpsLogger;
+
     public static SpongeGame i() {
         return instance;
     }
@@ -58,6 +61,7 @@ public class SpongeGame implements ApplicationListener {
 
         instance = this;
         scene = null;
+        fpsLogger = new FPSLogger();
 
         Logger.info(this, "Initializing Game");
         init();
@@ -123,11 +127,12 @@ public class SpongeGame implements ApplicationListener {
             final float delta = Gdx.graphics.getDeltaTime();
             scene.update(delta);
             renderScene(scene);
-        } catch (Throwable th) {
+        } catch (Exception th) {
 
             Logger.error(this, th);
             Gdx.app.exit();
         }
+        Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     private void renderScene(Scene scene) {

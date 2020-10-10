@@ -51,4 +51,5 @@ public class GwtLauncher extends GwtApplication {
 		public ApplicationListener createApplicationListener () { 
 			return new SpongeGame();
 		}
+
 }

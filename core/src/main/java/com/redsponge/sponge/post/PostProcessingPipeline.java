@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.redsponge.sponge.SpongeGame;
-import com.redsponge.sponge.assets.Assets;
 
 public class PostProcessingPipeline {
 
