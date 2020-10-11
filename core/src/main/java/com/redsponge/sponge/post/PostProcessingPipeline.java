@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.util.UGwt;
 
 public class PostProcessingPipeline {
 
@@ -72,8 +73,8 @@ public class PostProcessingPipeline {
 
 
     private void createFBOs(int width, int height) {
-        primaryBuffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
-        pongBuffer = new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+        primaryBuffer = UGwt.createFrameBuffer(width, height);//new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
+        pongBuffer = UGwt.createFrameBuffer(width, height);//new FrameBuffer(Format.RGBA8888, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true, true);
 
         primaryRegion.setRegion(primaryBuffer.getColorBufferTexture());
         primaryRegion.flip(false, true);

@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class CommonAssets {
 
     private static class Constants {
-        public static final String PREFIX = "__internal/";
+        public static final String PREFIX = "internal/";
         public static final AssetDescriptor<TextureAtlas> LIGHT_ATLAS = new AssetDescriptor<>(PREFIX + "lights/lights.atlas", TextureAtlas.class);
 
         public static final String SHADER_PREFIX = PREFIX + "shaders/";

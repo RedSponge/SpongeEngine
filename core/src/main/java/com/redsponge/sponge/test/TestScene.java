@@ -32,7 +32,7 @@ public class TestScene extends Scene {
 
         this.pipeline = new PostProcessingPipeline(viewport);
         Effects.addInvert(pipeline);
-        Effects.addGreyscale(pipeline);
+//        Effects.addGreyscale(pipeline);
 //        Effects.addGaussianBlur(pipeline);
 //        Effects.addGaussianBlur(pipeline);
 //        pipeline.addEffect(new ShaderEffect("greyscale"));

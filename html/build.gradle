@@ -22,8 +22,8 @@ gwt {
 	project.webAppDirName = 'webapp'
 
 	compiler.strict = true
+	compiler.style = Style.DETAILED
 	compiler.disableCastChecking = true
-	compiler.style = org.wisepersist.gradle.plugins.gwt.Style.DETAILED
 }
 
 dependencies {
@@ -37,6 +37,7 @@ dependencies {
 
 import org.akhikhl.gretty.AppBeforeIntegrationTestTask
 import org.wisepersist.gradle.plugins.gwt.GwtSuperDev
+import org.wisepersist.gradle.plugins.gwt.Style
 
 gretty.httpPort = 2938
 gretty.resourceBase = project.buildDir.path + "/gwt/draftOut"
