@@ -36,7 +36,6 @@ public class Logger {
             Logger.info(Logger.class, "Began logging on file", logFile.path());
         } catch (GdxRuntimeException e) {
             Logger.error(Logger.class, "Couldn't create log file - probably running on GWT!");
-            Logger.error(Logger.class, (Throwable) e);
             logFile = null;
         }
     }

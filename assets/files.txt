@@ -1,7 +1,7 @@
 internal:[lights, shaders]
 internal\lights:[lights.atlas, lights.png, lights2.png]
 internal\shaders:[blur_horizontal.frag, blur_horizontal.vert, blur_vertical.frag, blur_vertical.vert, greyscale.frag, greyscale.vert, invert.frag, invert.vert, passthrough.frag, passthrough.vert]
-logs:[10-10-20-22-48-48.log, 10-10-20-22-49-22.log, 10-10-20-22-51-09.log, 11-10-20-14-52-18.log, 11-10-20-15-09-51.log, 11-10-20-15-10-28.log, 11-10-20-15-10-48.log, 11-10-20-15-21-06.log]
+logs:[10-10-20-22-48-48.log, 10-10-20-22-49-22.log, 10-10-20-22-51-09.log, 11-10-20-14-52-18.log, 11-10-20-15-09-51.log, 11-10-20-15-10-28.log, 11-10-20-15-10-48.log, 11-10-20-15-21-06.log, 11-10-20-15-49-31.log, 11-10-20-15-50-06.log, 11-10-20-15-51-01.log, 11-10-20-15-51-25.log, 11-10-20-16-13-56.log, 11-10-20-16-14-19.log, 11-10-20-16-19-54.log, 11-10-20-16-20-06.log, 11-10-20-16-32-02.log, 11-10-20-16-37-04.log, 11-10-20-16-46-32.log, 11-10-20-16-47-02.log, 11-10-20-16-47-13.log, 11-10-20-16-49-33.log]
 test:[animation, music, particle, sound, texture]
 test\animation:[player.animnodes, player.sanim]
 test\music:[]

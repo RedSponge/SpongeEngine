@@ -1,4 +1,4 @@
-#version 330 core
+#define __VERSION__
 
 #ifdef GL_ES
     precision mediump float;
@@ -14,6 +14,6 @@ uniform sampler2D u_texture;
 
 void main() {
     vec4 col = v_color * texture2D(u_texture, v_texCoords);
-    float avg = (col.r + col.g + col.b) / 3f;
+    float avg = (col.r + col.g + col.b) / 3.;
     gl_FragColor = vec4(vec3(avg), col.a);
 }
