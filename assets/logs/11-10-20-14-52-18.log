@@ -1,0 +1,36 @@
+[INFO] [14:52:18] [Logger] Began logging on file logs/11-10-20-14-52-18.log 
+[INFO] [14:52:18] [SpongeGame] Initializing Game 
+[DEBUG] [14:52:18] [CommonAssets] Loading light textures 
+[DEBUG] [14:52:18] [CommonAssets] Loading shader passthrough 
+[DEBUG] [14:52:18] [CommonAssets] Loading shader invert 
+[DEBUG] [14:52:18] [CommonAssets] Loading shader greyscale 
+[DEBUG] [14:52:18] [CommonAssets] Loading shader blur_horizontal 
+[DEBUG] [14:52:18] [CommonAssets] Loading shader blur_vertical 
+[DEBUG] [14:52:18] [CommonAssets] Loaded Common Assets 
+[DEBUG] [14:52:18] [CommonAssets] Filling fields of CommonAssets 
+[DEBUG] [14:52:18] [SceneAssets] Loading textures for test 
+[DEBUG] [14:52:18] [SceneAssets] Loading Texture test/texture/hello.png for test 
+[DEBUG] [14:52:18] [SceneAssets] Loading Texture Atlas test/texture/player.atlas for test 
+[DEBUG] [14:52:18] [SceneAssets] Loading Texture test/texture/player.png for test 
+[DEBUG] [14:52:18] [SceneAssets] Loading animations for test 
+[DEBUG] [14:52:18] [SceneAssets] Found Animation-Nodes File test/animation/player.animnodes 
+[DEBUG] [14:52:18] [SceneAssets] Loading SAnimation test/animation/player.sanim 
+[DEBUG] [14:52:18] [SceneAssets] Loading Animation Nodes 
+[DEBUG] [14:52:18] [SceneAssets] Loading Animation Node test/animation/player.animnodes for test 
+[DEBUG] [14:52:18] [SceneAssets] Loading sounds for test 
+[DEBUG] [14:52:18] [SceneAssets] Calling AssetManager.finishLoading for test 
+[DEBUG] [14:52:18] [SceneAssets] Parsing animations for test 
+[DEBUG] [14:52:23] [SpongeGame] Disposing Game 
+[DEBUG] [14:52:23] [SceneAssets] Unloading Scene test 
+[DEBUG] [14:52:23] [SceneAssets] Unload Textures for test 
+[DEBUG] [14:52:23] [SceneAssets] Unloading Texture test/texture/hello.png 
+[DEBUG] [14:52:23] [SceneAssets] Unloading Texture test/texture/player.atlas 
+[DEBUG] [14:52:23] [SceneAssets] Unloading Texture test/texture/player.png 
+[DEBUG] [14:52:23] [SceneAssets] Unloading SAnimations for test 
+[DEBUG] [14:52:23] [CommonAssets] Unloading light textures 
+[DEBUG] [14:52:23] [CommonAssets] Unloading shader passthrough 
+[DEBUG] [14:52:23] [CommonAssets] Unloading shader invert 
+[DEBUG] [14:52:23] [CommonAssets] Unloading shader greyscale 
+[DEBUG] [14:52:23] [CommonAssets] Unloading shader blur_horizontal 
+[DEBUG] [14:52:23] [CommonAssets] Unloading shader blur_vertical 
+[DEBUG] [14:52:23] [CommonAssets] Unloaded Common Assets 
