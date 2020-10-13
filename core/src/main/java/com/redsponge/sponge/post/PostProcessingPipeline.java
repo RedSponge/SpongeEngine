@@ -50,7 +50,7 @@ public class PostProcessingPipeline {
         SpongeGame.i().getBatch().setProjectionMatrix(drawnViewport.getCamera().combined);
         FrameBuffer[] buffers = {primaryBuffer, pongBuffer};
         TextureRegion[] bufferRegions = {primaryRegion, pongRegion};
-        int idx = 0;
+        int idx = effects.size == 0 ? 1 : 0;
 
         for (PostProcessingEffect effect : effects) {
             buffers[1 - idx].begin();

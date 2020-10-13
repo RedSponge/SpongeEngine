@@ -1,14 +1,12 @@
 package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.post.Effects;
 import com.redsponge.sponge.post.PostProcessingPipeline;
-import com.redsponge.sponge.post.ShaderEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 
@@ -31,9 +29,9 @@ public class TestScene extends Scene {
         add(new JumpThru(new Vector2(100, 50), 100));
 
         this.pipeline = new PostProcessingPipeline(viewport);
-        Effects.addInvert(pipeline);
-        Effects.addGreyscale(pipeline);
-        Effects.addGaussianBlur(pipeline);
+//        Effects.addInvert(pipeline);
+//        Effects.addGreyscale(pipeline);
+//        Effects.addGaussianBlur(pipeline);
 //        Effects.addGreyscale(pipeline);
 //        Effects.addGaussianBlur(pipeline);
 //        Effects.addGaussianBlur(pipeline);
