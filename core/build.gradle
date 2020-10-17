@@ -11,6 +11,9 @@ dependencies {
 	}
 }
 
+task prepare_files {
+}
+
 task prepareFiles {
 	doLast {
 		File f = new File("../assets")

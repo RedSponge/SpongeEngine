@@ -10,6 +10,9 @@ build/
 hs_err_pid*
 .attach_pid*
 
+# Log files
+assets/logs/*.log
+
 ## Android:
 android/libs/armeabi/
 android/libs/armeabi-v7a/

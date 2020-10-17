@@ -2,10 +2,9 @@ package com.redsponge.sponge.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Logger {
@@ -19,8 +18,8 @@ public class Logger {
 
     private static FileHandle logFile;
 
-    private static final DateFormat FORMAT = new SimpleDateFormat("HH:mm:ss");
-    private static final DateFormat FILE_FORMAT = new SimpleDateFormat("dd-MM-yy-HH-mm-ss");
+    private static final String FORMAT = "HH:mm:ss";
+    private static final String FILE_FORMAT = "dd-MM-yy-HH-mm-ss";
     private static int logLevel = INFO;
 
     public static void setLogLevel(int logLevel) {
@@ -32,9 +31,13 @@ public class Logger {
     }
 
     public static void beginLog() {
-
-        logFile = Gdx.files.local("logs/"  +FILE_FORMAT.format(new Date()) + ".log");
-        Logger.info(Logger.class, "Began logging on file", logFile.path());
+        try {
+            logFile = Gdx.files.local("logs/" + DateFormatter.formatDate(new Date(TimeUtils.millis()), FILE_FORMAT) + ".log");
+            Logger.info(Logger.class, "Began logging on file", logFile.path());
+        } catch (GdxRuntimeException e) {
+            Logger.error(Logger.class, "Couldn't create log file - probably running on GWT!");
+            logFile = null;
+        }
     }
 
     //region INSTANCE METHODS
@@ -55,7 +58,7 @@ public class Logger {
         logUnderLevel(ERROR, from.getClass(), toLog);
     }
 
-    public static void error(Object from, Throwable thrown) {
+    public static void error(Object from, Exception thrown) {
         error(from, UJava.getStackTrace(thrown));
     }
 
@@ -89,7 +92,7 @@ public class Logger {
         for (Object o : toLog) {
             sb.append(o).append(" ");
         }
-        String tag = LOG_TITLES[level] + "] [" + FORMAT.format(new Date(TimeUtils.millis())) + "] [" + from.getSimpleName();
+        String tag = LOG_TITLES[level] + "] [" + DateFormatter.formatDate(new Date(TimeUtils.millis()), FORMAT) + "] [" + from.getSimpleName();
         String message = sb.toString();
         if(logLevel <= level) {
             if(level == ERROR) {
@@ -98,7 +101,9 @@ public class Logger {
                 Gdx.app.log(tag, message);
             }
         }
-        logFile.writeString("[" + tag + "] " + message + '\n', true);
+        if(logFile != null) {
+            logFile.writeString("[" + tag + "] " + message + '\n', true);
+        }
     }
 
 }
