@@ -1,0 +1,9 @@
+apply plugin: 'application'
+
+mainClassName = 'com.redsponge.sponge.texturepacker.PackTextures'
+sourceCompatibility = 8.0
+eclipse.project.name = appName + '-texture-packer'
+
+dependencies {
+    implementation project(":core")
+}
