@@ -17,8 +17,8 @@ public class StaticBackground extends Entity {
     @Override
     public void render() {
         super.render();
-        int x = (int) getScene().viewport.getCamera().position.x - getScene().getWidth() / 2;
-        int y = (int) getScene().viewport.getCamera().position.y - getScene().getHeight() / 2;
+        int y = (int) getScene().getViewport().getCamera().position.y - getScene().getHeight() / 2;
+        int x = (int) getScene().getViewport().getCamera().position.x - getScene().getWidth() / 2;
         SpongeGame.i().getShapeDrawer().filledRectangle(x, y, getScene().getWidth(), getScene().getHeight(), colour);
     }
 }

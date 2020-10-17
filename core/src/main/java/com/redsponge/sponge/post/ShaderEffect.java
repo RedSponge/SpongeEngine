@@ -3,9 +3,10 @@ package com.redsponge.sponge.post;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.assets.Assets;
 
-public class ShaderEffect implements PostProcessingEffect {
+public class ShaderEffect implements RenderingEffect {
 
     private final ShaderProgram shaderProgram;
 
@@ -18,10 +19,14 @@ public class ShaderEffect implements PostProcessingEffect {
     }
 
     @Override
-    public void process(SpriteBatch batch, TextureRegion buffer) {
+    public void apply(FitViewport viewport, SpriteBatch batch, TextureRegion buffer) {
         batch.setShader(shaderProgram);
         batch.begin();
-        batch.draw(buffer, 0, 0, buffer.getRegionWidth(), buffer.getRegionHeight());
+
+        shaderProgram.setUniformf("u_width", viewport.getWorldWidth());
+        shaderProgram.setUniformf("u_height", viewport.getWorldHeight());
+
+        batch.draw(buffer, 0, 0);
         batch.end();
     }
 }

@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
+import com.redsponge.sponge.post.RenderingPipeline;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.test.TestScene;
 import com.redsponge.sponge.util.Logger;
@@ -136,12 +136,7 @@ public class SpongeGame implements ApplicationListener {
     }
 
     private void renderScene(Scene scene) {
-        scene.viewport.apply();
-        spriteBatch.setProjectionMatrix(scene.viewport.getCamera().combined);
-
-        spriteBatch.begin();
         scene.render();
-        spriteBatch.end();
     }
 
     @Override

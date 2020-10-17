@@ -14,13 +14,16 @@ _in vec4 a_position;
 _in vec2 a_texCoord0;
 
 uniform mat4 u_projTrans;
+uniform float u_width;
 
 _out vec4 v_color;
 _out vec2 v_texCoords;
+_out vec2 v_offset;
 
 void main() {
     v_color = a_color;
     v_color.a = v_color.a * (255.0/254.0);
+    v_offset = vec2(1.0 / u_width, 0);
     v_texCoords = a_texCoord0;
     gl_Position = u_projTrans * a_position;
 }

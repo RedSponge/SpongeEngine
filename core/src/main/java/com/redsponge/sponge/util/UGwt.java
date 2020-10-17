@@ -6,12 +6,12 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class UGwt {
 
-    public static FrameBuffer createFrameBuffer(int width, int height) {
+    public static FrameBuffer createFrameBuffer(int width, int height, boolean depth, boolean stencil) {
         try {
-            return new FrameBuffer(Format.RGBA8888, width, height, false);
+            return new FrameBuffer(Format.RGBA8888, width, height, depth, stencil);
         } catch (GdxRuntimeException e) {
             Logger.warn(UGwt.class, "Tried to create FBO in GWT - falling back on Format.RGBA");
-            return new FrameBuffer(Format.RGB565, width, height, true, true);
+            return new FrameBuffer(Format.RGB565, width, height, depth, stencil);
         }
     }
 

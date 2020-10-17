@@ -8,6 +8,7 @@ import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.light.LightSystem;
+import com.redsponge.sponge.post.RenderingPipeline;
 import com.redsponge.sponge.util.Hitbox;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import java.util.Set;
 
 public abstract class Scene {
 
-    public final FitViewport viewport;
     private float startTime;
 
     private final Set<Entity> toAdd;
@@ -30,11 +30,10 @@ public abstract class Scene {
 
     protected SceneAssets assets;
 
-    private LightSystem lightSystem;
+    protected RenderingPipeline rPipeline;
 
     public Scene() {
-        viewport = new FitViewport(getWidth(), getHeight());
-        viewport.apply(true);
+        rPipeline = new RenderingPipeline(SpongeGame.i().getBatch(), getWidth(), getHeight());
 
         toAdd = new LinkedHashSet<>();
         toRemove = new LinkedHashSet<>();
@@ -43,7 +42,6 @@ public abstract class Scene {
         componentsByType = new HashMap<>();
 
         assets = Assets.get().loadScene(getName());
-        this.lightSystem = new LightSystem(viewport);
     }
 
     public void start() {
@@ -59,11 +57,16 @@ public abstract class Scene {
         }
     }
     public void render() {
+        rPipeline.beginCapture();
+        SpongeGame.i().getBatch().begin();
         for (Entity entity : entities) {
             if(entity.isVisible()) {
                 entity.render();
             }
         }
+        SpongeGame.i().getBatch().end();
+        rPipeline.endCapture();
+        rPipeline.drawToScreen();
     }
 
     public <T extends Entity> T add(T entity) {
@@ -211,7 +214,7 @@ public abstract class Scene {
     public abstract int getHeight();
 
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        rPipeline.resize(width, height);
     }
 
     public float getStartTime() {
@@ -220,6 +223,11 @@ public abstract class Scene {
 
     public void dispose() {
         Assets.get().unloadScene(getName());
+        rPipeline.dispose();
+    }
+
+    public FitViewport getViewport() {
+        return rPipeline.getGameViewport();
     }
 
     public abstract String getName();
