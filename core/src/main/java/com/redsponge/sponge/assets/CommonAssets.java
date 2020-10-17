@@ -11,7 +11,7 @@ public class CommonAssets {
     private static class Constants {
         public static final String PREFIX = "internal/";
         public static final AssetDescriptor<TextureAtlas> LIGHT_ATLAS = new AssetDescriptor<>(PREFIX + "lights/lights.atlas", TextureAtlas.class);
-
+        public static final AssetDescriptor<TextureAtlas> TRANSITION_ATLAS = new AssetDescriptor<>(PREFIX + "transitions/transitions.atlas", TextureAtlas.class);
         public static final String SHADER_PREFIX = PREFIX + "shaders/";
         public static final String[] SHADERS = {
                 "passthrough",
@@ -24,7 +24,9 @@ public class CommonAssets {
 
     private boolean isLoaded;
     private TextureAtlas lightTextures;
-    private ShaderLoader shaderLoader;
+    private TextureAtlas transitionTextures;
+
+    private final ShaderLoader shaderLoader;
 
     public CommonAssets() {
         shaderLoader = new ShaderLoader();
@@ -32,6 +34,10 @@ public class CommonAssets {
 
     public TextureAtlas getLightTextures() {
         return lightTextures;
+    }
+
+    public TextureAtlas getTransitionTextures() {
+        return transitionTextures;
     }
 
     public ShaderProgram getShader(String shader) {
@@ -45,7 +51,10 @@ public class CommonAssets {
         }
         Logger.debug(this, "Loading light textures");
         am.load(Constants.LIGHT_ATLAS);
-
+        
+        Logger.debug(this, "Loading transition textures");
+        am.load(Constants.TRANSITION_ATLAS);
+        
         for (String shader : Constants.SHADERS) {
             shaderLoader.load(Constants.SHADER_PREFIX, shader);
         }
@@ -56,7 +65,12 @@ public class CommonAssets {
 
     public void fillFields(AssetManager am) {
         Logger.debug(this, "Filling fields of CommonAssets");
+        
+        Logger.debug(this, "Filling lightTextures");
         lightTextures = am.get(Constants.LIGHT_ATLAS);
+        
+        Logger.debug(this, "Filling transitionTextures");
+        transitionTextures = am.get(Constants.TRANSITION_ATLAS);
         // Shaders were already filled.
     }
 

@@ -33,19 +33,6 @@ public class TestScene extends Scene {
         Effects.addGaussianBlur(rPipeline);
         Effects.addGreyscale(rPipeline);
         Effects.addInvert(rPipeline);
-
-//        this.pipeline = new RenderingPipeline();
-//        Effects.addInvert(pipeline);
-//        Effects.addGreyscale(pipeline);
-//        Effects.addGaussianBlur(pipeline);
-//        Effects.addGreyscale(pipeline);
-//        Effects.addGaussianBlur(pipeline);
-//        Effects.addGaussianBlur(pipeline);
-//        pipeline.addEffect(new ShaderEffect("greyscale"));
-//        lightMap = new LightMap(viewport, new Color(0, 0, 0, 0), LightBlending.ADDITIVE);
-//        PointLight pl = new PointLight(100, 100, 32, Assets.get().getCommon().getLightTextures().findRegion("point/feathered"));
-//        pl.getColor().a = 0.1f;
-//        lightMap.addLight(pl);
     }
 
     @Override
