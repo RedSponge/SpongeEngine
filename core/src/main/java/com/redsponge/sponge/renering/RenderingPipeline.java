@@ -1,4 +1,4 @@
-package com.redsponge.sponge.post;
+package com.redsponge.sponge.renering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,8 +15,8 @@ import com.redsponge.sponge.util.UGwt;
 public class RenderingPipeline implements Disposable {
 
     private final Array<RenderingEffect> effects;
-    private final FrameBuffer pongFBO; // Ping-ponging with primary buffer when doing post-processing
     private final FrameBuffer mainFBO;
+    private final FrameBuffer pongFBO; // Ping-ponging with primary buffer when doing post-processing
 
     private final TextureRegion mainRegion;
     private final TextureRegion pongRegion;

@@ -18,7 +18,8 @@ public class CommonAssets {
                 "invert",
                 "greyscale",
                 "blur_horizontal",
-                "blur_vertical"
+                "blur_vertical",
+                "transition"
         };
     }
 

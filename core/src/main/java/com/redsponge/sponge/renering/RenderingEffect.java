@@ -1,4 +1,4 @@
-package com.redsponge.sponge.post;
+package com.redsponge.sponge.renering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

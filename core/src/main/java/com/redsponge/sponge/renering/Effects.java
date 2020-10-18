@@ -1,4 +1,4 @@
-package com.redsponge.sponge.post;
+package com.redsponge.sponge.renering;
 
 public final class Effects {
 

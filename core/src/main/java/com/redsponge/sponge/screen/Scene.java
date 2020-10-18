@@ -7,8 +7,7 @@ import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
-import com.redsponge.sponge.light.LightSystem;
-import com.redsponge.sponge.post.RenderingPipeline;
+import com.redsponge.sponge.renering.RenderingPipeline;
 import com.redsponge.sponge.util.Hitbox;
 
 import java.util.ArrayList;
