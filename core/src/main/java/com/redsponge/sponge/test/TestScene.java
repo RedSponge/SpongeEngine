@@ -2,6 +2,7 @@ package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.assets.Assets;
@@ -20,7 +21,10 @@ public class TestScene extends Scene {
     private Player pl;
     private TransitionEffect te;
     private float prog;
+    private float fade;
+
     private InputAxis progControl;
+    private InputAxis fadeControl;
 
 //    private LightMap lightMap;
 
@@ -35,9 +39,12 @@ public class TestScene extends Scene {
         add(new JumpThru(new Vector2(100, 50), 100));
 
         te = new TransitionEffect(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
+        te.getTransitionColor().set(Color.WHITE);
 
         rPipeline.addEffect(te);
         progControl = new InputAxis(new InputEntry().addKey(Keys.G), new InputEntry().addKey(Keys.H));
+
+        fadeControl = new InputAxis(new InputEntry().addKey(Keys.T), new InputEntry().addKey(Keys.Y));
 //        Effects.addGaussianBlur(rPipeline);
 //        Effects.addGaussianBlur(rPipeline);
 //        Effects.addGaussianBlur(rPipeline);
@@ -48,10 +55,11 @@ public class TestScene extends Scene {
     @Override
     public void update(float delta) {
         super.update(delta);
-        int dir = progControl.get();
-        prog = UMath.clamp(prog + dir * delta * 2, 0, 1);
+        prog = UMath.clamp(prog + progControl.get() * delta * 2, 0, 1);
+        fade = UMath.clamp(fade + fadeControl.get() * delta * 2, 0, 1);
 //        prog = UMath.approach(prog, (progControl.get() + 1) / 2f, delta * 2);
         te.setProgress(prog);
+        te.setFadePercent(fade);
     }
 
     @Override
