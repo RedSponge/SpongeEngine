@@ -17,10 +17,11 @@ uniform mat4 u_projTrans;
 
 _out vec4 v_color;
 _out vec2 v_texCoords;
-
+_out vec2 v_transitionTexCoords;
 
 void main() {
     v_color = a_color;
     v_texCoords = a_texCoord0;
+    v_transitionTexCoords = vec2(v_texCoords.x, 1 - v_texCoords.y);
     gl_Position = u_projTrans * a_position;
 }

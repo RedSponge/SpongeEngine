@@ -22,7 +22,7 @@ public class Assets implements Disposable {
 
     public Assets() {
         assetMap = new AssetMap(Gdx.files.internal("files.txt"));
-        commonAssets = new CommonAssets();
+        commonAssets = new CommonAssets(assetMap);
         commonAssets.load(SpongeGame.i().getAssetManager());
         SpongeGame.i().getAssetManager().finishLoading();
         commonAssets.fillFields(SpongeGame.i().getAssetManager());

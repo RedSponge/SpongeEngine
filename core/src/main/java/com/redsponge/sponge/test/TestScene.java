@@ -1,19 +1,26 @@
 package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.assets.Assets;
+import com.redsponge.sponge.input.InputAxis;
+import com.redsponge.sponge.input.InputEntry;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.renering.Effects;
 import com.redsponge.sponge.renering.TransitionEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
+import com.redsponge.sponge.util.UMath;
 
 public class TestScene extends Scene {
 
     private StaticBackground bg;
     private Player pl;
+    private TransitionEffect te;
+    private float prog;
+    private InputAxis progControl;
 
 //    private LightMap lightMap;
 
@@ -27,9 +34,10 @@ public class TestScene extends Scene {
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
 
-        TransitionEffect te = new TransitionEffect(Assets.get().getCommon().getTransitionTextures().findRegion("slide"));
+        te = new TransitionEffect(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
 
         rPipeline.addEffect(te);
+        progControl = new InputAxis(new InputEntry().addKey(Keys.G), new InputEntry().addKey(Keys.H));
 //        Effects.addGaussianBlur(rPipeline);
 //        Effects.addGaussianBlur(rPipeline);
 //        Effects.addGaussianBlur(rPipeline);
@@ -40,6 +48,10 @@ public class TestScene extends Scene {
     @Override
     public void update(float delta) {
         super.update(delta);
+        int dir = progControl.get();
+        prog = UMath.clamp(prog + dir * delta * 2, 0, 1);
+//        prog = UMath.approach(prog, (progControl.get() + 1) / 2f, delta * 2);
+        te.setProgress(prog);
     }
 
     @Override

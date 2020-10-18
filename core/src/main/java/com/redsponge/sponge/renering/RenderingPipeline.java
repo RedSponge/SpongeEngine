@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.redsponge.sponge.util.UGwt;
+import com.redsponge.sponge.util.UGL;
 
 public class RenderingPipeline implements Disposable {
 
@@ -38,8 +38,8 @@ public class RenderingPipeline implements Disposable {
         this.gameViewport.update(width, height, true);
         this.copyViewport.update(width, height, true);
 
-        this.mainFBO = UGwt.createFrameBuffer(width, height, false, false);
-        this.pongFBO = UGwt.createFrameBuffer(width, height, false, false);
+        this.mainFBO = UGL.createFrameBuffer(width, height, false, false);
+        this.pongFBO = UGL.createFrameBuffer(width, height, false, false);
 
         this.mainFBO.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);
         this.pongFBO.getColorBufferTexture().setFilter(TextureFilter.Nearest, TextureFilter.Nearest);

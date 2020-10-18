@@ -10,4 +10,7 @@ public final class UMath {
         return (1 - alpha) * value + alpha * target;
     }
 
+    public static float clamp(float value, float min, float max) {
+        return Math.max(min, Math.min(value, max));
+    }
 }
