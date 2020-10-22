@@ -13,6 +13,8 @@ _in vec2 v_transitionTexCoords;
 
 uniform sampler2D u_texture;
 uniform sampler2D u_transitionTexture;
+uniform bool u_transitionTextureActive;
+
 uniform float u_progress;
 uniform float u_fade;
 uniform vec4 u_transitionColour;
@@ -31,21 +33,9 @@ vec4 applyFade(vec4 colour) {
 
 void main() {
     vec4 final = texture2D(u_texture, v_texCoords);
-    final = applyMask(final);
+    if (u_transitionTextureActive) {
+        final = applyMask(final);
+    }
     final = applyFade(final);
     gl_FragColor = final;
-//    vec4 col = texture2D(u_texture, v_texCoords);
-//    vec4 maskCol = texture2D(u_transitionTexture, v_texCoords);
-//    if(maskCol.r < u_progress) {
-//        gl_FragColor = u_transitionTarget;
-//    } else {
-//        gl_FragColor = col;
-//    }
 }
-    /*
-    if(maskCol.r > u_progress) {
-        gl_FragColor = col;
-    } else {
-        gl_FragColor = vec4(1, 0, 0, 1);
-    }
-}*/

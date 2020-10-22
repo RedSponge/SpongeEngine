@@ -8,6 +8,7 @@ import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.renering.RenderingPipeline;
+import com.redsponge.sponge.renering.TransitionEffect;
 import com.redsponge.sponge.util.Hitbox;
 
 import java.util.ArrayList;
@@ -30,9 +31,11 @@ public abstract class Scene {
     protected SceneAssets assets;
 
     protected RenderingPipeline rPipeline;
+    protected TransitionEffect sceneTransitionEffect;
 
     public Scene() {
         rPipeline = new RenderingPipeline(SpongeGame.i().getBatch(), getWidth(), getHeight());
+        sceneTransitionEffect = new TransitionEffect(null);
 
         toAdd = new LinkedHashSet<>();
         toRemove = new LinkedHashSet<>();

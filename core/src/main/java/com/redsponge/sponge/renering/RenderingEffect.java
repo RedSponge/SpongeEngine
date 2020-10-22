@@ -4,8 +4,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public interface RenderingEffect {
+public abstract class RenderingEffect {
 
-    void apply(FitViewport viewport, SpriteBatch batch, TextureRegion buffer);
+    private boolean isActive;
 
+    public RenderingEffect(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    abstract void apply(FitViewport viewport, SpriteBatch batch, TextureRegion buffer);
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }

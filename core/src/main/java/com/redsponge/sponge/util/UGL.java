@@ -6,9 +6,24 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public class UGL {
+import java.util.Stack;
+
+public final class UGL {
 
     private static final float[] colorTmp = new float[4];
+    private static FrameBufferStack fboStack = new FrameBufferStack();
+
+    public static void sPushFBO(FrameBuffer fbo) {
+        fboStack.push(fbo);
+    }
+
+    public static FrameBuffer sPopFBO() {
+        return fboStack.pop();
+    }
+
+    public static boolean sTestPopFBO(FrameBuffer fbo) {
+        return fboStack.pop() == fbo;
+    }
 
     public static FrameBuffer createFrameBuffer(int width, int height, boolean depth, boolean stencil) {
         try {
@@ -26,6 +41,31 @@ public class UGL {
         colorTmp[2] = color.b;
         colorTmp[3] = color.a;
         prog.setUniform4fv(name, colorTmp, 0, 4);
+    }
+
+    private static class FrameBufferStack {
+        private final Stack<FrameBuffer> stack;
+
+        public FrameBufferStack() {
+            stack = new Stack<>();
+        }
+
+        public void push(FrameBuffer buffer) {
+            if(stack.size() != 0) {
+                stack.peek().end();
+            }
+            stack.push(buffer);
+            buffer.begin();
+        }
+
+        public FrameBuffer pop() {
+            FrameBuffer fbo = stack.pop();
+            fbo.end();
+            if(stack.size() != 0) {
+                stack.peek().begin();
+            }
+            return fbo;
+        }
     }
 
 }

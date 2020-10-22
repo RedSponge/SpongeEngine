@@ -13,6 +13,7 @@ import com.redsponge.sponge.renering.Effects;
 import com.redsponge.sponge.renering.TransitionEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
+import com.redsponge.sponge.util.UGL;
 import com.redsponge.sponge.util.UMath;
 
 public class TestScene extends Scene {
@@ -57,7 +58,6 @@ public class TestScene extends Scene {
         super.update(delta);
         prog = UMath.clamp(prog + progControl.get() * delta * 2, 0, 1);
         fade = UMath.clamp(fade + fadeControl.get() * delta * 2, 0, 1);
-//        prog = UMath.approach(prog, (progControl.get() + 1) / 2f, delta * 2);
         te.setProgress(prog);
         te.setFadePercent(fade);
     }

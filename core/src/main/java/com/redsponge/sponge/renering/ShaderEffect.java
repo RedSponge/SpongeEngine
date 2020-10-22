@@ -6,15 +6,17 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.assets.Assets;
 
-public class ShaderEffect implements RenderingEffect {
+public class ShaderEffect extends RenderingEffect {
 
     private final ShaderProgram shaderProgram;
 
     public ShaderEffect(String shaderName) {
+        super(true);
         shaderProgram = Assets.get().getCommon().getShader(shaderName);
     }
 
     public ShaderEffect(ShaderProgram shaderProgram) {
+        super(true);
         this.shaderProgram = shaderProgram;
     }
 

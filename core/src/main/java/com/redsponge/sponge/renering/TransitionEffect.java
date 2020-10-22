@@ -11,18 +11,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.util.UGL;
 
-public class TransitionEffect implements RenderingEffect {
+public class TransitionEffect extends RenderingEffect {
 
     public static final int TRANSITION_TEXTURE_ID = 16;
 
     private final ShaderProgram shader;
-    private final Texture transitionTexture;
+    private Texture transitionTexture;
     private final Color transitionColor;
 
     private float progress;
     private float fadePercent;
 
     public TransitionEffect(Texture transitionTexture) {
+        super(true);
         this.transitionTexture = transitionTexture;
         this.shader = Assets.get().getCommon().getShader("transition");
         this.progress = 0;
@@ -35,8 +36,13 @@ public class TransitionEffect implements RenderingEffect {
         batch.setShader(shader);
         batch.begin();
 
-        transitionTexture.bind(TRANSITION_TEXTURE_ID);
-        shader.setUniformi("u_transitionTexture", TRANSITION_TEXTURE_ID);
+        if(transitionTexture != null) {
+            transitionTexture.bind(TRANSITION_TEXTURE_ID);
+            shader.setUniformi("u_transitionTexture", TRANSITION_TEXTURE_ID);
+            shader.setUniformi("u_transitionTextureActive", 1);
+        } else {
+            shader.setUniformi("u_transitionTextureActive", 0);
+        }
         shader.setUniformf("u_progress", progress);
         UGL.setUniformColour(shader, "u_transitionColour", transitionColor);
         shader.setUniformf("u_fade", fadePercent);
@@ -66,5 +72,13 @@ public class TransitionEffect implements RenderingEffect {
 
     public Color getTransitionColor() {
         return transitionColor;
+    }
+
+    public void setTransitionTexture(Texture transitionTexture) {
+        this.transitionTexture = transitionTexture;
+    }
+
+    public Texture getTransitionTexture() {
+        return transitionTexture;
     }
 }

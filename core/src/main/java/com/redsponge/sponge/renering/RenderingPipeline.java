@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.redsponge.sponge.util.Logger;
 import com.redsponge.sponge.util.UGL;
 
 public class RenderingPipeline implements Disposable {
@@ -56,14 +57,16 @@ public class RenderingPipeline implements Disposable {
     }
 
     public void beginCapture() {
-        mainFBO.begin();
+        UGL.sPushFBO(mainFBO);
 
         gameViewport.apply();
         batch.setProjectionMatrix(gameViewport.getCamera().combined);
     }
 
     public void endCapture() {
-        mainFBO.end();
+        if(!UGL.sTestPopFBO(mainFBO)) {
+            Logger.warn(this, "endCapture popped fbo wasn't the mainFBO - check if you have any fbos you haven't popped!");
+        }
     }
 
     public void drawToScreen() {
@@ -75,12 +78,17 @@ public class RenderingPipeline implements Disposable {
         copyViewport.apply();
 
         for (int i = 0; i < effects.size; i++) {
-            buffers[idx].begin();
-            Gdx.gl.glClearColor(0, 0, 0, 1.0f);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            effects.get(i).apply(copyViewport, batch, regions[1 - idx]);
-            buffers[idx].end();
-            idx = 1 - idx;
+            if(effects.get(i).isActive()) {
+                UGL.sPushFBO(buffers[idx]);
+                buffers[idx].begin();
+                Gdx.gl.glClearColor(0, 0, 0, 1.0f);
+                Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+                effects.get(i).apply(copyViewport, batch, regions[1 - idx]);
+                if(!UGL.sTestPopFBO(buffers[idx])) {
+                    Logger.warn(this, "drawOnScreen popped fbo didn't batch after appluing effect", effects.get(i) + "!", "check if there were non-popped fbos in the effect!");
+                }
+                idx = 1 - idx;
+            }
         }
 
         toScreenViewport.apply();

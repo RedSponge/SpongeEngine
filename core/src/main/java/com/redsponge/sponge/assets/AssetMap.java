@@ -5,12 +5,13 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.JsonValue.ValueType;
 
+import java.io.File;
 import java.util.Arrays;
 
 public class AssetMap {
 
     private static final String FILES_KEY = "~~files~~";
-    private JsonValue root;
+    private final JsonValue root;
 
     public AssetMap(FileHandle descriptorFile) {
         root = new JsonValue(ValueType.object);
@@ -20,7 +21,7 @@ public class AssetMap {
     private void parseFile(FileHandle file) {
         String[] lines = file.readString().split("\n");
         for (String line : lines) {
-            String[] path = line.split(":")[0].split("\\\\");
+            String[] path = line.split(":")[0].split("/");
             String valuesWithBrackets = line.split(":")[1];
             String[] valuesArr = valuesWithBrackets.substring(1, valuesWithBrackets.length() - 1).replace(" ", "").trim().split(",");
 
