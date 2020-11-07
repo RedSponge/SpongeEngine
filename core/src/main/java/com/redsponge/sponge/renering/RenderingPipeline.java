@@ -57,14 +57,14 @@ public class RenderingPipeline implements Disposable {
     }
 
     public void beginCapture() {
-        UGL.sPushFBO(mainFBO);
+        UGL.getFboStack().push(mainFBO);
 
         gameViewport.apply();
         batch.setProjectionMatrix(gameViewport.getCamera().combined);
     }
 
     public void endCapture() {
-        if(!UGL.sTestPopFBO(mainFBO)) {
+        if(UGL.getFboStack().pop() != mainFBO) {
             Logger.warn(this, "endCapture popped fbo wasn't the mainFBO - check if you have any fbos you haven't popped!");
         }
     }
@@ -79,13 +79,13 @@ public class RenderingPipeline implements Disposable {
 
         for (int i = 0; i < effects.size; i++) {
             if(effects.get(i).isActive()) {
-                UGL.sPushFBO(buffers[idx]);
+                UGL.getFboStack().push(buffers[idx]);
                 buffers[idx].begin();
                 Gdx.gl.glClearColor(0, 0, 0, 1.0f);
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
                 effects.get(i).apply(copyViewport, batch, regions[1 - idx]);
-                if(!UGL.sTestPopFBO(buffers[idx])) {
-                    Logger.warn(this, "drawOnScreen popped fbo didn't batch after appluing effect", effects.get(i) + "!", "check if there were non-popped fbos in the effect!");
+                if(UGL.getFboStack().pop() != (buffers[idx])) {
+                    Logger.warn(this, "drawOnScreen popped fbo didn't batch after applying effect", effects.get(i) + "!", "check if there were non-popped fbos in the effect!");
                 }
                 idx = 1 - idx;
             }

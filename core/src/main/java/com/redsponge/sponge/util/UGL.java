@@ -11,18 +11,10 @@ import java.util.Stack;
 public final class UGL {
 
     private static final float[] colorTmp = new float[4];
-    private static FrameBufferStack fboStack = new FrameBufferStack();
+    private static final FrameBufferStack fboStack = new FrameBufferStack();
 
-    public static void sPushFBO(FrameBuffer fbo) {
-        fboStack.push(fbo);
-    }
-
-    public static FrameBuffer sPopFBO() {
-        return fboStack.pop();
-    }
-
-    public static boolean sTestPopFBO(FrameBuffer fbo) {
-        return fboStack.pop() == fbo;
+    public static FrameBufferStack getFboStack() {
+        return fboStack;
     }
 
     public static FrameBuffer createFrameBuffer(int width, int height, boolean depth, boolean stencil) {
@@ -43,7 +35,7 @@ public final class UGL {
         prog.setUniform4fv(name, colorTmp, 0, 4);
     }
 
-    private static class FrameBufferStack {
+    public static class FrameBufferStack {
         private final Stack<FrameBuffer> stack;
 
         public FrameBufferStack() {
