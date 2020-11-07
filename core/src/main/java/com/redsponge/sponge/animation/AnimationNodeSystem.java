@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.redsponge.sponge.animation.Values.VariableValueHolder;
@@ -87,6 +88,7 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
     public AnimationNodeSystem copy() {
         AnimationNodeSystem system = new AnimationNodeSystem(active, animations);
         system.addNodes(connectedFile);
+        ShaderProgram s;
 //        for (String s : animationNodes.keySet()) {
 //            system.animationNodes.put(s, animationNodes.get(s));
 //        }

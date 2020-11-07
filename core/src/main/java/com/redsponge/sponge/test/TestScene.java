@@ -13,21 +13,17 @@ import com.redsponge.sponge.renering.Effects;
 import com.redsponge.sponge.renering.TransitionEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
-import com.redsponge.sponge.util.UGL;
 import com.redsponge.sponge.util.UMath;
 
 public class TestScene extends Scene {
 
     private StaticBackground bg;
     private Player pl;
-    private TransitionEffect te;
     private float prog;
     private float fade;
 
     private InputAxis progControl;
     private InputAxis fadeControl;
-
-//    private LightMap lightMap;
 
     @Override
     public void start() {
@@ -39,18 +35,13 @@ public class TestScene extends Scene {
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
 
-        te = new TransitionEffect(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
-        te.getTransitionColor().set(Color.WHITE);
 
-        rPipeline.addEffect(te);
+        sceneTransitionEffect.setTransitionTexture(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
+        sceneTransitionEffect.getTransitionColor().set(Color.WHITE);
+        rPipeline.addEffect(sceneTransitionEffect);
+
         progControl = new InputAxis(new InputEntry().addKey(Keys.G), new InputEntry().addKey(Keys.H));
-
         fadeControl = new InputAxis(new InputEntry().addKey(Keys.T), new InputEntry().addKey(Keys.Y));
-//        Effects.addGaussianBlur(rPipeline);
-//        Effects.addGaussianBlur(rPipeline);
-//        Effects.addGaussianBlur(rPipeline);
-//        Effects.addGreyscale(rPipeline);
-//        Effects.addInvert(rPipeline);
     }
 
     @Override
@@ -58,8 +49,8 @@ public class TestScene extends Scene {
         super.update(delta);
         prog = UMath.clamp(prog + progControl.get() * delta * 2, 0, 1);
         fade = UMath.clamp(fade + fadeControl.get() * delta * 2, 0, 1);
-        te.setProgress(prog);
-        te.setFadePercent(fade);
+        sceneTransitionEffect.setProgress(prog);
+        sceneTransitionEffect.setFadePercent(fade);
     }
 
     @Override

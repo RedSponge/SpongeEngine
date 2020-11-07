@@ -10,6 +10,7 @@ import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.renering.RenderingPipeline;
 import com.redsponge.sponge.renering.TransitionEffect;
 import com.redsponge.sponge.util.Hitbox;
+import com.redsponge.sponge.util.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public abstract class Scene {
 
     protected RenderingPipeline rPipeline;
     protected TransitionEffect sceneTransitionEffect;
+    protected boolean isFirstUpdate;
 
     public Scene() {
         rPipeline = new RenderingPipeline(SpongeGame.i().getBatch(), getWidth(), getHeight());
@@ -48,6 +50,7 @@ public abstract class Scene {
 
     public void start() {
         startTime = SpongeGame.i().getElapsedTime();
+        isFirstUpdate = true;
     }
 
     public void update(float delta) {
@@ -56,6 +59,13 @@ public abstract class Scene {
             if(entity.isActive()) {
                 entity.update(delta);
             }
+        }
+
+        if(isFirstUpdate) {
+            if(!rPipeline.contains(sceneTransitionEffect)) {
+                Logger.warn(this, "sceneTransitionEffect wasn't added to pipeline! Make sure you add it for transitions to work properly!");
+            }
+            isFirstUpdate = false;
         }
     }
     public void render() {

@@ -128,4 +128,8 @@ public class RenderingPipeline implements Disposable {
     public FitViewport getToScreenViewport() {
         return toScreenViewport;
     }
+
+    public boolean contains(TransitionEffect effect) {
+        return effects.contains(effect, true);
+    }
 }
