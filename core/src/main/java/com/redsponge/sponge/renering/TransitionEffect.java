@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.util.UGL;
+import com.redsponge.sponge.util.UMath;
 
 public class TransitionEffect extends RenderingEffect {
 
@@ -57,7 +58,7 @@ public class TransitionEffect extends RenderingEffect {
     }
 
     public TransitionEffect setProgress(float progress) {
-        this.progress = progress;
+        this.progress = UMath.clamp(progress, 0, 1);
         return this;
     }
 
@@ -66,7 +67,7 @@ public class TransitionEffect extends RenderingEffect {
     }
 
     public TransitionEffect setFadePercent(float fadePercent) {
-        this.fadePercent = fadePercent;
+        this.fadePercent = UMath.clamp(fadePercent, 0, 1);
         return this;
     }
 
@@ -74,8 +75,9 @@ public class TransitionEffect extends RenderingEffect {
         return transitionColor;
     }
 
-    public void setTransitionTexture(Texture transitionTexture) {
+    public TransitionEffect setTransitionTexture(Texture transitionTexture) {
         this.transitionTexture = transitionTexture;
+        return this;
     }
 
     public Texture getTransitionTexture() {
