@@ -1,0 +1,62 @@
+
+torch.png
+size: 32,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fire
+  rotate: false
+  xy: 2, 17
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 1
+fire
+  rotate: false
+  xy: 2, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 2
+fire
+  rotate: false
+  xy: 12, 17
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 3
+fire
+  rotate: false
+  xy: 22, 17
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 4
+holder
+  rotate: false
+  xy: 12, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 1
+holder
+  rotate: false
+  xy: 12, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 2
+holder
+  rotate: false
+  xy: 12, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 4
+holder
+  rotate: false
+  xy: 12, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 3

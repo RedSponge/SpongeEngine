@@ -41,7 +41,7 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
         drawViewport.apply();
         batch.setProjectionMatrix(drawViewport.getCamera().combined);
 //        UGL.getFboStack().push(bloomFBO);
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        Gdx.gl.glClearColor(0, 0, 0, 0.5f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();

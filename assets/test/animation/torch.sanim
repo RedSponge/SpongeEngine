@@ -1,0 +1,40 @@
+{
+  "atlas": "torch.atlas",
+  "animations": {
+    "holder": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "holder",
+          "idx": 1,
+          "length": 300
+        }
+      ]
+    },
+    "fire": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "fire",
+          "idx": 1,
+          "length": 100
+        },
+        {
+          "frame": "fire",
+          "idx": 2,
+          "length": 100
+        },
+        {
+          "frame": "fire",
+          "idx": 3,
+          "length": 100
+        },
+        {
+          "frame": "fire",
+          "idx": 4,
+          "length": 100
+        }
+      ]
+    }
+  }
+}

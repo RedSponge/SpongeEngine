@@ -1,5 +1,6 @@
 package com.redsponge.sponge.test;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
@@ -62,9 +63,9 @@ public class Player extends PActor {
         drawn.setOffsetX(-8);
         BloomEffect be = scene.getRenderingPipeline().getEffect(BloomEffect.class);
         be.addBloomRender(() -> {
-            drawn.getColor().a = 0.5f;//(1, 1, 1, 0.5f);
+            drawn.getColor().set(Color.BLACK);
             render();
-            drawn.getColor().a = 1;
+            drawn.getColor().set(Color.WHITE);
         });
     }
 

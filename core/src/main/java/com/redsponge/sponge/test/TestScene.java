@@ -32,14 +32,16 @@ public class TestScene extends Scene {
     public void start() {
         super.start();
         add(bg = new StaticBackground());
+        for(int i = 0; i < 8; i++) {
+            add(new Torch(new Vector2(40 + i * 80, 100)));
+        }
         add(pl = new Player(new Vector2(100, 100)));
         add(new Block(new Vector2(0, 0), new Hitbox(0, 0, getWidth(), 20)));
         add(new Block(new Vector2(-2, 0), new Hitbox(0, 0, 1, 1000)));
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
 
-
-        be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport(), 2);
+        be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport(), 1);
         rPipeline.addEffect(be);
 
         Effects.addContrast(rPipeline, 0.1f);
