@@ -39,7 +39,7 @@ public class TestScene extends Scene {
         add(new JumpThru(new Vector2(100, 50), 100));
 
 
-        be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport());
+        be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport(), 2);
         rPipeline.addEffect(be);
 
         Effects.addContrast(rPipeline, 0.1f);
