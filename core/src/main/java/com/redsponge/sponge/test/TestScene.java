@@ -42,9 +42,12 @@ public class TestScene extends Scene {
         be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport());
         rPipeline.addEffect(be);
 
+        Effects.addContrast(rPipeline, 0.1f);
+
         sceneTransitionEffect.setTransitionTexture(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
         sceneTransitionEffect.getTransitionColor().set(Color.WHITE);
         rPipeline.addEffect(sceneTransitionEffect);
+
 
         progControl = new InputAxis(new InputEntry().addKey(Keys.G), new InputEntry().addKey(Keys.H));
         fadeControl = new InputAxis(new InputEntry().addKey(Keys.T), new InputEntry().addKey(Keys.Y));
@@ -78,7 +81,7 @@ public class TestScene extends Scene {
 
     @Override
     public int getHeight() {
-        return 360;
+        return 320;
     }
 
     @Override

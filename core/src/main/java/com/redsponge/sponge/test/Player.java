@@ -62,7 +62,7 @@ public class Player extends PActor {
         drawn.setOffsetX(-8);
         BloomEffect be = scene.getRenderingPipeline().getEffect(BloomEffect.class);
         be.addBloomRender(() -> {
-            drawn.getColor().set(1, 1, 1, 0.5f);
+            drawn.getColor().a = 0.5f;//(1, 1, 1, 0.5f);
             render();
             drawn.getColor().a = 1;
         });
@@ -178,6 +178,6 @@ public class Player extends PActor {
     @Override
     public void render() {
         super.render();
-        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
+//        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
     }
 }

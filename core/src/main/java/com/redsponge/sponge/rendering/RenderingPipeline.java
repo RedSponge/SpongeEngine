@@ -72,7 +72,7 @@ public class RenderingPipeline implements Disposable {
         }
     }
 
-    public void drawToScreen() {
+    public TextureRegion applyEffects() {
         TextureRegion[] regions = {pongRegion, mainRegion};
         FrameBuffer[] buffers = {pongFBO, mainFBO};
         int idx = 0;
@@ -93,12 +93,18 @@ public class RenderingPipeline implements Disposable {
                 idx = 1 - idx;
             }
         }
+        batch.setShader(defaultShader);
+        return regions[1 - idx];
+    }
+
+    public void drawToScreen() {
+        TextureRegion region = applyEffects();
 
         toScreenViewport.apply();
         batch.setProjectionMatrix(toScreenViewport.getCamera().combined);
         batch.setShader(defaultShader);
         batch.begin();
-        batch.draw(regions[1 - idx], 0, 0, toScreenViewport.getWorldWidth(), toScreenViewport.getWorldHeight());
+        batch.draw(region, 0, 0, toScreenViewport.getWorldWidth(), toScreenViewport.getWorldHeight());
         batch.end();
     }
 
@@ -153,5 +159,9 @@ public class RenderingPipeline implements Disposable {
         }
         Logger.warn(this, "Couldn't find effect of type", clazz);
         return null;
+    }
+
+    public ShaderProgram getDefaultShader() {
+        return defaultShader;
     }
 }

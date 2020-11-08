@@ -41,7 +41,7 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
     void apply(FitViewport viewport, SpriteBatch batch, TextureRegion buffer) {
         rPipeline.beginCapture();
 //        UGL.getFboStack().push(bloomFBO);
-        Gdx.gl.glClearColor(1, 0, 0, .1f);
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
@@ -51,15 +51,15 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
         }
         batch.end();
         rPipeline.endCapture();
-        rPipeline.drawToScreen();
+        TextureRegion bloomMap = rPipeline.applyEffects();
 //
 //        UGL.getFboStack().push(bloomFBO);
 //        Gdx.gl.glClearColor(0, 0, 0, 0);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //        rPipeline.drawToScreen();
-        if(UGL.getFboStack().pop() != bloomFBO) {
-            Logger.warn(this, "using rPipeline.drawToScreen() didn't clean all fbos it binded!");
-        };
+//        if(UGL.getFboStack().pop() != bloomFBO) {
+//            Logger.warn(this, "using rPipeline.drawToScreen() didn't clean all fbos it binded!");
+//        };
 //
         viewport.apply();
         batch.setProjectionMatrix(viewport.getCamera().combined);
@@ -68,10 +68,10 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
 //        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         batch.draw(buffer, 0, 0);
 //        Logger.info(this, bloomFBORegion.getRegionWidth(), bloomFBORegion.getRegionHeight());
-//        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_DST_ALPHA);
+        batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
 ////        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        batch.draw(bloomFBORegion, 0, 0);
-//        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        batch.draw(bloomMap, 0, 0);
+        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         batch.end();
     }
 
