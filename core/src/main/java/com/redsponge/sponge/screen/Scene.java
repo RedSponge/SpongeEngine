@@ -7,8 +7,8 @@ import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
-import com.redsponge.sponge.renering.RenderingPipeline;
-import com.redsponge.sponge.renering.TransitionEffect;
+import com.redsponge.sponge.rendering.RenderingPipeline;
+import com.redsponge.sponge.rendering.TransitionEffect;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.Logger;
 
@@ -246,5 +246,9 @@ public abstract class Scene {
 
     public SceneAssets getAssets() {
         return assets;
+    }
+
+    public RenderingPipeline getRenderingPipeline() {
+        return rPipeline;
     }
 }

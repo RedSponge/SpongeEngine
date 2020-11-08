@@ -9,6 +9,7 @@ import com.redsponge.sponge.components.TimedAction;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
+import com.redsponge.sponge.rendering.BloomEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.UMath;
 
@@ -59,6 +60,12 @@ public class Player extends PActor {
         add(drawn = new AnimationComponent(true, true, system.getActiveAnimation()));
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
         drawn.setOffsetX(-8);
+        BloomEffect be = scene.getRenderingPipeline().getEffect(BloomEffect.class);
+        be.addBloomRender(() -> {
+            drawn.getColor().set(1, 1, 1, 0.5f);
+            render();
+            drawn.getColor().a = 1;
+        });
     }
 
     public void attack() {

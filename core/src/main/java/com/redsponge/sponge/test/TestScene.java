@@ -5,12 +5,13 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.input.InputAxis;
 import com.redsponge.sponge.input.InputEntry;
 import com.redsponge.sponge.physics.JumpThru;
-import com.redsponge.sponge.renering.Effects;
-import com.redsponge.sponge.renering.TransitionEffect;
+import com.redsponge.sponge.rendering.BloomEffect;
+import com.redsponge.sponge.rendering.Effects;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.UMath;
@@ -25,6 +26,8 @@ public class TestScene extends Scene {
     private InputAxis progControl;
     private InputAxis fadeControl;
 
+    private BloomEffect be;
+
     @Override
     public void start() {
         super.start();
@@ -35,6 +38,9 @@ public class TestScene extends Scene {
         add(new Block(new Vector2(getWidth() + 1, 0), new Hitbox(0, 0, 1, 1000)));
         add(new JumpThru(new Vector2(100, 50), 100));
 
+
+        be = new BloomEffect(true, SpongeGame.i().getBatch(), getViewport());
+        rPipeline.addEffect(be);
 
         sceneTransitionEffect.setTransitionTexture(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
         sceneTransitionEffect.getTransitionColor().set(Color.WHITE);
@@ -78,5 +84,11 @@ public class TestScene extends Scene {
     @Override
     public String getName() {
         return "test";
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        be.dispose();
     }
 }

@@ -24,7 +24,8 @@ public class CommonAssets {
                 "greyscale",
                 "blur_horizontal",
                 "blur_vertical",
-                "transition"
+                "transition",
+                "contrast"
         };
     }
 

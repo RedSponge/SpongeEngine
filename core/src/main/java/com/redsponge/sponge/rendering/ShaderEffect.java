@@ -1,4 +1,4 @@
-package com.redsponge.sponge.renering;
+package com.redsponge.sponge.rendering;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +8,7 @@ import com.redsponge.sponge.assets.Assets;
 
 public class ShaderEffect extends RenderingEffect {
 
-    private final ShaderProgram shaderProgram;
+    protected final ShaderProgram shaderProgram;
 
     public ShaderEffect(String shaderName) {
         super(true);

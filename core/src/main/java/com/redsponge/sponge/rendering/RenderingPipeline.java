@@ -1,4 +1,4 @@
-package com.redsponge.sponge.renering;
+package com.redsponge.sponge.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,6 +16,8 @@ import com.redsponge.sponge.util.UGL;
 public class RenderingPipeline implements Disposable {
 
     private final Array<RenderingEffect> effects;
+    private final Array<Resizable> resizableEffects;
+
     private final FrameBuffer mainFBO;
     private final FrameBuffer pongFBO; // Ping-ponging with primary buffer when doing post-processing
 
@@ -54,6 +56,7 @@ public class RenderingPipeline implements Disposable {
         this.defaultShader = SpriteBatch.createDefaultShader();
 
         this.effects = new Array<>();
+        this.resizableEffects = new Array<>();
     }
 
     public void beginCapture() {
@@ -101,14 +104,23 @@ public class RenderingPipeline implements Disposable {
 
     public void resize(int width, int height) {
         toScreenViewport.update(width, height, true);
+        for (int i = 0; i < resizableEffects.size; i++) {
+            resizableEffects.get(i).resize(width, height);
+        }
     }
 
     public void addEffect(RenderingEffect effect) {
         effects.add(effect);
+        if(effect instanceof Resizable) {
+            resizableEffects.add((Resizable) effect);
+        }
     }
 
     public void removeEffect(RenderingEffect effect) {
         effects.removeValue(effect, true);
+        if(effect instanceof Resizable) {
+            resizableEffects.removeValue((Resizable) effect, true);
+        }
     }
 
     @Override
@@ -131,5 +143,15 @@ public class RenderingPipeline implements Disposable {
 
     public boolean contains(TransitionEffect effect) {
         return effects.contains(effect, true);
+    }
+
+    public <T extends RenderingEffect> T getEffect(Class<T> clazz) {
+        for (RenderingEffect effect : effects) {
+            if(effect.getClass() == clazz) {
+                return (T) effect;
+            }
+        }
+        Logger.warn(this, "Couldn't find effect of type", clazz);
+        return null;
     }
 }

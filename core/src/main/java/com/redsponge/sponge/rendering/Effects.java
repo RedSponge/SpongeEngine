@@ -1,4 +1,4 @@
-package com.redsponge.sponge.renering;
+package com.redsponge.sponge.rendering;
 
 public final class Effects {
 
@@ -17,6 +17,13 @@ public final class Effects {
     public static void addGaussianBlur(RenderingPipeline pipeline) {
         pipeline.addEffect(new ShaderEffect("blur_horizontal"));
         pipeline.addEffect(new ShaderEffect("blur_vertical"));
+    }
+
+    public static ParameterizedShaderEffect addContrast(RenderingPipeline pipeline, float contrast) {
+        ParameterizedShaderEffect pse = new ParameterizedShaderEffect("contrast");
+        pse.putParameter("u_contrast", contrast);
+        pipeline.addEffect(pse);
+        return pse;
     }
 
 }

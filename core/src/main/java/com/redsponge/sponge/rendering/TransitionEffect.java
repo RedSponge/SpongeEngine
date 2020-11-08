@@ -1,4 +1,4 @@
-package com.redsponge.sponge.renering;
+package com.redsponge.sponge.rendering;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.assets.Assets;
-import com.redsponge.sponge.util.UGL;
 import com.redsponge.sponge.util.UMath;
 
 public class TransitionEffect extends RenderingEffect {
@@ -45,7 +44,7 @@ public class TransitionEffect extends RenderingEffect {
             shader.setUniformi("u_transitionTextureActive", 0);
         }
         shader.setUniformf("u_progress", progress);
-        UGL.setUniformColour(shader, "u_transitionColour", transitionColor);
+        shader.setUniformf("u_transitionColour", transitionColor);
         shader.setUniformf("u_fade", fadePercent);
 
         Gdx.gl.glActiveTexture(GL20.GL_TEXTURE0);
