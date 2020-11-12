@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
+import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.input.InputAxis;
 import com.redsponge.sponge.input.InputEntry;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.rendering.BloomEffect;
 import com.redsponge.sponge.rendering.Effects;
+import com.redsponge.sponge.rendering.ParameterizedShaderEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.UMath;
@@ -25,8 +27,11 @@ public class TestScene extends Scene {
 
     private InputAxis progControl;
     private InputAxis fadeControl;
+    private InputAxis pixelationControl;
 
     private BloomEffect be;
+    private ParameterizedShaderEffect pixelationEffect;
+    private float pixelation;
 
     @Override
     public void start() {
@@ -45,6 +50,7 @@ public class TestScene extends Scene {
         rPipeline.addEffect(be);
 
         Effects.addContrast(rPipeline, 0.1f);
+        pixelationEffect = Effects.addPixelation(rPipeline, 1);
 
         sceneTransitionEffect.setTransitionTexture(Assets.get().getCommon().getTransitionTexture("pokemon.png"));
         sceneTransitionEffect.getTransitionColor().set(Color.WHITE);
@@ -53,6 +59,7 @@ public class TestScene extends Scene {
 
         progControl = new InputAxis(new InputEntry().addKey(Keys.G), new InputEntry().addKey(Keys.H));
         fadeControl = new InputAxis(new InputEntry().addKey(Keys.T), new InputEntry().addKey(Keys.Y));
+        pixelationControl = new InputAxis(new InputEntry().addKey(Keys.K), new InputEntry().addKey(Keys.L));
     }
 
     @Override
@@ -62,6 +69,11 @@ public class TestScene extends Scene {
         fade = UMath.clamp(fade + fadeControl.get() * delta * 2, 0, 1);
         sceneTransitionEffect.setProgress(prog);
         sceneTransitionEffect.setFadePercent(fade);
+
+        pixelation = UMath.clamp(pixelation + pixelationControl.get() * delta * 32, 0, 16);
+        pixelationEffect.putParameter("u_pixelation", (float) (int) pixelation);
+        pixelationEffect.setActive(pixelation >= 1);
+
     }
 
     @Override

@@ -26,4 +26,10 @@ public final class Effects {
         return pse;
     }
 
+    public static ParameterizedShaderEffect addPixelation(RenderingPipeline rPipeline, float pixelation) {
+        ParameterizedShaderEffect pse = new ParameterizedShaderEffect("pixelate");
+        pse.putParameter("u_pixelation", pixelation);
+        rPipeline.addEffect(pse);
+        return pse;
+    }
 }

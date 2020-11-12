@@ -25,7 +25,8 @@ public class CommonAssets {
                 "blur_horizontal",
                 "blur_vertical",
                 "transition",
-                "contrast"
+                "contrast",
+                "pixelate"
         };
     }
 
