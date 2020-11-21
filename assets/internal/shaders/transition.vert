@@ -22,6 +22,6 @@ _out vec2 v_transitionTexCoords;
 void main() {
     v_color = a_color;
     v_texCoords = a_texCoord0;
-    v_transitionTexCoords = vec2(v_texCoords.x, 1 - v_texCoords.y);
+    v_transitionTexCoords = vec2(v_texCoords.x, 1.0 - v_texCoords.y);
     gl_Position = u_projTrans * a_position;
 }

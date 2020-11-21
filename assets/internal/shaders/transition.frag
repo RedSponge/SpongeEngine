@@ -28,7 +28,7 @@ vec4 applyMask(vec4 colour) {
 }
 
 vec4 applyFade(vec4 colour) {
-    return mix(colour, u_transitionColour, smoothstep(0, 1, u_fade));
+    return mix(colour, u_transitionColour, smoothstep(0.0, 1.0, u_fade));
 }
 
 void main() {

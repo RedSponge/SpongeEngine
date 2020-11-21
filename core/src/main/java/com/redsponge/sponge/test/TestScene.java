@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
-import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.input.InputAxis;
 import com.redsponge.sponge.input.InputEntry;
@@ -71,7 +70,7 @@ public class TestScene extends Scene {
         sceneTransitionEffect.setFadePercent(fade);
 
         pixelation = UMath.clamp(pixelation + pixelationControl.get() * delta * 32, 0, 16);
-        pixelationEffect.putParameter("u_pixelation", (float) (int) pixelation);
+        pixelationEffect.putParameter("u_pixelation", (int) pixelation);
         pixelationEffect.setActive(pixelation >= 1);
 
     }

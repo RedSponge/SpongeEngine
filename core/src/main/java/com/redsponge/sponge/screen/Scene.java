@@ -13,6 +13,7 @@ import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
