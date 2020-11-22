@@ -2,16 +2,19 @@ package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent.PositionPolicy;
 import com.redsponge.sponge.components.TimedAction;
+import com.redsponge.sponge.event.CollisionEvent;
+import com.redsponge.sponge.event.EventBus;
+import com.redsponge.sponge.event.EventHandler;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.rendering.BloomEffect;
 import com.redsponge.sponge.screen.Scene;
+import com.redsponge.sponge.util.Logger;
 import com.redsponge.sponge.util.UMath;
 
 public class Player extends PActor {
@@ -50,6 +53,8 @@ public class Player extends PActor {
         add(forceDownTime = new TimedAction());
         add(attackTime = new TimedAction());
         vel = new Vector2();
+
+        EventBus.getInstance().registerListener(this);
     }
 
     @Override
@@ -179,6 +184,12 @@ public class Player extends PActor {
     @Override
     public void render() {
         super.render();
-//        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
     }
+
+    @EventHandler
+    public void onCollision(CollisionEvent event) {
+        Logger.info(this, "Wooooo", event);
+    }
+
+
 }

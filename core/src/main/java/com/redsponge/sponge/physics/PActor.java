@@ -2,6 +2,8 @@ package com.redsponge.sponge.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.entity.Entity;
+import com.redsponge.sponge.event.CollisionEvent;
+import com.redsponge.sponge.event.EventBus;
 
 public class PActor extends Entity {
 
@@ -64,6 +66,7 @@ public class PActor extends Entity {
             if(hit != null) {
                 Collision c = new Collision(new Vector2(sign, 0), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) onCollision.onCollision(c);
+                EventBus.getInstance().dispatch(new CollisionEvent(c));
                 return true;
             }
 
@@ -111,10 +114,9 @@ public class PActor extends Entity {
             }
 
             if(hit != null) {
-                Collision col = new Collision(tmp.set(Vector2.X).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
-                if(onCollision != null) {
-                    onCollision.onCollision(col);
-                }
+                Collision c = new Collision(tmp.set(Vector2.Y).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
+                if(onCollision != null) onCollision.onCollision(c);
+                EventBus.getInstance().dispatch(new CollisionEvent(c));
                 return true;
             }
 
