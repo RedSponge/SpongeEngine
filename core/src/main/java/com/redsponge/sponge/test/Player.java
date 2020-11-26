@@ -53,13 +53,13 @@ public class Player extends PActor {
         add(forceDownTime = new TimedAction());
         add(attackTime = new TimedAction());
         vel = new Vector2();
-
-        EventBus.getInstance().registerListener(this);
     }
 
     @Override
     public void added(Scene scene) {
         super.added(scene);
+
+        EventBus.getInstance().registerListener(this);
         //animations = getScene().getAssets().getAnimationGroup("player");
         system = getScene().getAssets().getAnimationNodeSystemInstance("player");
 //        system.addNodes(Gdx.files.internal("test/animation/player.animnodes"));
@@ -72,6 +72,12 @@ public class Player extends PActor {
             render();
             drawn.getColor().set(Color.WHITE);
         });
+    }
+
+    @Override
+    public void removed() {
+        super.removed();
+        EventBus.getInstance().removeListener(this);
     }
 
     public void attack() {
@@ -188,8 +194,7 @@ public class Player extends PActor {
 
     @EventHandler
     public void onCollision(CollisionEvent event) {
-        Logger.info(this, "Wooooo", event);
+        Logger.info(this, event);
     }
-
 
 }

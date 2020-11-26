@@ -17,32 +17,48 @@ public class EventBus {
     }
 
     private final Map<Class<?>, Array<Invokation>> invokations;
+    private final Map<Object, Map<Class<?>, Array<Invokation>>> cachedInvokations;
 
     private EventBus() {
         invokations = new HashMap<>();
+        cachedInvokations = new HashMap<>();
     }
 
     public void registerListener(Object invoked) {
+        Map<Class<?>, Array<Invokation>> invokationMap = new HashMap<>();
         for (Method method : ClassReflection.getDeclaredMethods(invoked.getClass())) {
             if(method.isAnnotationPresent(EventHandler.class)) {
                 Class<?>[] paramTypes = method.getParameterTypes();
                 if(paramTypes.length == 0) {
                     Logger.warn(this, "Tried to register object", invoked, "as event listener and method", method, "was declared listener but didn't have parameters!");
                 } else {
-                    Logger.debug(this, "Registered method", method, "for object", invoked, "for event type", paramTypes[0]);
-                    addInvokation(paramTypes[0], new Invokation(invoked, method));
+                    Logger.debug(this, "Registered method", method.getName(), "for object", invoked, "for event type", paramTypes[0]);
+                    Invokation inv = new Invokation(invoked, method);
+                    addToArrayMap(paramTypes[0], inv, invokations);
+                    addToArrayMap(paramTypes[0], inv, invokationMap);
                 }
             }
         }
+        cachedInvokations.put(invokationMap, invokationMap);
     }
 
-    private void addInvokation(Class<?> paramType, Invokation invokation) {
-        if(invokations.containsKey(paramType)) {
-            invokations.get(paramType).add(invokation);
+    public void removeListener(Object invoked) {
+        if(cachedInvokations.containsKey(invoked)) {
+            Logger.error(this, "Tried to remove listener", invoked, "but it isn't connected!");
+            return;
+        }
+        Map<Class<?>, Array<Invokation>> map = cachedInvokations.get(invoked);
+        map.forEach((cls, arr) -> invokations.get(cls).removeAll(arr, true));
+        cachedInvokations.remove(invoked);
+    }
+
+    private <T, V> void addToArrayMap(T key, V value, Map<T,Array<V>> map) {
+        if(map.containsKey(key)) {
+            map.get(key).add(value);
         } else {
-            Array<Invokation> invokations = new Array<>();
-            invokations.add(invokation);
-            this.invokations.put(paramType, invokations);
+            Array<V> newArray = new Array<>();
+            newArray.add(value);
+            map.put(key, newArray);
         }
     }
 

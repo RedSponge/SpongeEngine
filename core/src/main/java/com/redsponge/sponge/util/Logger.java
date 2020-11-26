@@ -1,5 +1,6 @@
 package com.redsponge.sponge.util;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
@@ -33,6 +34,7 @@ public class Logger {
     public static void beginLog() {
         try {
             logFile = Gdx.files.local("logs/" + DateFormatter.formatDate(new Date(TimeUtils.millis()), FILE_FORMAT) + ".log");
+            Logger.setLogLevel(Application.LOG_INFO);
             Logger.info(Logger.class, "Began logging on file", logFile.path());
         } catch (GdxRuntimeException e) {
             Logger.error(Logger.class, "Couldn't create log file - probably running on GWT!");

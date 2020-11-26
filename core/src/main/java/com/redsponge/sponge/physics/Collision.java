@@ -17,4 +17,15 @@ public class Collision {
         this.stopper = stopper;
         this.pusher = pusher;
     }
+
+    @Override
+    public String toString() {
+        return "Collision{" +
+                "dir=" + dir +
+                ", mag=" + mag +
+                ", completed=" + completed +
+                ", stopper=" + stopper +
+                ", pusher=" + pusher +
+                '}';
+    }
 }
