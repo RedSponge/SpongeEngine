@@ -45,13 +45,6 @@ holder
   size: 8, 13
   orig: 8, 13
   offset: 0, 0
-  index: 2
-holder
-  rotate: false
-  xy: 12, 2
-  size: 8, 13
-  orig: 8, 13
-  offset: 0, 0
   index: 4
 holder
   rotate: false
@@ -60,3 +53,10 @@ holder
   orig: 8, 13
   offset: 0, 0
   index: 3
+holder
+  rotate: false
+  xy: 12, 2
+  size: 8, 13
+  orig: 8, 13
+  offset: 0, 0
+  index: 2

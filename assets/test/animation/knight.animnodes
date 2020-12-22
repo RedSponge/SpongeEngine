@@ -1,0 +1,179 @@
+{
+  "initial": "idle",
+  "prefabs": {
+    "to_attack": {
+      "links": [
+        {
+          "to": "attack1",
+          "condition": {
+            "type": "and",
+            "condition_a": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "attack_index"
+              },
+              "var_b": {
+                "type": "int",
+                "value": 1
+              }
+            },
+            "condition_b": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "is_attacking"
+              },
+              "var_b": {
+                "type": "boolean",
+                "value": true
+              }
+            }
+          }
+        },
+        {
+          "to": "attack2",
+          "condition": {
+            "type": "and",
+            "condition_a": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "attack_index"
+              },
+              "var_b": {
+                "type": "int",
+                "value": 2
+              }
+            },
+            "condition_b": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "is_attacking"
+              },
+              "var_b": {
+                "type": "boolean",
+                "value": true
+              }
+            }
+          }
+        },
+        {
+          "to": "attack3",
+          "condition": {
+            "type": "and",
+            "condition_a": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "attack_index"
+              },
+              "var_b": {
+                "type": "int",
+                "value": 3
+              }
+            },
+            "condition_b": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "is_attacking"
+              },
+              "var_b": {
+                "type": "boolean",
+                "value": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    "end_attack": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "nodes": {
+    "idle": {
+      "links": [
+        {
+          "prefab": "to_attack"
+        },
+        {
+          "to": "run",
+          "condition": {
+            "type": "not",
+            "condition": {
+              "type": "equals",
+              "var_a": {
+                "type": "variable",
+                "name": "x_speed"
+              },
+              "var_b": {
+                "type": "float",
+                "value": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    "run": {
+      "links": [
+        {
+          "prefab": "to_attack"
+        },
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "x_speed"
+            },
+            "var_b": {
+              "type": "float",
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    "attack1": {
+      "links": [
+        {
+          "prefab": "end_attack"
+        }
+      ]
+    },
+    "attack2": {
+      "links": [
+        {
+          "prefab": "end_attack"
+        }
+      ]
+    },
+    "attack3": {
+      "links": [
+        {
+          "prefab": "end_attack"
+        }
+      ]
+    }
+  }
+}

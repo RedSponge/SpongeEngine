@@ -1,0 +1,60 @@
+{
+  "atlas": "enemy.atlas",
+  "animations": {
+    "run": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "run",
+          "idx": 1,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 2,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 3,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 4,
+          "length": 100
+        }
+      ]
+    },
+    "hit": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "hit",
+          "idx": 1,
+          "length": 100
+        }
+      ]
+    },
+    "attack": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "attack",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "attack",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "attack",
+          "idx": 3,
+          "length": 100
+        }
+      ]
+    }
+  }
+}

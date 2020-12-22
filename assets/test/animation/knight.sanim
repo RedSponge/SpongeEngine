@@ -1,0 +1,110 @@
+{
+  "atlas": "knight.atlas",
+  "animations": {
+    "idle": {
+      "play_mode": "LOOP_PINGPONG",
+      "frames": [
+        {
+          "frame": "idle",
+          "idx": 1,
+          "length": 150
+        },
+        {
+          "frame": "idle",
+          "idx": 2,
+          "length": 150
+        },
+        {
+          "frame": "idle",
+          "idx": 3,
+          "length": 150
+        }
+      ]
+    },
+    "run": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "run",
+          "idx": 1,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 2,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 3,
+          "length": 100
+        },
+        {
+          "frame": "run",
+          "idx": 4,
+          "length": 100
+        }
+      ]
+    },
+    "attack1": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "attackWeapon1",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon1",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon1",
+          "idx": 3,
+          "length": 100
+        }
+      ]
+    },
+    "attack2": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "attackWeapon2",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon2",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon2",
+          "idx": 3,
+          "length": 100
+        }
+      ]
+    },
+    "attack3": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "attackWeapon3",
+          "idx": 1,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon3",
+          "idx": 2,
+          "length": 50
+        },
+        {
+          "frame": "attackWeapon3",
+          "idx": 3,
+          "length": 100
+        }
+      ]
+    }
+  }
+}

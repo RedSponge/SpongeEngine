@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.test.TestScene;
+import com.redsponge.sponge.test.presentation.PresentationScene;
 import com.redsponge.sponge.util.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -64,12 +64,12 @@ public class SpongeGame implements ApplicationListener {
 
         Logger.info(this, "Initializing Game");
         init();
-        setScene(new TestScene());
+        setScene(new PresentationScene());
     }
 
     protected void init() {}
 
-    public void setScene(TestScene scene) {
+    public void setScene(Scene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();
