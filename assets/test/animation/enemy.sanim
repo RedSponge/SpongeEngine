@@ -2,7 +2,7 @@
   "atlas": "enemy.atlas",
   "animations": {
     "run": {
-      "play_mode": "LOOP",
+      "play_mode": "LOOP_PINGPONG",
       "frames": [
         {
           "frame": "run",

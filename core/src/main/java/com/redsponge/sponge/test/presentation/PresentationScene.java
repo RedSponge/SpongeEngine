@@ -17,6 +17,7 @@ public class PresentationScene extends Scene {
         add(new StaticBackground());
         add(new MapEntity());
         add(p = new Player(new Vector2(100, 300)));
+        add(new Enemy(new Vector2(400, 400)));
         add(new CameraHandler(p));
     }
 
