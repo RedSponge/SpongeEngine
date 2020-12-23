@@ -27,6 +27,7 @@ public class Player extends PActor {
     private final TimedAction attackTime;
     private final TimedAction attackCooldown;
     private final TimedAction lungeTime;
+    private final TimedAction comboTime;
 
     private final float coyoteTime = 0.1f;
     private final float jumpTime = 0.2f;
@@ -39,10 +40,11 @@ public class Player extends PActor {
     private final float accel = 800;
     private final float accelAirMultiplier = 0.8f;
     private final float maxJumpMemoryTime = 0.1f;
-    private final float attackCooldownConstant = 0.1f;
     private final float inAttackSpeedMultiplier = 0.5f;
+    private final float attackCooldownConstant = 0.05f;
     private final float lungeBoostTime = 0.1f;
     private final float lungePower = 500;
+    private final float combeMaxTime = 0.2f;
 
     private static final int LUNGE_ATTACK = 0;
 
@@ -65,6 +67,7 @@ public class Player extends PActor {
         add(attackCooldown = new TimedAction());
         add(attackPressMemory = new TimedAction());
         add(lungeTime = new TimedAction());
+        add(comboTime = new TimedAction());
 
         vel = new Vector2();
     }
@@ -95,12 +98,18 @@ public class Player extends PActor {
     }
 
     public void attack() {
-        attackCount = (attackCount + 1) % 3;
+        if(comboTime.isRunning()) {
+            attackCount = (attackCount + 1) % 3;
+        } else {
+            attackCount = 1;
+        }
+
         attackTime.setValue(system.getAnimationGroup().get("attack" + (attackCount + 1)).getBuiltAnimation().getAnimationDuration());
         if(attackCount == LUNGE_ATTACK) {
             lungeTime.setValue(lungeBoostTime);
         }
         attackCooldown.setValue(attackTime.getValue() + attackCooldownConstant);
+        comboTime.setValue(attackCooldown.getValue() + combeMaxTime);
     }
 
     @Override
