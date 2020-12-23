@@ -1,5 +1,85 @@
 {
+  "initial": "run",
+  "prefabs": {
+    "to_hit": {
+      "links": [
+        {
+          "to": "hit",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_hit"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        }
+      ]
+    }
+  },
   "nodes": {
-
+    "run": {
+      "links": [
+        {
+          "to": "attack",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        },
+        {
+          "prefab": "to_hit"
+        }
+      ]
+    },
+    "attack": {
+      "links": [
+        {
+          "to": "run",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        },
+        {
+          "prefab": "to_hit"
+        }
+      ]
+    },
+    "hit": {
+      "links": [
+        {
+          "to": "run",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_hit"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
   }
 }

@@ -96,10 +96,10 @@ public class Player extends PActor {
 
     public void attack() {
         attackCount = (attackCount + 1) % 3;
+        attackTime.setValue(system.getAnimationGroup().get("attack" + (attackCount + 1)).getBuiltAnimation().getAnimationDuration());
         if(attackCount == LUNGE_ATTACK) {
             lungeTime.setValue(lungeBoostTime);
         }
-        attackTime.setValue(system.getAnimationGroup().get("attack" + (attackCount + 1)).getBuiltAnimation().getAnimationDuration());
         attackCooldown.setValue(attackTime.getValue() + attackCooldownConstant);
     }
 
@@ -131,7 +131,8 @@ public class Player extends PActor {
             finalVelX *= inAttackSpeedMultiplier;
         }
         if(lungeTime.isActive()) {
-            finalVelX = lungePower;
+            finalVelX = lungePower * (drawn.isFlippedX() ? 1 : -1);
+            vel.y = Math.max(vel.y, -20);
         }
 
         moveX(finalVelX * delta, this::collideX);
@@ -150,7 +151,9 @@ public class Player extends PActor {
         system.update();
 
         drawn.setAnimation(system.getActiveAnimation());
-        if(attackTime.isRunning()) {
+        if(attackTime.isRunning() && attackCount == LUNGE_ATTACK) {
+            drawn.setOffsetX(-32 + (drawn.isFlippedX() ? 0 : -4));
+        } else if(attackTime.isRunning()) {
             drawn.setOffsetX(-19);
         } else {
             drawn.setOffsetX(-32+13.5f);
