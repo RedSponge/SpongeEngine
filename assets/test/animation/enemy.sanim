@@ -1,27 +1,22 @@
 {
   "atlas": "enemy.atlas",
   "animations": {
-    "run": {
+    "idle": {
       "play_mode": "LOOP_PINGPONG",
       "frames": [
         {
-          "frame": "run",
+          "frame": "idle",
           "idx": 1,
           "length": 100
         },
         {
-          "frame": "run",
+          "frame": "idle",
           "idx": 2,
           "length": 100
         },
         {
-          "frame": "run",
+          "frame": "idle",
           "idx": 3,
-          "length": 100
-        },
-        {
-          "frame": "run",
-          "idx": 4,
           "length": 100
         }
       ]
@@ -32,26 +27,6 @@
         {
           "frame": "hit",
           "idx": 1,
-          "length": 100
-        }
-      ]
-    },
-    "attack": {
-      "play_mode": "NORMAL",
-      "frames": [
-        {
-          "frame": "attack",
-          "idx": 1,
-          "length": 50
-        },
-        {
-          "frame": "attack",
-          "idx": 2,
-          "length": 50
-        },
-        {
-          "frame": "attack",
-          "idx": 3,
           "length": 100
         }
       ]

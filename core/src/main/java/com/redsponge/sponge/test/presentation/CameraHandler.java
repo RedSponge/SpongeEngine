@@ -9,6 +9,7 @@ import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.event.EventHandler;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.test.Player;
+import com.redsponge.sponge.test.PresentationSettings;
 import com.redsponge.sponge.util.UMath;
 
 public class CameraHandler extends Entity {
@@ -52,6 +53,7 @@ public class CameraHandler extends Entity {
 
     @EventHandler
     public void onShakeEvent(ShakeEvent shakeEvent) {
+        if(!PresentationSettings.doShake) return;
         if(shakeEvent.override) shakeTimer.setValue(0);
         shakeTimer.setValue(shakeTimer.getValue() + shakeEvent.time);
     }

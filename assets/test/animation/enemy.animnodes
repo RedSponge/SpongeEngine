@@ -1,5 +1,5 @@
 {
-  "initial": "run",
+  "initial": "idle",
   "prefabs": {
     "to_hit": {
       "links": [
@@ -9,11 +9,11 @@
             "type": "equals",
             "var_a": {
               "type": "variable",
-              "name": "is_hit"
+              "name": "is_on_ground"
             },
             "var_b": {
               "type": "boolean",
-              "value": true
+              "value": false
             }
           }
         }
@@ -21,43 +21,8 @@
     }
   },
   "nodes": {
-    "run": {
+    "idle": {
       "links": [
-        {
-          "to": "attack",
-          "condition": {
-            "type": "equals",
-            "var_a": {
-              "type": "variable",
-              "name": "is_attacking"
-            },
-            "var_b": {
-              "type": "boolean",
-              "value": true
-            }
-          }
-        },
-        {
-          "prefab": "to_hit"
-        }
-      ]
-    },
-    "attack": {
-      "links": [
-        {
-          "to": "run",
-          "condition": {
-            "type": "equals",
-            "var_a": {
-              "type": "variable",
-              "name": "is_attacking"
-            },
-            "var_b": {
-              "type": "boolean",
-              "value": false
-            }
-          }
-        },
         {
           "prefab": "to_hit"
         }
@@ -66,16 +31,16 @@
     "hit": {
       "links": [
         {
-          "to": "run",
+          "to": "idle",
           "condition": {
             "type": "equals",
             "var_a": {
               "type": "variable",
-              "name": "is_hit"
+              "name": "is_on_ground"
             },
             "var_b": {
               "type": "boolean",
-              "value": false
+              "value": true
             }
           }
         }

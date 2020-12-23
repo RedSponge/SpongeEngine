@@ -82,6 +82,6 @@ public class PSolid extends WorldGeometry {
 
     @Override
     public void render() {
-        drawHitbox(SpongeGame.i().getShapeDrawer());
+//        drawHitbox(SpongeGame.i().getShapeDrawer());
     }
 }

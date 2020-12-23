@@ -51,9 +51,11 @@ public class MapEntity extends Entity {
     @Override
     public void render() {
         SpongeGame.i().getBatch().end();
+        SpongeGame.i().getBatch().setColor(0.78f, 0.78f, 0.78f, 1);
         tmr.setView((OrthographicCamera) getScene().getViewport().getCamera());
         tmr.render();
 
+        SpongeGame.i().getBatch().setColor(1, 1, 1, 1);
         SpongeGame.i().getBatch().setProjectionMatrix(getScene().getViewport().getCamera().combined);
         SpongeGame.i().getBatch().begin();
 

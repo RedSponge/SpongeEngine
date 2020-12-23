@@ -7,7 +7,7 @@ import sun.awt.AWTAccessor.InputEventAccessor;
 
 public class Controls {
 
-    public static final InputEntry JUMP = new InputEntry().addKey(Keys.SPACE);
+    public static final InputEntry JUMP = new InputEntry().addKey(Keys.SPACE).addKey(Keys.Z);
 
     public static final InputAxis HORIZONTAl = new InputAxis(new InputEntry().addKey(Keys.A).addKey(Keys.LEFT), new InputEntry().addKey(Keys.D).addKey(Keys.RIGHT));
 
