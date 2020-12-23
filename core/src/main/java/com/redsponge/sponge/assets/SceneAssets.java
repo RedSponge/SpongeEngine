@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.animation.SAnimationGroup;
+import com.redsponge.sponge.particles.Particle;
 import com.redsponge.sponge.util.Logger;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class SceneAssets implements Disposable {
     private HashMap<String, String> nameMap;
     private HashMap<String, SAnimationGroup> animationMap;
     private HashMap<String, AnimationNodeSystem> animationNodeSystemMap;
+    private HashMap<String, Particle> particleEffectMap;
 
     private AssetMap assetMap;
     private Array<FileHandle> loadedFiles;
@@ -35,6 +37,7 @@ public class SceneAssets implements Disposable {
         this.nameMap = new HashMap<>();
         this.animationMap = new HashMap<>();
         this.animationNodeSystemMap = new HashMap<>();
+        this.particleEffectMap = new HashMap<>();
         this.loadedFiles = new Array<>();
     }
 
@@ -50,8 +53,15 @@ public class SceneAssets implements Disposable {
         Logger.debug(this, "Loading sounds for", sceneName);
         loadSounds(mainFolder);
 
+        Logger.debug(this, "Loading particles for", sceneName);
+        loadParticles(mainFolder);
+
         Logger.debug(this, "Calling AssetManager.finishLoading for", sceneName);
         assetManager.finishLoading();
+
+        for (Particle value : particleEffectMap.values()) {
+            value.load(assetManager.get(mainFolder.child("particle").child("textures.atlas").path()));
+        }
 
         Logger.debug(this, "Parsing animations for", sceneName);
         for (SAnimationGroup value : animationMap.values()) {
@@ -121,6 +131,25 @@ public class SceneAssets implements Disposable {
         }
     }
 
+    private void loadParticles(FileHandle mainFolder) {
+        if(mainFolder.child("particle").exists()) {
+            if(!mainFolder.child("particle").child("textures.atlas").exists()) {
+                Gdx.app.log("SceneAssets", "Skipping loading particles - missing textures.atlas");
+                return;
+            } else {
+                assetManager.load(mainFolder.child("particle").child("textures.atlas").path(), TextureAtlas.class);
+            }
+
+            FileHandle[] particleFiles = assetMap.list(mainFolder.child("particle"));
+            for (FileHandle particleFile : particleFiles) {
+                if (particleFile.extension().equals("p")) {
+                    Particle particle = new Particle(particleFile);
+                    particleEffectMap.put(particleFile.nameWithoutExtension(), particle);
+                }
+            }
+        }
+    }
+
     public void unload() {
         FileHandle mainFolder = Gdx.files.internal(sceneName);
         Logger.debug(this, "Unloading Scene", sceneName);
@@ -152,6 +181,14 @@ public class SceneAssets implements Disposable {
 
     public AnimationNodeSystem getAnimationNodeSystemInstance(String name) {
         return animationNodeSystemMap.get(name).copy();
+    }
+
+    public Particle getParticle(String particleName) {
+        return particleEffectMap.get(particleName);
+    }
+
+    public HashMap<String, Particle> getParticleEffectMap() {
+        return particleEffectMap;
     }
 
     @Override

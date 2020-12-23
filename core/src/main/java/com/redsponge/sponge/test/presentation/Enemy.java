@@ -101,6 +101,7 @@ public class Enemy extends PActor {
         EventBus.getInstance().dispatch(new RequireFreezeEvent((Math.abs(vel.y) > 100) ? 0.08f : 0.04f));
         EventBus.getInstance().dispatch(new ShakeEvent(0.05f, false));
         if(PresentationSettings.doSound) hitSound.play(0.5f, MathUtils.random(1.7f, 2), 0);
+        getScene().getAssets().getParticle("stars").spawnEffect(getX() + getWidth() / 2f + (facingRight ? 0 : 8), getY());
     }
 
     private void onCollideY(Collision collision) {

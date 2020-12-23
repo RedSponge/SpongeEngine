@@ -2,8 +2,8 @@ Untitled
 - Delay -
 active: false
 - Duration - 
-lowMin: 3000.0
-lowMax: 3000.0
+lowMin: 100.0
+lowMax: 100.0
 - Count - 
 min: 0
 max: 200
@@ -20,8 +20,8 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 250.0
-highMax: 500.0
+highMin: 750.0
+highMax: 1000.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -44,8 +44,8 @@ shape: line
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 5.0
-highMax: 5.0
+highMin: 10.0
+highMax: 10.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -65,7 +65,7 @@ timeline0: 0.0
 lowMin: 0.0
 lowMax: 0.0
 highMin: 2.0
-highMax: 4.0
+highMax: 8.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -78,7 +78,7 @@ active: true
 lowMin: -20.0
 lowMax: -20.0
 highMin: 10.0
-highMax: 30.0
+highMax: 20.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -109,8 +109,8 @@ active: false
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: -5.0
-highMax: 5.0
+highMin: -10.0
+highMax: 10.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -121,8 +121,8 @@ active: false
 - Tint - 
 colorsCount: 3
 colors0: 1.0
-colors1: 0.91764706
-colors2: 0.6901961
+colors1: 0.8392157
+colors2: 0.49019608
 timelineCount: 1
 timeline0: 0.0
 - Transparency - 
@@ -131,19 +131,21 @@ lowMax: 0.0
 highMin: 1.0
 highMax: 1.0
 relative: false
-scalingCount: 4
+scalingCount: 5
 scaling0: 0.0
-scaling1: 0.28070176
-scaling2: 0.1754386
-scaling3: 0.0
-timelineCount: 4
+scaling1: 0.6315789
+scaling2: 0.7368421
+scaling3: 0.61403507
+scaling4: 0.0
+timelineCount: 5
 timeline0: 0.0
-timeline1: 0.1849315
-timeline2: 0.70547944
-timeline3: 1.0
+timeline1: 0.19863014
+timeline2: 0.47945204
+timeline3: 0.8082192
+timeline4: 1.0
 - Options - 
 attached: false
-continuous: true
+continuous: false
 aligned: false
 additive: false
 behind: false

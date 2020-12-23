@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.event.EventHandler;
+import com.redsponge.sponge.particles.Particle;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.test.Player;
 import com.redsponge.sponge.test.PresentationSettings;
@@ -31,6 +32,7 @@ public class PresentationScene extends Scene {
         add(new Enemy(new Vector2(500, 400)));
         add(p = new Player(new Vector2(100, 300)));
         add(new CameraHandler(p));
+        add(new ParticleRendererEntity());
 
         guiViewport = new FitViewport(getWidth(), getHeight());
         font = new BitmapFont(Gdx.files.internal("cool.fnt"));
@@ -50,8 +52,14 @@ public class PresentationScene extends Scene {
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
             PresentationSettings.doFreeze = !PresentationSettings.doFreeze;
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
+            PresentationSettings.doParticles = !PresentationSettings.doParticles;
+        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.NUM_4)) {
             PresentationSettings.doSound = !PresentationSettings.doSound;
+        }
+        for (Particle value : assets.getParticleEffectMap().values()) {
+            value.update(delta);
         }
     }
 
@@ -62,12 +70,14 @@ public class PresentationScene extends Scene {
 
         super.render();
 
+
         guiViewport.apply();
         SpongeGame.i().getBatch().setProjectionMatrix(guiViewport.getCamera().combined);
 
         SpongeGame.i().getBatch().begin();
         if(PresentationSettings.doShake)  font.draw(SpongeGame.i().getBatch(), "Screen Shake", 20, guiViewport.getWorldHeight() - 32+10);
         if(PresentationSettings.doFreeze) font.draw(SpongeGame.i().getBatch(), "Freeze", 20, guiViewport.getWorldHeight() - 52+10);
+        if(PresentationSettings.doParticles) font.draw(SpongeGame.i().getBatch(), "Particles", 20, guiViewport.getWorldHeight() - 72+10);
         if(PresentationSettings.doSound) font.draw(SpongeGame.i().getBatch(), "Sound", 20, guiViewport.getWorldHeight() - 92+10);
         SpongeGame.i().getBatch().end();
     }

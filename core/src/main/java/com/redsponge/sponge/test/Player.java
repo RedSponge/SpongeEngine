@@ -1,16 +1,19 @@
 package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
+import com.redsponge.sponge.assets.SceneAssets;
 import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent.PositionPolicy;
 import com.redsponge.sponge.components.TimedAction;
 import com.redsponge.sponge.event.CollisionEvent;
 import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.event.EventHandler;
+import com.redsponge.sponge.particles.Particle;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
@@ -33,6 +36,8 @@ public class Player extends PActor {
     private final TimedAction lungeTime;
     private final TimedAction comboTime;
     private final TimedAction attackEventSendTime;
+    private final TimedAction dustSpawnTime;
+    private final TimedAction walkSoundTimer;
 
     private final float coyoteTime = 0.1f;
     private final float jumpTime = 0.2f;
@@ -50,6 +55,7 @@ public class Player extends PActor {
     private final float lungeBoostTime = 0.1f;
     private final float lungePower = 500;
     private final float comboMaxTime = 0.2f;
+    private final float dustTimer = 0.1f;
 
     private static final int LUNGE_ATTACK = 0;
 
@@ -63,7 +69,12 @@ public class Player extends PActor {
     private int attackCount;
     private TimedAction attackPressMemory;
 
+    private Particle dustParticle;
+
     private Sound[] swingSounds;
+    private Sound[] walkSounds;
+    private Sound[] jumpSounds;
+    private Sound landSound;
 
     public Player(Vector2 pos) {
         super(pos);
@@ -78,11 +89,21 @@ public class Player extends PActor {
         add(lungeTime = new TimedAction());
         add(comboTime = new TimedAction());
         add(attackEventSendTime = new TimedAction());
-
+        add(dustSpawnTime = new TimedAction(dustTimer, null, false));
+        add(walkSoundTimer = new TimedAction(0.4f,null, false));
         attackEventSendTime.setOnComplete(this::updateAttackBox);
 
         vel = new Vector2();
         attackRectangle = new Rectangle();
+
+        dustSpawnTime.setOnComplete(() -> {
+            dustSpawnTime.setValue(dustTimer);
+            dustParticle.spawnEffect(getX() + getWidth() / 2f, getY() - 8);
+        });
+        walkSoundTimer.setOnComplete( () -> {
+            if(PresentationSettings.doSound) walkSounds[MathUtils.random(walkSounds.length - 1)].play(0.5f);
+            walkSoundTimer.setValue(0.4f);
+        });
     }
 
     private void updateAttackBox() {
@@ -110,11 +131,28 @@ public class Player extends PActor {
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
         drawn.setOffsetY(-8);
 
+        dustParticle = scene.getAssets().getParticle("dust");
+
         swingSounds = new Sound[1];
         for (int i = 0; i < swingSounds.length; i++) {
             System.out.println("swipe" + (i + 1));
-            swingSounds[i] = scene.getAssets().<Sound>get("swoop" + (i + 1) + ".ogg");
+            swingSounds[i] = scene.getAssets().get("swoop" + (i + 1) + ".ogg");
         }
+
+        walkSounds = new Sound[3];
+        for (int i = 0; i < walkSounds.length; i++) {
+            System.out.println("armor" + (i + 1));
+            walkSounds[i] = scene.getAssets().get("armor" + (i + 1) + ".ogg");
+        }
+
+        jumpSounds = new Sound[2];
+        for (int i = 0; i < jumpSounds.length; i++) {
+            System.out.println("jump" + (i + 1));
+            jumpSounds[i] = scene.getAssets().get("jump" + (i + 1) + ".ogg");
+        }
+
+        landSound = scene.getAssets().get("land.ogg");
+
 //        BloomEffect be = scene.getRenderingPipeline().getEffect(BloomEffect.class);
 //        be.addBloomRender(() -> {
 //            drawn.getColor().set(Color.BLACK);
@@ -167,6 +205,9 @@ public class Player extends PActor {
 
         updateVX(delta);
         updateVY(delta);
+
+        dustSpawnTime.setActive(vel.x != 0 && onGround);
+        walkSoundTimer.setActive(vel.x != 0 && onGround);
 
         if (!Controls.DOWN.isPressed()) {
             forceDownTime.setValue(0.3f);
@@ -239,6 +280,7 @@ public class Player extends PActor {
             varJumpTime.setValue(jumpTime);
             vel.y = jumpSpeed;
             vel.x += jumpHorizontalBoost * Controls.HORIZONTAl.get();
+            if(PresentationSettings.doSound) jumpSounds[MathUtils.random(jumpSounds.length - 1)].play(0.5f);
         } else {
             float mult;
             if (Controls.JUMP.isPressed() && Math.abs(vel.y) <= halfGravityThreshold) mult = 0.5f;
@@ -267,19 +309,12 @@ public class Player extends PActor {
             moveY(-1, this::collideY);
             collision.stopper.setCollidable(true);
         } else {
-            if (vel.y < 0 && collision.dir.y < 0) {
-//                EventBus.getInstance().dispatch(new ShakeEvent(0.1f, false));
+            if (Math.abs(vel.y) > 100) {
+                if(PresentationSettings.doSound) landSound.play(0.5f);
             }
             vel.y = 0;
             zeroRemainderY();
         }
-    }
-
-    @Override
-    public void render() {
-        super.render();
-//        SpongeGame.i().getShapeDrawer().rectangle(getSceneHitbox().getRectangle());
-//        SpongeGame.i().getShapeDrawer().rectangle(attackRectangle, Color.RED);
     }
 
     @EventHandler
