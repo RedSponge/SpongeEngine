@@ -14,19 +14,19 @@ public class GameScene extends Scene {
     public void start() {
         super.start();
         add(new StaticBackground());
-        simulator = new LevelSimulator();
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 0);
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, 1)), 4, 0);
-        simulator.setRoomObject(new SkipTile(), 4, 2);
-        simulator.setRoomObject(new SkipTile(), 4, 4);
-        simulator.setRoomObject(new OrbGiveTile(), 4, 6);
-        simulator.setRoomObject(new DeathTile(), 4, 5);
-        addPortalPair(4, 3, 6, 4);
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(-1, 0)), 6, 6);
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 0, 6);
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 4);
-        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 6, 3);
-        addPortalPair(6, 0, 0, 2);
+        simulator = LevelParser.parseLevel(Gdx.files.internal("level.txt").readString());//new LevelSimulator();
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 0);
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, 1)), 4, 0);
+//        simulator.setRoomObject(new SkipTile(), 4, 2);
+//        simulator.setRoomObject(new SkipTile(), 4, 4);
+//        simulator.setRoomObject(new OrbGiveTile(), 4, 6);
+//        simulator.setRoomObject(new DeathTile(), 4, 5);
+//        addPortalPair(4, 3, 6, 4);
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(-1, 0)), 6, 6);
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 0, 6);
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 4);
+//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 6, 3);
+//        addPortalPair(6, 0, 0, 2);
 
 //        add(new TestRoomRenderer(simulator));
         add(new IsometricTileMapRenderer(new Vector2(100,0), simulator));
@@ -34,11 +34,11 @@ public class GameScene extends Scene {
     }
 
     private void addPortalPair(int x1, int y1, int x2, int y2) {
-        PortalTile a = new PortalTile();
-        PortalTile b = new PortalTile(a);
-        a.setOther(b);
-        simulator.setRoomObject(a, x1, y1);
-        simulator.setRoomObject(b, x2, y2);
+//        PortalTile a = new PortalTile(colour);
+//        PortalTile b = new PortalTile(a, colour);
+//        a.setOther(b);
+//        simulator.setRoomObject(a, x1, y1);
+//        simulator.setRoomObject(b, x2, y2);
     }
 
     @Override
