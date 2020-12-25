@@ -72,6 +72,7 @@ public class DrawnComponent extends Component {
         rendered.flip(isFlippedX, isFlippedY);
         SpongeGame.i().getBatch().setColor(color);
         SpongeGame.i().getBatch().draw(rendered, x, y, originX, originY, width, height, scaleX, scaleY, rotation);
+        SpongeGame.i().getBatch().setColor(Color.WHITE);
         rendered.flip(isFlippedX, isFlippedY);
     }
 
