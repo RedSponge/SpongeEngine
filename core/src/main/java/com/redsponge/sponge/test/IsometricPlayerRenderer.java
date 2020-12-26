@@ -5,14 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
 import com.redsponge.sponge.components.AnimationComponent;
-import com.redsponge.sponge.components.DrawnComponent;
 import com.redsponge.sponge.entity.Entity;
-import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.util.Logger;
 
 public class IsometricPlayerRenderer extends Entity {
 
@@ -56,8 +52,8 @@ public class IsometricPlayerRenderer extends Entity {
         mapRenderer.getPositionOfIndex((int) referencePos.x, (int) referencePos.y, requiredByReference);
         setX(requiredByReference.x + 14);
         setY(requiredByReference.y + 7);
-        drawn.setOffsetX(-4);
-        drawn.setOffsetY(-4);
+        drawn.setOffsetX(-4-1);
+        drawn.setOffsetY(-2-1);
 
         if(referenceVel.x != 0 || referenceVel.y != 0) {
             boolean up = referenceVel.x + referenceVel.y > 0;
