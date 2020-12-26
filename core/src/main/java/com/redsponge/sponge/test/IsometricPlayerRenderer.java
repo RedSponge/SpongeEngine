@@ -91,4 +91,9 @@ public class IsometricPlayerRenderer extends Entity {
     public void onJump(JumpEvent event) {
         jumpingTime.setValue(jumpLength);
     }
+
+    @EventHandler
+    public void onEnterPortal(PortalEnterEvent event) {
+
+    }
 }
