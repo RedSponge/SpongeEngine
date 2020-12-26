@@ -2,6 +2,8 @@ package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.animation.SAnimation;
 import com.redsponge.sponge.animation.SAnimationGroup;
@@ -18,12 +20,13 @@ public class IsometricPlayerRenderer extends Entity {
 
     private Texture upTex, downTex;
 
-    private DrawnComponent drawn;
+    private AnimationComponent drawn;
     private Vector2 referencePos, referenceVel;
     private Vector2 requiredByReference;
     private IsometricTileMapRenderer mapRenderer;
 
     private SAnimationGroup playerAnimations;
+    private Animation<TextureRegion> frontAnimation, backAnimation;
 
     public IsometricPlayerRenderer(Vector2 pos, Vector2 refPos, Vector2 refVel) {
         super(pos);
@@ -36,12 +39,14 @@ public class IsometricPlayerRenderer extends Entity {
     @Override
     public void added(Scene scene) {
         super.added(scene);
-        upTex = scene.getAssets().get("player_up.png");
-        downTex = scene.getAssets().get("player_down.png");
+//        upTex = scene.getAssets().get("player_up.png");
+//        downTex = scene.getAssets().get("player_down.png");
 
         playerAnimations = scene.getAssets().getAnimationGroup("player");
 
-        drawn = new AnimationComponent(true, true, playerAnimations.get("back").getBuiltAnimation());
+        frontAnimation = playerAnimations.get("front").getBuiltAnimation();
+        backAnimation = playerAnimations.get("back").getBuiltAnimation();
+        drawn = new AnimationComponent(true, true, backAnimation);
         add(drawn);
         mapRenderer = scene.first(IsometricTileMapRenderer.class);
     }
@@ -57,7 +62,7 @@ public class IsometricPlayerRenderer extends Entity {
         if(referenceVel.x != 0 || referenceVel.y != 0) {
             boolean up = referenceVel.x + referenceVel.y > 0;
             boolean flipped = referenceVel.y > 0 || referenceVel.x < 0;
-            drawn.getRendered().setTexture(up ? upTex : downTex);
+            drawn.setAnimation(up ? backAnimation : frontAnimation);
             drawn.setFlippedX(flipped);
         }
         drawn.getColor().set(mapRenderer.getLevel().isPlayerProtected() ? Color.BLUE : Color.WHITE);

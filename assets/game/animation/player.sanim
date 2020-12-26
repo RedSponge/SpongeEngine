@@ -1,7 +1,7 @@
 {
   "atlas": "player.atlas",
   "initial": "back",
-  "frames": {
+  "animations": {
     "front": {
       "play_mode": "LOOP",
       "frames": [
