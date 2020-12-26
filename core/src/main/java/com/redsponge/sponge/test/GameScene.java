@@ -15,20 +15,6 @@ public class GameScene extends Scene {
         super.start();
         add(new StaticBackground());
         simulator = LevelParser.parseLevel(Gdx.files.internal("level.txt").readString());//new LevelSimulator();
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 0);
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, 1)), 4, 0);
-//        simulator.setRoomObject(new SkipTile(), 4, 2);
-//        simulator.setRoomObject(new SkipTile(), 4, 4);
-//        simulator.setRoomObject(new OrbGiveTile(), 4, 6);
-//        simulator.setRoomObject(new DeathTile(), 4, 5);
-//        addPortalPair(4, 3, 6, 4);
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(-1, 0)), 6, 6);
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 0, 6);
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(1, 0)), 0, 4);
-//        simulator.setRoomObject(new DirectionSetTile(new Vector2(0, -1)), 6, 3);
-//        addPortalPair(6, 0, 0, 2);
-
-//        add(new TestRoomRenderer(simulator));
         add(new IsometricTileMapRenderer(new Vector2(100,0), simulator));
         add(new IsometricPlayerRenderer(new Vector2(), simulator.getPlayerPos(), simulator.getPlayerVel()));
     }

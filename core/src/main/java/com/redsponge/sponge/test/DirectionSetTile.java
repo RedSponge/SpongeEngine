@@ -28,6 +28,10 @@ public class DirectionSetTile implements RoomTile {
 
     @Override
     public Color getDebugColor() {
-        return Color.YELLOW;
+        return Color.WHITE;
+    }
+
+    public Vector2 getDirection() {
+        return dir;
     }
 }

@@ -50,7 +50,6 @@ public class IsometricPlayerRenderer extends Entity {
         if(referenceVel.x != 0 || referenceVel.y != 0) {
             boolean up = referenceVel.x + referenceVel.y > 0;
             boolean flipped = referenceVel.y > 0 || referenceVel.x < 0;
-            Logger.warn(this, (int) referenceVel.x, (int) referenceVel.y, up, flipped);
             drawn.getRendered().setTexture(up ? upTex : downTex);
             drawn.setFlippedX(flipped);
         }
