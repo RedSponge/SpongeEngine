@@ -1,0 +1,76 @@
+{
+  "atlas": "player.atlas",
+  "initial": "back",
+  "frames": {
+    "front": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 1
+        },
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 2
+        },
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 3
+        },
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 4
+        },
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 5
+        },
+        {
+          "frame": "front",
+          "length": 200,
+          "idx": 6
+        }
+      ]
+    },
+    "back": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 1
+        },
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 2
+        },
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 3
+        },
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 4
+        },
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 5
+        },
+        {
+          "frame": "back",
+          "length": 200,
+          "idx": 6
+        }
+      ]
+    }
+  }
+}

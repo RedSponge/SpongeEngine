@@ -3,6 +3,9 @@ package com.redsponge.sponge.test;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.animation.SAnimation;
+import com.redsponge.sponge.animation.SAnimationGroup;
+import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.event.EventBus;
@@ -20,6 +23,8 @@ public class IsometricPlayerRenderer extends Entity {
     private Vector2 requiredByReference;
     private IsometricTileMapRenderer mapRenderer;
 
+    private SAnimationGroup playerAnimations;
+
     public IsometricPlayerRenderer(Vector2 pos, Vector2 refPos, Vector2 refVel) {
         super(pos);
         vel = new Vector2();
@@ -34,7 +39,9 @@ public class IsometricPlayerRenderer extends Entity {
         upTex = scene.getAssets().get("player_up.png");
         downTex = scene.getAssets().get("player_down.png");
 
-        drawn = new DrawnComponent(true, true, upTex);
+        playerAnimations = scene.getAssets().getAnimationGroup("player");
+
+        drawn = new AnimationComponent(true, true, playerAnimations.get("back").getBuiltAnimation());
         add(drawn);
         mapRenderer = scene.first(IsometricTileMapRenderer.class);
     }
