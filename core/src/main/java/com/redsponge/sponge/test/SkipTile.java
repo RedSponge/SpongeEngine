@@ -1,11 +1,13 @@
 package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.graphics.Color;
+import com.redsponge.sponge.event.EventBus;
 
 public class SkipTile extends StallTile {
 
     @Override
     public void onReleasePlayer(LevelSimulator levelIn) {
+        EventBus.getInstance().dispatch(new JumpEvent());
         levelIn.getPlayerPos().add(levelIn.getPlayerVel());
         levelIn.progressPlayer();
     }

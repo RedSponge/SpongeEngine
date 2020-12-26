@@ -7,6 +7,7 @@ public class AnimationComponent extends DrawnComponent {
 
     protected float time;
     protected Animation<TextureRegion> animation;
+    protected float animationSpeed;
 
     public AnimationComponent(boolean active, boolean visible, Animation<TextureRegion> animation) {
         super(active, visible, animation.getKeyFrame(0));
