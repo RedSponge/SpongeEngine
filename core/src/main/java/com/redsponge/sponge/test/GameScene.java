@@ -29,7 +29,8 @@ public class GameScene extends Scene {
             "levels/l6.txt",
             "levels/middle.txt",
             "levels/two_portals.txt",
-            "levels/impossible.txt"
+            "levels/l9.txt",
+            "levels/win.txt"
     };
     private float winTime;
     private Music music;
