@@ -74,7 +74,9 @@ public class IsometricPlayerRenderer extends Entity {
         scene.getRenderingPipeline().getEffect(BloomEffect.class).addBloomRender(() -> {
             if (portalDrawn.isVisible()) portalDrawn.render();
             if (mapRenderer.getLevel().isPlayerProtected()) {
+                drawn.getColor().a = 0.4f;
                 render();
+                drawn.getColor().a = 1;
             }
         });
         mapRenderer.getPositionOfIndex((int) referencePos.x, (int) referencePos.y, requiredByReference);
@@ -84,11 +86,11 @@ public class IsometricPlayerRenderer extends Entity {
     @Override
     public void update(float delta) {
         mapRenderer.getPositionOfIndex((int) referencePos.x, (int) referencePos.y, requiredByReference);
-        if (!portalTime.isRunning() && !portalExitTime.isRunning() && isPlaying) {
+        if (!portalTime.isRunning() && !portalExitTime.isRunning()) {
             getPositionf().x = UMath.approach(getPositionf().x, requiredByReference.x + 14, 50 * delta);
             getPositionf().y = UMath.approach(getPositionf().y, requiredByReference.y + 7, 50 * delta / 2);
             if (getPositionf().x == requiredByReference.x + 14 && getPositionf().y == requiredByReference.y + 7) {
-                mapRenderer.getLevel().progressPlayer();
+                if(isPlaying) mapRenderer.getLevel().progressPlayer();
                 if (!delayed) {
                     lastReferenceVel.set(referenceVel);
                 } else {

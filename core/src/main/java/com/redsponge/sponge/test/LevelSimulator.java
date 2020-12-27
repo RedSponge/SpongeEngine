@@ -70,6 +70,7 @@ public class LevelSimulator {
     public void reset() {
         playerPos.set(0, 0);
         playerVel.set(1, 0);
+        isPlayerProtected = false;
     }
 
     public void setPlayerProtected(boolean playerProtected) {

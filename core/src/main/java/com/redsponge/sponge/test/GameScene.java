@@ -2,6 +2,7 @@ package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
@@ -18,13 +19,20 @@ public class GameScene extends Scene {
 
     private Level level;
 
-    private int currentLevel;
+    private int currentLevel = 8;
     private String[] levels = new String[] {
             "levels/l1.txt",
             "levels/l2.txt",
-            "levels/l3.txt"
+            "levels/l3.txt",
+            "levels/l4.txt",
+            "levels/l5.txt",
+            "levels/l6.txt",
+            "levels/middle.txt",
+            "levels/two_portals.txt",
+            "levels/impossible.txt"
     };
     private float winTime;
+    private Music music;
 
 
     @Override
@@ -44,6 +52,10 @@ public class GameScene extends Scene {
         loadLevel(levels[currentLevel]);
 
         rPipeline.addEffect(sceneTransitionEffect);
+        music = Gdx.audio.newMusic(Gdx.files.internal("restless.ogg"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
     }
 
     private void loadLevel(String path) {
@@ -107,5 +119,11 @@ public class GameScene extends Scene {
     @Override
     public String getName() {
         return "game";
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        music.dispose();
     }
 }
