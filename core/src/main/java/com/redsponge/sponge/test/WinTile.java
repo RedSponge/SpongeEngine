@@ -3,7 +3,8 @@ package com.redsponge.sponge.test;
 import com.badlogic.gdx.graphics.Color;
 import com.redsponge.sponge.event.EventBus;
 
-public class DeathTile implements RoomTile {
+public class WinTile implements RoomTile {
+
     @Override
     public boolean canPlayerEnter(LevelSimulator levelIn) {
         return true;
@@ -11,10 +12,7 @@ public class DeathTile implements RoomTile {
 
     @Override
     public void onPlayerEnter(LevelSimulator levelIn) {
-        if(levelIn.isPlayerProtected()) levelIn.setPlayerProtected(false);
-        else {
-            EventBus.getInstance().dispatch(new ResetMoveEvent());
-        }
+        EventBus.getInstance().dispatch(new WinEvent());
     }
 
     @Override
@@ -24,6 +22,6 @@ public class DeathTile implements RoomTile {
 
     @Override
     public Color getDebugColor() {
-        return Color.RED;
+        return Color.LIME;
     }
 }

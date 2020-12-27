@@ -7,7 +7,7 @@ public class PortalTile extends StallTile {
     private PortalTile other;
 
     public static final Color[] colours = new Color[] {
-            Color.CYAN, Color.PURPLE, Color.MAGENTA, Color.MAROON
+            new Color(0, 0.7f, 0.7f, 1.0f), Color.PURPLE, Color.MAGENTA, Color.MAROON
     };
 
     public PortalTile(Color colour) {
@@ -39,5 +39,9 @@ public class PortalTile extends StallTile {
 
     public PortalTile getOther() {
         return other;
+    }
+
+    public Color getColour() {
+        return colour;
     }
 }

@@ -3,8 +3,11 @@ package com.redsponge.sponge.test;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class LevelParser {
 
@@ -19,19 +22,24 @@ public class LevelParser {
         put("|", ObstacleTile::new);
         put("X", DeathTile::new);
         put("+", OrbGiveTile::new);
+        put(".", WinTile::new);
     }};
 
-    public static LevelSimulator parseLevel(String text) {
+    public static Level parseLevel(String text) {
         HashMap<String, int[]> portalPairs = new HashMap<>();
         int numPortals = 0;
-        LevelSimulator levelSim = new LevelSimulator();
+        RoomTile[][] room = new RoomTile[7][7];
+//        Level levelSim = new LevelSimulator();
+        for (int i = 0; i < 49; i++) {
+            room[i / 7][i % 7] = new EmptyTile();
+        }
         String[] lines = text.split("\n");
         for(int y = 0; y < 7; y++) {
-            System.out.println(lines[y]);
             String[] partss = lines[y].split(",");
-            System.out.println(partss.length);
+//            System.out.println(partss[6] + " " + partss.length + " " + lines[y]);
             for (int x = 0; x < partss.length; x++) {
-                String part = partss[x];
+                String part = partss[x].trim();
+                if(part.isEmpty()) part = " ";
                 if(generators.get(part) == null) {
                     if('A' <= part.charAt(0) && part.charAt(0) <= 'Z') {
                         if (portalPairs.get(part) == null) {
@@ -42,27 +50,30 @@ public class LevelParser {
                             System.out.println("Creating Portal '" + part + "'");
                             pp[2] = x;
                             pp[3] = 6 - y;
-                            createPortalPair(levelSim, pp, numPortals++);
+                            createPortalPair(room, pp, numPortals++);
                             portalPairs.remove(part);
                         }
                     } else {
                         System.out.println("Skipping '" + part + "'");
                     }
-                    continue;
+                } else {
+                    room[6 - y][x] = generators.get(part).generate();
                 }
-                levelSim.setRoomObject(generators.get(part).generate(), x, 6 - y);
             }
         }
-        return levelSim;
+        String[] counts = lines[7].split(" ");
+        List<Integer> ints = Arrays.stream(counts).map(Integer::parseInt).collect(Collectors.toList());
+        System.out.println(ints);
+        return new Level(room, ints.get(4), ints.get(2), ints.get(3), ints.get(0), ints.get(1));
     }
 
-    private static void createPortalPair(LevelSimulator levelSim, int[] pp, int idx) {
+    private static void createPortalPair(RoomTile[][] room, int[] pp, int idx) {
         PortalTile a = new PortalTile(PortalTile.colours[idx]);
         PortalTile b = new PortalTile(PortalTile.colours[idx], a);
         a.setOther(b);
 
-        levelSim.setRoomObject(a, pp[0], pp[1]);
-        levelSim.setRoomObject(b, pp[2], pp[3]);
+        room[pp[1]][pp[0]] = a;
+        room[pp[3]][pp[2]] = b;
     }
 
 }

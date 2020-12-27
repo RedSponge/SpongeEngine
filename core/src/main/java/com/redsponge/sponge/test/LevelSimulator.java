@@ -21,6 +21,12 @@ public class LevelSimulator {
         }
     }
 
+    public void loadLevel(RoomTile[][] tiles) {
+        for (int i = 0; i < tiles.length; i++) {
+            System.arraycopy(tiles[i], 0, room[i], 0, tiles[i].length);
+        }
+    }
+
     public void setRoomObject(RoomTile obj, int x, int y) {
         room[y][x] = obj;
     }
@@ -50,7 +56,6 @@ public class LevelSimulator {
             }
             nextObject.onPlayerEnter(this);
         }
-        System.out.println(playerVel);
     }
 
     public Vector2 findTile(RoomTile other) {

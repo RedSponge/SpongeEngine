@@ -4,59 +4,150 @@ size: 256,128
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+crystal
+  rotate: false
+  xy: 38, 2
+  size: 16, 21
+  orig: 16, 21
+  offset: 0, 0
+  index: -1
+ground
+  rotate: false
+  xy: 2, 24
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 1
+ground
+  rotate: false
+  xy: 38, 44
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 2
+ground
+  rotate: false
+  xy: 210, 89
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 3
+ground
+  rotate: false
+  xy: 2, 5
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 4
+ground
+  rotate: false
+  xy: 38, 25
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 5
+ground
+  rotate: false
+  xy: 74, 44
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 6
+ground
+  rotate: false
+  xy: 210, 70
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 7
+ground
+  rotate: false
+  xy: 74, 25
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: 8
+lego
+  rotate: false
+  xy: 56, 6
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: -1
+pillow_down
+  rotate: false
+  xy: 2, 43
+  size: 34, 18
+  orig: 34, 18
+  offset: 0, 0
+  index: -1
+pillow_up
+  rotate: false
+  xy: 210, 108
+  size: 34, 18
+  orig: 34, 18
+  offset: 0, 0
+  index: -1
 portal
   rotate: false
-  xy: 2, 2
+  xy: 2, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 1
 portal
   rotate: false
-  xy: 28, 2
+  xy: 28, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 2
 portal
   rotate: false
-  xy: 54, 2
+  xy: 54, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 3
 portal
   rotate: false
-  xy: 80, 2
+  xy: 80, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 4
 portal
   rotate: false
-  xy: 106, 2
+  xy: 106, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 5
 portal
   rotate: false
-  xy: 132, 2
+  xy: 132, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 6
 portal
   rotate: false
-  xy: 158, 2
+  xy: 158, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 7
 portal
   rotate: false
-  xy: 184, 2
+  xy: 184, 63
   size: 24, 63
   orig: 24, 63
   offset: 0, 0
   index: 8
+trampoline
+  rotate: false
+  xy: 110, 44
+  size: 34, 17
+  orig: 34, 17
+  offset: 0, 0
+  index: -1
