@@ -64,4 +64,12 @@ public class TimedAction extends Component {
     public boolean isRunning() {
         return value > 0;
     }
+
+    public void setOnComplete(Runnable onComplete) {
+        this.onComplete = onComplete;
+    }
+
+    public Runnable getOnComplete() {
+        return onComplete;
+    }
 }

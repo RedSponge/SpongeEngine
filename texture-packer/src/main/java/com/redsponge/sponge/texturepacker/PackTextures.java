@@ -8,6 +8,7 @@ public class PackTextures {
 //        TexturePacker.processIfModified("raw/transitions", "../assets/internal/transitions", "transitions");
         TexturePacker.processIfModified("raw/torch", "../assets/test/texture", "torch");
         TexturePacker.processIfModified("raw/player", "../assets/game/texture", "player");
+        TexturePacker.processIfModified("raw/world", "../assets/game/texture", "world");
     }
 
 }

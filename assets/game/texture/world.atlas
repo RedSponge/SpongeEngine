@@ -1,0 +1,62 @@
+
+world.png
+size: 256,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+portal
+  rotate: false
+  xy: 2, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 1
+portal
+  rotate: false
+  xy: 28, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 2
+portal
+  rotate: false
+  xy: 54, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 3
+portal
+  rotate: false
+  xy: 80, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 4
+portal
+  rotate: false
+  xy: 106, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 5
+portal
+  rotate: false
+  xy: 132, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 6
+portal
+  rotate: false
+  xy: 158, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 7
+portal
+  rotate: false
+  xy: 184, 2
+  size: 24, 63
+  orig: 24, 63
+  offset: 0, 0
+  index: 8

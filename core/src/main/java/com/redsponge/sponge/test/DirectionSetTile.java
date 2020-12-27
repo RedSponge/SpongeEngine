@@ -2,6 +2,7 @@ package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.event.EventBus;
 
 public class DirectionSetTile implements RoomTile {
 
@@ -19,6 +20,7 @@ public class DirectionSetTile implements RoomTile {
     @Override
     public void onPlayerEnter(LevelSimulator levelIn) {
         levelIn.getPlayerVel().set(dir);
+        EventBus.getInstance().dispatch(new DelayedDirChangeEvent());
     }
 
     @Override

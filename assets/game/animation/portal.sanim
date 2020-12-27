@@ -1,0 +1,50 @@
+{
+  "atlas": "world.atlas",
+  "animations": {
+    "portal": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 1
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 2
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 3
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 4
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 5
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 6
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 7
+        },
+        {
+          "frame": "portal",
+          "length": 100,
+          "idx": 8
+        }
+      ]
+    }
+  }
+}

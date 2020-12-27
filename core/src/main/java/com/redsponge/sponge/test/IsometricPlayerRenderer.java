@@ -21,6 +21,8 @@ public class IsometricPlayerRenderer extends Entity {
     private Texture upTex, downTex;
 
     private AnimationComponent drawn;
+    private AnimationComponent portalDrawn;
+
     private Vector2 referencePos, referenceVel;
     private Vector2 requiredByReference;
     private IsometricTileMapRenderer mapRenderer;
@@ -31,6 +33,12 @@ public class IsometricPlayerRenderer extends Entity {
     private float jumpLength = 0.6f;
     private float jumpHeight = 10;
 
+    private Animation<TextureRegion> portalAnimation;
+    private TimedAction portalTime;
+    private TimedAction portalExitTime;
+    private Vector2 lastReferenceVel;
+    private boolean delayed;
+
     public IsometricPlayerRenderer(Vector2 pos, Vector2 refPos, Vector2 refVel) {
         super(pos);
         vel = new Vector2();
@@ -38,11 +46,14 @@ public class IsometricPlayerRenderer extends Entity {
         this.referenceVel = refVel;
         this.requiredByReference = new Vector2();
         add(jumpingTime = new TimedAction());
+        add(portalTime = new TimedAction());
+        add(portalExitTime = new TimedAction());
     }
 
     @Override
     public void added(Scene scene) {
         super.added(scene);
+        lastReferenceVel = new Vector2(1, 0);
 //        upTex = scene.getAssets().get("player_up.png");
 //        downTex = scene.getAssets().get("player_down.png");
 
@@ -50,8 +61,12 @@ public class IsometricPlayerRenderer extends Entity {
 
         frontAnimation = playerAnimations.get("front").getBuiltAnimation();
         backAnimation = playerAnimations.get("back").getBuiltAnimation();
+        portalAnimation = scene.getAssets().getAnimationGroup("portal").get("portal").getBuiltAnimation();
+
         drawn = new AnimationComponent(true, true, backAnimation);
         add(drawn);
+
+        add(portalDrawn = new AnimationComponent(false, false, portalAnimation));
         mapRenderer = scene.first(IsometricTileMapRenderer.class);
 
         EventBus.getInstance().registerListener(this);
@@ -60,12 +75,21 @@ public class IsometricPlayerRenderer extends Entity {
     @Override
     public void update(float delta) {
         mapRenderer.getPositionOfIndex((int) referencePos.x, (int) referencePos.y, requiredByReference);
-        getPositionf().x = UMath.approach(getPositionf().x, requiredByReference.x + 14, 50 * delta);
-        getPositionf().y = UMath.approach(getPositionf().y, requiredByReference.y + 7, 50 * delta / 2);
-        if(getPositionf().x ==  requiredByReference.x + 14 && getPositionf().y == requiredByReference.y + 7) {
-            System.out.println("STAHP");
-            mapRenderer.getLevel().progressPlayer();
+        if(!portalTime.isRunning() && !portalExitTime.isRunning()) {
+            getPositionf().x = UMath.approach(getPositionf().x, requiredByReference.x + 14, 50 * delta);
+            getPositionf().y = UMath.approach(getPositionf().y, requiredByReference.y + 7, 50 * delta / 2);
+            if (getPositionf().x == requiredByReference.x + 14 && getPositionf().y == requiredByReference.y + 7) {
+                System.out.println("STAHP");
+                mapRenderer.getLevel().progressPlayer();
+                if(!delayed) {
+                    lastReferenceVel.set(referenceVel);
+                } else {
+                    delayed = false;
+                }
 //            drawn.resetTime();
+            }
+        } else if(!drawn.isVisible()) {
+
         }
 //        setX(requiredByReference.x + 14);
 //        setY(requiredByReference.y + 7);
@@ -76,11 +100,21 @@ public class IsometricPlayerRenderer extends Entity {
         drawn.setOffsetX(-4-1);
         drawn.setOffsetY(-2-1 + jumpOffset);
 
-        if(referenceVel.x != 0 || referenceVel.y != 0) {
-            boolean up = referenceVel.x + referenceVel.y > 0;
-            boolean flipped = referenceVel.y > 0 || referenceVel.x < 0;
+        portalDrawn.setOffsetX(-5).setOffsetY(-3 + jumpOffset).setVisible(portalTime.isRunning());
+        portalDrawn.setActive(portalTime.isRunning() || portalExitTime.isRunning());
+        portalDrawn.setVisible(portalTime.isRunning() || portalExitTime.isRunning());
+
+        boolean shouldShow = (portalTime.isRunning() && portalTime.getValue() > 0.4f) || (portalExitTime.isRunning() && portalExitTime.getValue() < 0.4f) || (!portalTime.isRunning() && !portalExitTime.isRunning());
+        drawn.setVisible(shouldShow);
+
+
+        if(lastReferenceVel.x != 0 || lastReferenceVel.y != 0) {
+            boolean up = lastReferenceVel.x + lastReferenceVel.y > 0;
+            boolean flipped = lastReferenceVel.y > 0 || lastReferenceVel.x < 0;
             drawn.setAnimation(up ? backAnimation : frontAnimation);
             drawn.setFlippedX(flipped);
+
+            portalDrawn.setFlippedX(flipped);
         }
         drawn.getColor().set(mapRenderer.getLevel().isPlayerProtected() ? Color.BLUE : Color.WHITE);
 
@@ -94,6 +128,17 @@ public class IsometricPlayerRenderer extends Entity {
 
     @EventHandler
     public void onEnterPortal(PortalEnterEvent event) {
+        portalTime.setValue(portalAnimation.getAnimationDuration());
+        portalDrawn.getColor().set(event.color).add(0.2f, 0.2f, 0.2f, 0.2f);
+        portalTime.setOnComplete(() -> {
+            getPositionf().set(mapRenderer.getPositionOfIndex((int) event.position.x, (int) event.position.y, requiredByReference).add(14, 7));
+            portalExitTime.setValue(portalAnimation.getAnimationDuration());
+            portalDrawn.resetTime();
+        });
+    }
 
+    @EventHandler
+    public void onDelayedDirChange(DelayedDirChangeEvent event) {
+        delayed = true;
     }
 }

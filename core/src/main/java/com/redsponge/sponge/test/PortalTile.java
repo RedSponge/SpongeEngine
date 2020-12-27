@@ -1,6 +1,7 @@
 package com.redsponge.sponge.test;
 
 import com.badlogic.gdx.graphics.Color;
+import com.redsponge.sponge.event.EventBus;
 
 public class PortalTile extends StallTile {
     private PortalTile other;
@@ -16,6 +17,7 @@ public class PortalTile extends StallTile {
 
     @Override
     public void onReleasePlayer(LevelSimulator levelIn) {
+        EventBus.getInstance().dispatch(new PortalEnterEvent(colour, levelIn.findTile(other)));
         levelIn.getPlayerPos().set(levelIn.findTile(other));
     }
 
