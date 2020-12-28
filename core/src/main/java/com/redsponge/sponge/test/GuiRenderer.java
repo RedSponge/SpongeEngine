@@ -121,9 +121,12 @@ public class GuiRenderer extends Entity {
     public void update(float delta) {
         mousePosition = getScene().getRenderingPipeline().getToScreenViewport().unproject(new Vector2(Gdx.input.getX(), Gdx.input.getY()));
 
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            togglePausePlay();
+        }
+        else if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             Vector2 ps = mapRenderer.getIndexByPoint(mousePosition, new Vector2());
-            if(ps.x >= 0 && ps.y >= 0 && ps.x < 7 && ps.y < 7 && selectedIndex != -1 && level.getTiles()[(int) ps.y][(int) ps.x] instanceof EmptyTile) {
+            if(ps.x >= 0 && ps.y >= 0 && ps.x < 7 && ps.y < 7 && selectedIndex != -1 && level.getTiles()[(int) ps.y][(int) ps.x] instanceof EmptyTile && mapRenderer.getLevel().getRoom()[(int) ps.y][(int) ps.x] instanceof EmptyTile) {
                 System.out.println(ps);
                 switch (selectedIndex) {
                     case 0: mapRenderer.getLevel().setRoomObject(new DirectionSetTile(new Vector2(1, 0)), (int) ps.x, (int) ps.y); break;

@@ -131,7 +131,7 @@ public class SpongeGame implements ApplicationListener {
             Logger.error(this, th);
             Gdx.app.exit();
         }
-        Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
+//        Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 
     private void renderScene(Scene scene) {

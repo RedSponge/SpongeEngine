@@ -19,7 +19,7 @@ public class GameScene extends Scene {
 
     private Level level;
 
-    private int currentLevel = 8;
+    private int currentLevel = 0;
     private String[] levels = new String[] {
             "levels/l1.txt",
             "levels/l2.txt",
@@ -30,6 +30,7 @@ public class GameScene extends Scene {
             "levels/middle.txt",
             "levels/two_portals.txt",
             "levels/l9.txt",
+            "levels/l10.txt",
             "levels/win.txt"
     };
     private float winTime;
@@ -53,7 +54,7 @@ public class GameScene extends Scene {
         loadLevel(levels[currentLevel]);
 
         rPipeline.addEffect(sceneTransitionEffect);
-        music = Gdx.audio.newMusic(Gdx.files.internal("restless.ogg"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("restless.mp3"));
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
@@ -82,9 +83,6 @@ public class GameScene extends Scene {
 
     @Override
     public void update(float delta) {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            simulator.progressPlayer();
-        }
         if(winTime > 1 && winTime - delta <= 1) {
             loadLevel(levels[++currentLevel]);
         }

@@ -16,9 +16,9 @@ public class Lwjgl3Launcher {
 
 	private static Lwjgl3ApplicationConfiguration getDefaultConfiguration() {
 		Lwjgl3ApplicationConfiguration configuration = new Lwjgl3ApplicationConfiguration();
-		configuration.setTitle("Sponge");
-		configuration.setWindowedMode(640, 480);
-		configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+		configuration.setTitle("Restless Slumber");
+		configuration.setWindowedMode(640, 360);
+		configuration.setWindowIcon("icon128.png", "icon64.png", "icon32.png", "icon16.png");
 		return configuration;
 	}
 }
