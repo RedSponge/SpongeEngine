@@ -77,8 +77,8 @@ public class RenderingPipeline implements Disposable {
         FrameBuffer[] buffers = {pongFBO, mainFBO};
         int idx = 0;
 
-        batch.setProjectionMatrix(copyViewport.getCamera().combined);
         copyViewport.apply();
+        batch.setProjectionMatrix(copyViewport.getCamera().combined);
 
         for (int i = 0; i < effects.size; i++) {
             if(effects.get(i).isActive()) {
