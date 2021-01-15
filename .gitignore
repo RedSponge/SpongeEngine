@@ -12,6 +12,7 @@ hs_err_pid*
 
 # Log files
 assets/logs/*.log
+assets/files.txt
 
 ## Android:
 android/libs/armeabi/
