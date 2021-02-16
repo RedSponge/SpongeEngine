@@ -53,6 +53,7 @@ public class Player extends PActor {
         add(forceDownTime = new TimedAction());
         add(attackTime = new TimedAction());
         vel = new Vector2();
+        setzIndex(10);
     }
 
     @Override

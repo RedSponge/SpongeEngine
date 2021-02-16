@@ -13,7 +13,6 @@ public class SAnimation {
     private Array<SFrame<TextureRegion>> frames;
     private PlayMode playMode;
     private Animation<TextureRegion> builtAnimation;
-
     private float[] timeStamps;
 
     public SAnimation(Array<SFrame<TextureRegion>> frames, PlayMode playMode) {

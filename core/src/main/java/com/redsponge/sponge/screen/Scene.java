@@ -12,13 +12,7 @@ import com.redsponge.sponge.rendering.TransitionEffect;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public abstract class Scene {
 
@@ -29,6 +23,8 @@ public abstract class Scene {
     private final List<Entity> entities;
     private final Map<Class<?>, List<Entity>> entitiesByType;
     private final Map<Class<?>, List<Component>> componentsByType;
+
+    private boolean isZSortRequired;
 
     protected SceneAssets assets;
 
@@ -56,6 +52,10 @@ public abstract class Scene {
 
     public void update(float delta) {
         updateLists();
+        if(isZSortRequired) {
+            entities.sort(Comparator.comparingInt(Entity::getzIndex));
+            isZSortRequired = false;
+        }
         for (Entity entity : entities) {
             if(entity.isActive()) {
                 entity.update(delta);
@@ -106,6 +106,7 @@ public abstract class Scene {
                 entity.removed();
             }
             toRemove.clear();
+            isZSortRequired = true;
         }
 
         if(toAdd.size() > 0) {
@@ -114,6 +115,7 @@ public abstract class Scene {
                 trackEntity(entity);
                 entity.added(this);
             }
+            isZSortRequired = true;
         }
 
         for (Entity entity : entities) {
@@ -251,5 +253,9 @@ public abstract class Scene {
 
     public RenderingPipeline getRenderingPipeline() {
         return rPipeline;
+    }
+
+    public void requireZSort() {
+        this.isZSortRequired = true;
     }
 }

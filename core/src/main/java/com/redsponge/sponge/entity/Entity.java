@@ -27,6 +27,7 @@ public abstract class Entity {
     private Set<Component> toRemove;
 
     private Vector2 position;
+    private int zIndex;
     private Hitbox hitbox;
 
     public Entity(Vector2 pos) {
@@ -111,6 +112,15 @@ public abstract class Entity {
             }
             toAdd.clear();
         }
+    }
+
+    public void setzIndex(int zIndex) {
+        this.zIndex = zIndex;
+        if(scene != null) scene.requireZSort();
+    }
+
+    public int getzIndex() {
+        return zIndex;
     }
 
     public Vector2 getPositionf() {
