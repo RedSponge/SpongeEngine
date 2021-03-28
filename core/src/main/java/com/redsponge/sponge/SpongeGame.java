@@ -3,27 +3,19 @@ package com.redsponge.sponge;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.FPSLogger;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
+import com.redsponge.sponge.game.GameScene;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.test.TestScene;
 import com.redsponge.sponge.util.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SpongeGame implements ApplicationListener {
 
@@ -64,12 +56,12 @@ public class SpongeGame implements ApplicationListener {
 
         Logger.info(this, "Initializing Game");
         init();
-        setScene(new TestScene());
+        setScene(new GameScene());
     }
 
     protected void init() {}
 
-    public void setScene(TestScene scene) {
+    public void setScene(Scene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();

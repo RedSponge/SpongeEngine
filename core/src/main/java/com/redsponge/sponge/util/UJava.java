@@ -1,8 +1,11 @@
 package com.redsponge.sponge.util;
 
+import com.badlogic.gdx.math.MathUtils;
+
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Collection;
 
 public final class UJava {
 
@@ -15,6 +18,10 @@ public final class UJava {
 
         }
         return output.toString();
+    }
+
+    public static <T> T randomValue(T[] array) {
+        return array[MathUtils.random(array.length - 1)];
     }
 
 }

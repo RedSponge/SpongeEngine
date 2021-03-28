@@ -1,4 +1,4 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -20,5 +20,10 @@ public class StaticBackground extends Entity {
         int y = (int) getScene().getViewport().getCamera().position.y - getScene().getHeight() / 2;
         int x = (int) getScene().getViewport().getCamera().position.x - getScene().getWidth() / 2;
         SpongeGame.i().getShapeDrawer().filledRectangle(x, y, getScene().getWidth(), getScene().getHeight(), colour);
+    }
+
+    @Override
+    public int getzIndex() {
+        return -999;
     }
 }

@@ -66,7 +66,7 @@ public class PActor extends Entity {
             if(hit != null) {
                 Collision c = new Collision(new Vector2(sign, 0), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) onCollision.onCollision(c);
-                EventBus.getInstance().dispatch(new CollisionEvent(c));
+                EventBus.getInstance().dispatch(new CollisionEvent(this, c));
                 return true;
             }
 
@@ -116,7 +116,7 @@ public class PActor extends Entity {
             if(hit != null) {
                 Collision c = new Collision(tmp.set(Vector2.Y).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) onCollision.onCollision(c);
-                EventBus.getInstance().dispatch(new CollisionEvent(c));
+                EventBus.getInstance().dispatch(new CollisionEvent(this, c));
                 return true;
             }
 

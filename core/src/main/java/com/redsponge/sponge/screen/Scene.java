@@ -1,5 +1,7 @@
 package com.redsponge.sponge.screen;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.redsponge.sponge.SpongeGame;
@@ -71,6 +73,7 @@ public abstract class Scene {
     }
     public void render() {
         rPipeline.beginCapture();
+
         SpongeGame.i().getBatch().begin();
         for (Entity entity : entities) {
             if(entity.isVisible()) {

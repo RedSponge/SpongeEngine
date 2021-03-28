@@ -21,7 +21,7 @@ public final class UGL {
 
     public static FrameBuffer createFrameBuffer(int width, int height, boolean depth, boolean stencil) {
         try {
-            return new FrameBuffer(Format.RGBA8888, width, height, depth, stencil);
+                return new FrameBuffer(Format.RGBA8888, width, height, depth, stencil);
         } catch (GdxRuntimeException e) {
             Logger.warn(UGL.class, "Tried to create FBO in GWT - falling back on Format.RGBA");
             return new FrameBuffer(Format.RGB565, width, height, depth, stencil);
