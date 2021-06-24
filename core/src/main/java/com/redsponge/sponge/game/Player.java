@@ -1,7 +1,8 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent.PositionPolicy;
@@ -14,6 +15,7 @@ import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.rendering.BloomEffect;
 import com.redsponge.sponge.screen.Scene;
+import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.Logger;
 import com.redsponge.sponge.util.UMath;
 
@@ -29,12 +31,12 @@ public class Player extends PActor {
 
     private final float coyoteTime = 0.1f;
     private final float jumpTime = 0.2f;
-    private final float jumpSpeed = 160;
+    private final float jumpSpeed = 180;
     private final float jumpHorizontalBoost = 30;
-    private final float maxFall = 160;
-    private final float gravity = -1000;
-    private final float halfGravityThreshold = 40;
-    private final float maxRun = 200;
+    private final float maxFall = 200;
+    private final float gravity = -600;
+    private final float halfGravityThreshold = 30;
+    private final float maxRun = 150;
     private final float accel = 800;
     private final float accelAirMultiplier = 0.8f;
     private final float maxJumpMemoryTime = 0.1f;
@@ -43,6 +45,7 @@ public class Player extends PActor {
 
     private AnimationComponent drawn;
     private AnimationNodeSystem system;
+    private Hitbox attackBox;
 
     public Player(Vector2 pos) {
         super(pos);
@@ -67,12 +70,6 @@ public class Player extends PActor {
         add(drawn = new AnimationComponent(true, true, system.getActiveAnimation()));
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
         drawn.setOffsetX(-8);
-        BloomEffect be = scene.getRenderingPipeline().getEffect(BloomEffect.class);
-        be.addBloomRender(() -> {
-            drawn.getColor().set(Color.BLACK);
-            render();
-            drawn.getColor().set(Color.WHITE);
-        });
     }
 
     @Override
@@ -83,6 +80,7 @@ public class Player extends PActor {
 
     public void attack() {
         attackTime.setValue(system.getAnimationGroup().get("attack_up").getBuiltAnimation().getAnimationDuration());
+        EventBus.getInstance().dispatch(new PunchEvent(attackBox = new Hitbox(getX() - 10, getY() + getHeight() - 20, getWidth() + 10, 90), this, new Vector2(0, 1)));
     }
 
     @Override
@@ -109,6 +107,7 @@ public class Player extends PActor {
             moveX(vel.x * delta, this::collideX);
             moveY(vel.y * delta, this::collideY);
         }
+
 
         if(Controls.HORIZONTAl.get() != 0) {
             drawn.setFlippedX(Controls.HORIZONTAl.get() < 0);
@@ -157,8 +156,13 @@ public class Player extends PActor {
             vel.x += jumpHorizontalBoost * Controls.HORIZONTAl.get();
         } else {
             float mult;
-            if(Controls.JUMP.isPressed() && Math.abs(vel.y) <= halfGravityThreshold) mult = 0.5f;
-            else mult = 1;
+            if(Controls.JUMP.isPressed()) {
+                if(vel.y > 0) {
+                    if(Math.abs(vel.y) <= halfGravityThreshold) mult = 0.5f;
+                    else mult = 1;
+                } else mult = 1.5f;
+            }
+            else mult = 2f;
 
             vel.y = UMath.approach(vel.y, maxFall, gravity * mult * delta);
         }
@@ -191,6 +195,10 @@ public class Player extends PActor {
     @Override
     public void render() {
         super.render();
+        if(attackBox != null) {
+            SpongeGame.i().getShapeDrawer().setColor(Color.YELLOW);
+            SpongeGame.i().getShapeDrawer().rectangle(attackBox.getRectangle());
+        }
     }
 
     @EventHandler

@@ -42,12 +42,8 @@
   "nodes": {
     "idle": {
       "links": [
-        {
-          "prefab": "to_attack"
-        },
-        {
-          "prefab": "to_jump"
-        },
+        { "prefab": "to_attack" },
+        { "prefab": "to_jump" },
         {
           "to": "run",
           "condition": {

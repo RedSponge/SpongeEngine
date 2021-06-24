@@ -1,0 +1,20 @@
+
+game.png
+size: 512, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+background
+  rotate: false
+  xy: 2, 36
+  size: 320, 180
+  orig: 320, 180
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

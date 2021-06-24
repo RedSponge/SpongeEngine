@@ -1,9 +1,8 @@
-package com.redsponge.sponge.test;
+package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.Input.Keys;
 import com.redsponge.sponge.input.InputAxis;
 import com.redsponge.sponge.input.InputEntry;
-import sun.awt.AWTAccessor.InputEventAccessor;
 
 public class Controls {
 

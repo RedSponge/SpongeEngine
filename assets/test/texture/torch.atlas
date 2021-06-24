@@ -1,8 +1,8 @@
 
 torch.png
-size: 32,32
+size: 32, 32
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Nearest, Nearest
 repeat: none
 fire
   rotate: false
@@ -52,11 +52,11 @@ holder
   size: 8, 13
   orig: 8, 13
   offset: 0, 0
-  index: 4
+  index: 3
 holder
   rotate: false
   xy: 12, 2
   size: 8, 13
   orig: 8, 13
   offset: 0, 0
-  index: 3
+  index: 4

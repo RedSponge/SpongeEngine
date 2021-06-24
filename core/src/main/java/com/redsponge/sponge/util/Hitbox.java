@@ -72,6 +72,10 @@ public class Hitbox {
         return y + height;
     }
 
+    public Vector2 getCenter() {
+        return getOrigin().add(width / 2f, height / 2f);
+    }
+
     public Vector2 getOrigin() {
         return new Vector2(x, y);
     }

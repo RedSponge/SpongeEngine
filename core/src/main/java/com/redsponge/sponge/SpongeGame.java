@@ -2,6 +2,8 @@ package com.redsponge.sponge;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.FPSLogger;
@@ -14,8 +16,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
+import com.redsponge.sponge.game.GameScene;
 import com.redsponge.sponge.screen.Scene;
-import com.redsponge.sponge.test.TestScene;
 import com.redsponge.sponge.util.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
 
@@ -64,12 +66,12 @@ public class SpongeGame implements ApplicationListener {
 
         Logger.info(this, "Initializing Game");
         init();
-        setScene(new TestScene());
+        setScene(new GameScene());
     }
 
     protected void init() {}
 
-    public void setScene(TestScene scene) {
+    public void setScene(GameScene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();
@@ -117,6 +119,10 @@ public class SpongeGame implements ApplicationListener {
 
     @Override
     public void render() {
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F11)) {
+            toggleFullscreen();
+        }
+
         if(scene == null) {
             Gdx.gl.glClearColor(0, 0, 0, 1.0f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -132,6 +138,16 @@ public class SpongeGame implements ApplicationListener {
             Gdx.app.exit();
         }
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
+    }
+
+    private void toggleFullscreen() {
+        boolean isFullscreen = Gdx.graphics.isFullscreen();
+        Graphics.DisplayMode mode = Gdx.graphics.getDisplayMode();
+        if(isFullscreen) {
+            Gdx.graphics.setWindowedMode(mode.width, mode.height);
+        } else {
+            Gdx.graphics.setFullscreenMode(mode);
+        }
     }
 
     private void renderScene(Scene scene) {
