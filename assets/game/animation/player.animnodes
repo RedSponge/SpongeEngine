@@ -9,7 +9,7 @@
             "type": "equals",
             "var_a": {
               "type": "variable",
-              "name": "is_attacking"
+              "name": "is_attacking_up"
             },
             "var_b": {
               "type": "boolean",
@@ -17,6 +17,20 @@
             }
           },
           "reset_time": true
+        },
+        {
+          "to": "attack_front",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking_front"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
         }
       ]
     },
@@ -35,6 +49,51 @@
               "value": false
             }
           }
+        }
+      ]
+    },
+    "from_attack_to_idle": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "condition",
+              "condition": {
+                "type": "and",
+                "conditions": [
+                  {
+                    "type": "equals",
+                    "var_a": {
+                      "type": "variable",
+                      "name": "is_attacking_up"
+                    },
+                    "var_b": {
+                      "type": "boolean",
+                      "value": false
+                    }
+                  },
+                  {
+                    "type": "equals",
+                    "var_a": {
+                      "type": "variable",
+                      "name": "is_attacking_front"
+                    },
+                    "var_b": {
+                      "type": "boolean",
+                      "value": false
+                    }
+                  },
+                ]
+              }
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          },
+          "reset_time": false
         }
       ]
     }
@@ -92,21 +151,16 @@
     "attack_up": {
       "links": [
         {
-          "to": "idle",
-          "condition": {
-            "type": "equals",
-            "var_a": {
-              "type": "variable",
-              "name": "is_attacking"
-            },
-            "var_b": {
-              "type": "boolean",
-              "value": false
-            }
-          },
-          "reset_time": false
-        }
+          "prefab": "from_attack_to_idle"
+        },
       ]
+    },
+    "attack_front": {
+      "links": [
+          {
+            "prefab": "from_attack_to_idle"
+          },
+        ]
     },
     "jump_up": {
       "links": [

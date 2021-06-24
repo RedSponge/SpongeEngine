@@ -10,6 +10,7 @@ import com.redsponge.sponge.animation.AnimationChangeCondition.LesserThanCompari
 import com.redsponge.sponge.animation.AnimationChangeCondition.NotChangeCondition;
 import com.redsponge.sponge.animation.AnimationChangeCondition.OrChangeCondition;
 import com.redsponge.sponge.animation.Values.ConstantValueHolder;
+import com.redsponge.sponge.animation.Values.ConditionValueHolder;
 import com.redsponge.sponge.animation.Values.ValueHolder;
 
 import java.util.HashMap;
@@ -51,6 +52,9 @@ public class AnimationNode {
     }
 
     private AnimationChangeCondition parseCondition(JsonValue condition, AnimationNodeSystem system) {
+        if(!condition.has("type")) {
+            throw new RuntimeException("Failed to parse condition! No type value! json:\n{\n" + condition + "\n}");
+        }
         String type = condition.getString("type");
         switch (type) {
             case "equals": {
@@ -82,14 +86,20 @@ public class AnimationNode {
                 return new NotChangeCondition(parseCondition(condition.get("condition"), system));
             }
             case "and": {
-                AnimationChangeCondition a = parseCondition(condition.get("condition_a"), system);
-                AnimationChangeCondition b = parseCondition(condition.get("condition_b"), system);
-                return new AndChangeCondition(a, b);
+                JsonValue conditionsValue = condition.get("conditions");
+                AnimationChangeCondition[] conditions = new AnimationChangeCondition[conditionsValue.size];
+                for (int i = 0; i < conditions.length; i++) {
+                    conditions[i] = parseCondition(conditionsValue.get(i), system);
+                }
+                return new AndChangeCondition(conditions);
             }
             case "or": {
-                AnimationChangeCondition a = parseCondition(condition.get("condition_a"), system);
-                AnimationChangeCondition b = parseCondition(condition.get("condition_b"), system);
-                return new OrChangeCondition(a, b);
+                JsonValue conditionsValue = condition.get("conditions");
+                AnimationChangeCondition[] conditions = new AnimationChangeCondition[conditionsValue.size];
+                for (int i = 0; i < conditions.length; i++) {
+                    conditions[i] = parseCondition(conditionsValue.get(i), system);
+                }
+                return new OrChangeCondition(conditions);
             }
         }
         throw new RuntimeException("Failed to parse condition of type '" + type + "'\n json is\n" + condition);
@@ -106,6 +116,8 @@ public class AnimationNode {
                 return new ConstantValueHolder<>(value.getFloat("value"));
             case "int":
                 return new ConstantValueHolder<>(value.getInt("value"));
+            case "condition":
+                return new ConditionValueHolder(parseCondition(value.get("condition"), system));
         }
         throw new RuntimeException("Failed to parse value of type '" + type + "'\n json is\n" + value);
     }

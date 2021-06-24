@@ -3,6 +3,7 @@ package com.redsponge.sponge.animation;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 import java.util.Arrays;
@@ -13,12 +14,14 @@ public class SAnimation {
     private Array<SFrame<TextureRegion>> frames;
     private PlayMode playMode;
     private Animation<TextureRegion> builtAnimation;
+    private final Vector2[] offsets;
     private float[] timeStamps;
 
-    public SAnimation(Array<SFrame<TextureRegion>> frames, PlayMode playMode) {
+    public SAnimation(Array<SFrame<TextureRegion>> frames, PlayMode playMode, Vector2[] offsets) {
         this.frames = new Array<>(frames);
         this.playMode = playMode;
         this.timeStamps = new float[frames.size];
+        this.offsets = offsets;
         buildAnimation();
     }
 
@@ -111,5 +114,9 @@ public class SAnimation {
 
     public void rebuild() {
         buildAnimation();
+    }
+
+    public Vector2[] getOffsets() {
+        return offsets;
     }
 }

@@ -13,7 +13,6 @@ import com.redsponge.sponge.event.EventHandler;
 import com.redsponge.sponge.physics.Collision;
 import com.redsponge.sponge.physics.JumpThru;
 import com.redsponge.sponge.physics.PActor;
-import com.redsponge.sponge.rendering.BloomEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
 import com.redsponge.sponge.util.Logger;
@@ -21,7 +20,18 @@ import com.redsponge.sponge.util.UMath;
 
 public class Player extends PActor {
 
+
+
+
+    enum AttackDirection {
+        Front,
+        Up,
+        Down
+    };
+
+    private AttackDirection attackDir;
     private Vector2 vel;
+    private Vector2 attackVel;
 
     private TimedAction jumpGraceTime;
     private TimedAction varJumpTime;
@@ -45,7 +55,9 @@ public class Player extends PActor {
 
     private AnimationComponent drawn;
     private AnimationNodeSystem system;
-    private Hitbox attackBox;
+    private PunchEvent punchEventToSend;
+
+    private boolean isFacingLeft;
 
     public Player(Vector2 pos) {
         super(pos);
@@ -56,6 +68,7 @@ public class Player extends PActor {
         add(forceDownTime = new TimedAction());
         add(attackTime = new TimedAction());
         vel = new Vector2();
+        attackVel = new Vector2();
         setzIndex(10);
     }
 
@@ -67,7 +80,7 @@ public class Player extends PActor {
         //animations = getScene().getAssets().getAnimationGroup("player");
         system = getScene().getAssets().getAnimationNodeSystemInstance("player");
 //        system.addNodes(Gdx.files.internal("test/animation/player.animnodes"));
-        add(drawn = new AnimationComponent(true, true, system.getActiveAnimation()));
+        add(drawn = new AnimationComponent(true, true, system.getActiveBuiltAnimation()));
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
         drawn.setOffsetX(-8);
     }
@@ -79,8 +92,32 @@ public class Player extends PActor {
     }
 
     public void attack() {
+        int vertical = Controls.VERTICAL.get();
+
+        switch (vertical) {
+            case -1: {
+                attackDir = AttackDirection.Down;
+                punchEventToSend = new PunchEvent(new Hitbox(0, 0, 0, 0), this, new Vector2(0, -1));
+            } break;
+            case  0: {
+                attackDir = AttackDirection.Front;
+                if(isFacingLeft) {
+                    punchEventToSend = new PunchEvent(new Hitbox(getX() - 60, getY() - 10, 50 + getWidth(), getHeight() + 20), this, new Vector2(getWidth() + 50 + 50, -10));
+                } else {
+                    punchEventToSend = new PunchEvent(new Hitbox(getX() + 10, getY() - 10, 50 + getWidth(), getHeight() + 20), this, new Vector2(-50, -10));
+                }
+            } break;
+            case 1: {
+                attackDir = AttackDirection.Up;
+                punchEventToSend = new PunchEvent(new Hitbox(getX() - 5, getY() - 5, getWidth() + 10, 90 + getHeight() - 20), this, new Vector2(getWidth() / 2f + 5, 0));
+            } break;
+        }
+
+//        attackVel.set(vel).setLength(50);
         attackTime.setValue(system.getAnimationGroup().get("attack_up").getBuiltAnimation().getAnimationDuration());
-        EventBus.getInstance().dispatch(new PunchEvent(attackBox = new Hitbox(getX() - 10, getY() + getHeight() - 20, getWidth() + 10, 90), this, new Vector2(0, 1)));
+        EventBus.getInstance().dispatch(punchEventToSend);
+        vel.scl(0.5f);
+        if(vel.y < 0) vel.y = -.1f;
     }
 
     @Override
@@ -95,7 +132,7 @@ public class Player extends PActor {
         }
 
         if(attackTime.isRunning()) {
-            vel.y = 0;
+//            vel.set(attackVel);
         } else {
             updateVY(delta);
             updateVX(delta);
@@ -103,29 +140,28 @@ public class Player extends PActor {
             if(!Controls.DOWN.isPressed()) {
                 forceDownTime.setValue(0.3f);
             }
-
-            moveX(vel.x * delta, this::collideX);
-            moveY(vel.y * delta, this::collideY);
         }
+
+        moveX(vel.x * delta, this::collideX);
+        moveY(vel.y * delta, this::collideY);
 
 
         if(Controls.HORIZONTAl.get() != 0) {
-            drawn.setFlippedX(Controls.HORIZONTAl.get() < 0);
+            isFacingLeft = Controls.HORIZONTAl.get() < 0;
+            drawn.setFlippedX(isFacingLeft);
         }
 
-        system.putParam("is_attacking", attackTime.isRunning());
+        system.putParam("is_attacking_up", attackTime.isRunning() && attackDir == AttackDirection.Up);
+        system.putParam("is_attacking_front", attackTime.isRunning() && attackDir == AttackDirection.Front);
         system.putParam("x_speed", vel.x);
         system.putParam("y_speed", vel.y);
         system.putParam("is_on_ground", onGround);
 
         system.update();
 
-        drawn.setAnimation(system.getActiveAnimation());
-        if(attackTime.isRunning()) {
-            drawn.setOffsetX(-19);
-        } else {
-            drawn.setOffsetX(-8);
-        }
+        drawn.setAnimation(system.getActiveBuiltAnimation());
+        Vector2 offset = system.getActiveAnimation().getOffsets()[isFacingLeft ? 1 : 0];
+        drawn.setOffsetX(offset.x).setOffsetY(offset.y);
         drawn.update(0);
     }
 
@@ -195,9 +231,9 @@ public class Player extends PActor {
     @Override
     public void render() {
         super.render();
-        if(attackBox != null) {
-            SpongeGame.i().getShapeDrawer().setColor(Color.YELLOW);
-            SpongeGame.i().getShapeDrawer().rectangle(attackBox.getRectangle());
+        if(punchEventToSend != null) {
+            SpongeGame.i().getShapeDrawer().rectangle(punchEventToSend.getPunchBox().getRectangle(), Color.YELLOW);
+            SpongeGame.i().getShapeDrawer().filledCircle(punchEventToSend.getOrigin(), 2, Color.RED);
         }
     }
 

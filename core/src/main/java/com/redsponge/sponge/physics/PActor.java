@@ -82,7 +82,7 @@ public class PActor extends Entity {
 
     public boolean moveY(float amount, CollisionHandler onCollision) {
         remainder.y += amount;
-        int move = Math.round(remainder.y);
+        int move = (int) Math.floor(remainder.y);
 
         if(move != 0) {
             remainder.y -= move;

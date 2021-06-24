@@ -1,11 +1,9 @@
 package com.redsponge.sponge.game;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.components.TimedAction;
 import com.redsponge.sponge.entity.Component;
-import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.event.EventHandler;
 
@@ -49,13 +47,12 @@ public class PunchableComponent extends Component {
         if(event.getPuncher() == getEntity()) return;
 
         if(getEntity().getSceneHitbox().intersects(event.getPunchBox())) {
-            Vector2 diff = getEntity().getSceneHitbox().getCenter().sub(event.getPunchBox().getCenter()).nor();
-            Vector2 genDir = event.getGeneralDirection();
+            Vector2 diff = getEntity().getSceneHitbox().getCenter().sub(event.getOrigin()).nor();
 
-            float diffMult = 1 / 5f;
+            float diffMult = 1.5f / 4f;
             float genMult = 1 - diffMult;
 
-            Vector2 merged = diff.scl(diffMult).mulAdd(genDir, genMult).nor();
+            Vector2 merged = diff;//diff.scl(diffMult).mulAdd(genDir, genMult).nor();
 
             vel.set(merged).scl(300);
             punchTimer.setValue(0.2f);

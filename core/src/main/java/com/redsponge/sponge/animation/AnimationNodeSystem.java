@@ -54,7 +54,11 @@ public class AnimationNodeSystem implements Values.VariableSupplier {
         }
     }
 
-    public Animation<TextureRegion> getActiveAnimation() {
+    public SAnimation getActiveAnimation() {
+        return animations.get(active);
+    }
+
+    public Animation<TextureRegion> getActiveBuiltAnimation() {
         return animations.get(active).getBuiltAnimation();
     }
 

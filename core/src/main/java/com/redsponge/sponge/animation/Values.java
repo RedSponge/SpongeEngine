@@ -19,6 +19,19 @@ public interface Values {
         }
     }
 
+    public class ConditionValueHolder implements ValueHolder<Boolean> {
+        private final AnimationChangeCondition condition;
+
+        public ConditionValueHolder(AnimationChangeCondition condition) {
+            this.condition = condition;
+        }
+
+        @Override
+        public Boolean get() {
+            return condition.test();
+        }
+    }
+
     @FunctionalInterface
     interface VariableSupplier {
         <T> T supply(String variableName);
