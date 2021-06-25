@@ -11,10 +11,12 @@ public class PunchableComponent extends Component {
 
     private Vector2 vel;
     private TimedAction punchTimer;
+    private int weight;
 
-    public PunchableComponent(boolean active, boolean visible, Vector2 entityVelocity) {
+    public PunchableComponent(boolean active, boolean visible, Vector2 entityVelocity, int weight) {
         super(active, visible);
         this.vel = entityVelocity;
+        this.weight = weight;
         punchTimer = new TimedAction();
     }
 
@@ -54,7 +56,7 @@ public class PunchableComponent extends Component {
 
             Vector2 merged = diff;//diff.scl(diffMult).mulAdd(genDir, genMult).nor();
 
-            vel.set(merged).scl(300);
+            vel.set(merged).scl(weight);
             punchTimer.setValue(0.2f);
         }
     }

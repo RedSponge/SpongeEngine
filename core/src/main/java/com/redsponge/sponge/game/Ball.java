@@ -28,7 +28,8 @@ public class Ball extends PActor {
         drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("game.atlas").findRegion("ball"));
         add(drawn);
         drawn.setOffsetX(-6).setOffsetY(-6);
-        punchable = new PunchableComponent(true, true, vel);
+        drawn.setOriginX(16).setOriginY(16);
+        punchable = new PunchableComponent(true, true, vel, 300);
         add(punchable);
     }
 
@@ -38,7 +39,7 @@ public class Ball extends PActor {
         vel.y = UMath.approach(vel.y, -300, 200 * delta);
         boolean isOnGround = groundCheck();
         if(isOnGround) {
-            vel.x *= .9f;
+            vel.x *= .99f;
         }
 
         if(vel.len2() > 300 * 300 && punchable.shouldDecay()) {
@@ -56,6 +57,8 @@ public class Ball extends PActor {
         if(Math.abs(vel.y) < 1) {
             vel.y = 0;
         }
+
+        drawn.setRotation(drawn.getRotation() - vel.x * delta * vel.len2() / 10000);
     }
 
     private void onCollideY(Collision collision) {

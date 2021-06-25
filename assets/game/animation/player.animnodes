@@ -31,6 +31,20 @@
               "value": true
             }
           }
+        },
+        {
+          "to": "attack_down",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_attacking_down"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
         }
       ]
     },
@@ -85,6 +99,17 @@
                       "value": false
                     }
                   },
+                  {
+                    "type": "equals",
+                    "var_a": {
+                      "type": "variable",
+                      "name": "is_attacking_down"
+                    },
+                    "var_b": {
+                      "type": "boolean",
+                      "value": false
+                    }
+                  }
                 ]
               }
             },
@@ -161,6 +186,13 @@
             "prefab": "from_attack_to_idle"
           },
         ]
+    },
+    "attack_down": {
+      "links": [
+        {
+          "prefab": "from_attack_to_idle"
+        }
+      ]
     },
     "jump_up": {
       "links": [

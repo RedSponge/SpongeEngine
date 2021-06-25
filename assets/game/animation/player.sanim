@@ -143,52 +143,111 @@
         {
           "frame": "attack",
           "idx": 1,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 2,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 3,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 4,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 5,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 6,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 7,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 8,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 9,
-          "length": 50
+          "length": 25
         },
         {
           "frame": "attack",
           "idx": 10,
-          "length": 50
+          "length": 25
+        }
+      ]
+    },
+    "attack_down": {
+      "play_mode": "LOOP",
+      "offsets": [
+        [-8, -86],
+        [-16, -86]
+      ],
+      "frames": [
+        {
+          "frame": "attack_down",
+          "idx": 1,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 2,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 3,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 4,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 5,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 6,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 7,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 8,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 9,
+          "length": 25
+        },
+        {
+          "frame": "attack_down",
+          "idx": 10,
+          "length": 25
         }
       ]
     },

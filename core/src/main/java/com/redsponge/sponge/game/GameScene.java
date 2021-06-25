@@ -1,26 +1,19 @@
 package com.redsponge.sponge.game;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
-import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.assets.Assets;
-import com.redsponge.sponge.input.InputAxis;
-import com.redsponge.sponge.input.InputEntry;
-import com.redsponge.sponge.physics.JumpThru;
-import com.redsponge.sponge.rendering.BloomEffect;
-import com.redsponge.sponge.rendering.Effects;
 import com.redsponge.sponge.rendering.ParameterizedShaderEffect;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Hitbox;
-import com.redsponge.sponge.util.UMath;
 
 public class GameScene extends Scene {
 
-    private Player pl;
+    private Player player1;
+    private Player player2;
     private ParameterizedShaderEffect pixelationEffect;
     private float pixelation;
     private Ball ball;
@@ -31,7 +24,8 @@ public class GameScene extends Scene {
     public void start() {
         super.start();
         add(bg = new GameBackground(new Vector2(0, 0)));
-        add(pl = new Player(new Vector2(100, 100)));
+        add(player1 = new Player(new Vector2(getWidth() - 100 - 16, 100), new PlayerControls(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN, Input.Keys.PERIOD, Input.Keys.SLASH)));
+//        add(player2 = new Player(new Vector2(100, 100), new PlayerControls(Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S, Input.Keys.F, Input.Keys.G)));
 
         add(ball = new Ball(new Vector2(getWidth() / 2f, getHeight() / 2f)));
 
