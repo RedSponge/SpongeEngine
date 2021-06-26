@@ -12,6 +12,7 @@ public class PunchableComponent extends Component {
     private Vector2 vel;
     private TimedAction punchTimer;
     private int weight;
+    private PunchEvent lastPunchEvent;
 
     public PunchableComponent(boolean active, boolean visible, Vector2 entityVelocity, int weight) {
         super(active, visible);
@@ -47,6 +48,8 @@ public class PunchableComponent extends Component {
     public void onPunch(PunchEvent event) {
         if(!isActive()) return;
         if(event.getPuncher() == getEntity()) return;
+        if(event == lastPunchEvent) return;
+        lastPunchEvent = event;
 
         if(getEntity().getSceneHitbox().intersects(event.getPunchBox())) {
             Vector2 diff = getEntity().getSceneHitbox().getCenter().sub(event.getOrigin()).nor();

@@ -25,7 +25,7 @@ public class GameScene extends Scene {
         super.start();
         add(bg = new GameBackground(new Vector2(0, 0)));
         add(player1 = new Player(new Vector2(getWidth() - 100 - 16, 100), new PlayerControls(Input.Keys.LEFT, Input.Keys.RIGHT, Input.Keys.UP, Input.Keys.DOWN, Input.Keys.PERIOD, Input.Keys.SLASH)));
-//        add(player2 = new Player(new Vector2(100, 100), new PlayerControls(Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S, Input.Keys.F, Input.Keys.G)));
+        add(player2 = new Player(new Vector2(100, 100), new PlayerControls(Input.Keys.A, Input.Keys.D, Input.Keys.W, Input.Keys.S, Input.Keys.F, Input.Keys.G)));
 
         add(ball = new Ball(new Vector2(getWidth() / 2f, getHeight() / 2f)));
 

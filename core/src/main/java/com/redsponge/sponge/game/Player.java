@@ -35,6 +35,7 @@ public class Player extends PActor {
     private TimedAction jumpMemoryTime;
     private TimedAction forceDownTime;
     private TimedAction attackTime;
+    private TimedAction attackBoxSpawnTime;
 
     private PlayerControls controls;
 
@@ -69,6 +70,7 @@ public class Player extends PActor {
         add(jumpMemoryTime = new TimedAction());
         add(forceDownTime = new TimedAction());
         add(attackTime = new TimedAction());
+        add(attackBoxSpawnTime = new TimedAction());
         vel = new Vector2();
         attackVel = new Vector2();
         setzIndex(10);
@@ -82,7 +84,7 @@ public class Player extends PActor {
 
         EventBus.getInstance().registerListener(this);
         //animations = getScene().getAssets().getAnimationGroup("player");
-        system = getScene().getAssets().getAnimationNodeSystemInstance("player");
+        system = getScene().getAssets().getAnimationNodeSystemInstance("dashni");
 //        system.addNodes(Gdx.files.internal("test/animation/player.animnodes"));
         add(drawn = new AnimationComponent(true, true, system.getActiveBuiltAnimation()));
         drawn.setPositionPolicy(PositionPolicy.USE_ENTITY);
@@ -102,21 +104,22 @@ public class Player extends PActor {
         switch (vertical) {
             case -1: {
                 attackDir = AttackDirection.Down;
-                punchEventToSend = new PunchEvent(new Hitbox(getX() - 10, getY() - 60, getWidth() + 20, 70), this, new Vector2(getWidth() / 2f + 10, 70));
+                punchEventToSend = new PunchEvent(new Hitbox(getX() - 10, getY() - 40, getWidth() + 20, 50), this, new Vector2(getWidth() / 2f + 10, 70));
                 animationName = "attack_down";
             } break;
             case  0: {
                 attackDir = AttackDirection.Front;
+                int reach = 40;
                 if(isFacingLeft) {
-                    punchEventToSend = new PunchEvent(new Hitbox(getX() - 60, getY() - 10, 50 + getWidth(), getHeight() + 20), this, new Vector2(getWidth() + 50 + 50, 0));
+                    punchEventToSend = new PunchEvent(new Hitbox(getX() - reach, getY() - 10, getWidth() + reach + 10, getHeight() + 20), this, new Vector2(getWidth() + 50 + 50, 0));
                 } else {
-                    punchEventToSend = new PunchEvent(new Hitbox(getX() + 10, getY() - 10, 50 + getWidth(), getHeight() + 20), this, new Vector2(-50, 0));
+                    punchEventToSend = new PunchEvent(new Hitbox(getX() - 20, getY() - 10, getWidth() + reach + 10, getHeight() + 20), this, new Vector2(-50, 0));
                 }
                 animationName = "attack_front";
             } break;
             case 1: {
                 attackDir = AttackDirection.Up;
-                punchEventToSend = new PunchEvent(new Hitbox(getX() - 5, getY() - 5, getWidth() + 10, 90 + getHeight() - 20), this, new Vector2(getWidth() / 2f + 5, 0));
+                punchEventToSend = new PunchEvent(new Hitbox(getX() - 10, getY() - 5, getWidth() + 20, getHeight() + 20), this, new Vector2(getWidth() / 2f + 5, 0));
                 animationName = "attack_up";
             } break;
             default:
@@ -125,7 +128,7 @@ public class Player extends PActor {
 
 //        attackVel.set(vel).setLength(50);
         attackTime.setValue(system.getAnimationGroup().get(animationName).getBuiltAnimation().getAnimationDuration());
-        EventBus.getInstance().dispatch(punchEventToSend);
+        attackBoxSpawnTime.setValue(0.075f);
         vel.scl(0.5f);
         if(vel.y < 0) vel.y = -.1f;
     }
@@ -150,6 +153,7 @@ public class Player extends PActor {
         Logger.info(this, "VX is "  +vel.x);
         if(attackTime.isRunning()) {
 //            vel.set(attackVel);
+            EventBus.getInstance().dispatch(punchEventToSend);
         } else {
             updateVY(delta);
             updateVX(delta);

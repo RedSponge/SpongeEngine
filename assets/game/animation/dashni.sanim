@@ -1,5 +1,5 @@
 {
-  "atlas": "player.atlas",
+  "atlas": "dashni.atlas",
   "animations": {
     "idle": {
       "offsets": [
@@ -96,8 +96,8 @@
     },
     "attack_up": {
       "offsets": [
-        [-19, 0],
-        [-19, 0]
+        [-8, 0],
+        [-8, 0]
       ],
       "play_mode": "LOOP",
       "frames": [
@@ -114,30 +114,20 @@
         {
           "frame": "attack_up",
           "idx": 3,
-          "length": 25
-        },
-        {
-          "frame": "attack_up",
-          "idx": 4,
-          "length": 25
-        },
-        {
-          "frame": "attack_up",
-          "idx": 5,
           "length": 100
         },
         {
           "frame": "attack_up",
-          "idx": 10,
-          "length": 25
+          "idx": 4,
+          "length": 50
         }
       ]
     },
     "attack_front": {
       "play_mode": "LOOP",
       "offsets": [
-        [0, 0],
-        [-104, 0]
+        [-8, 0],
+        [-8, 0]
       ],
       "frames": [
         {
@@ -158,12 +148,12 @@
         {
           "frame": "attack",
           "idx": 4,
-          "length": 25
+          "length": 100
         },
         {
           "frame": "attack",
           "idx": 5,
-          "length": 25
+          "length": 75
         },
         {
           "frame": "attack",
@@ -173,21 +163,6 @@
         {
           "frame": "attack",
           "idx": 7,
-          "length": 25
-        },
-        {
-          "frame": "attack",
-          "idx": 8,
-          "length": 25
-        },
-        {
-          "frame": "attack",
-          "idx": 9,
-          "length": 25
-        },
-        {
-          "frame": "attack",
-          "idx": 10,
           "length": 25
         }
       ]
@@ -195,8 +170,8 @@
     "attack_down": {
       "play_mode": "LOOP",
       "offsets": [
-        [-8, -86],
-        [-16, -86]
+        [-8, 0],
+        [-8, 0]
       ],
       "frames": [
         {
@@ -217,36 +192,11 @@
         {
           "frame": "attack_down",
           "idx": 4,
-          "length": 25
+          "length": 100
         },
         {
           "frame": "attack_down",
           "idx": 5,
-          "length": 25
-        },
-        {
-          "frame": "attack_down",
-          "idx": 6,
-          "length": 25
-        },
-        {
-          "frame": "attack_down",
-          "idx": 7,
-          "length": 25
-        },
-        {
-          "frame": "attack_down",
-          "idx": 8,
-          "length": 25
-        },
-        {
-          "frame": "attack_down",
-          "idx": 9,
-          "length": 25
-        },
-        {
-          "frame": "attack_down",
-          "idx": 10,
           "length": 25
         }
       ]

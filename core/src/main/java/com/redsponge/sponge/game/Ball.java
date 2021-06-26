@@ -17,7 +17,7 @@ public class Ball extends PActor {
 
     public Ball(Vector2 pos) {
         super(pos);
-        getHitbox().set(0, 0, 20, 20);
+        getHitbox().set(0, 0, 26, 26);
         setzIndex(6);
         vel = new Vector2();
     }
@@ -27,7 +27,7 @@ public class Ball extends PActor {
         super.added(scene);
         drawn = new DrawnComponent(true, true, getScene().getAssets().<TextureAtlas>get("game.atlas").findRegion("ball"));
         add(drawn);
-        drawn.setOffsetX(-6).setOffsetY(-6);
+        drawn.setOffsetX(-3).setOffsetY(-3);
         drawn.setOriginX(16).setOriginY(16);
         punchable = new PunchableComponent(true, true, vel, 300);
         add(punchable);
