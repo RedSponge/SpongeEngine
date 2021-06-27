@@ -2,11 +2,16 @@ package com.redsponge.sponge.gwt;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.badlogic.gdx.backends.gwt.preloader.Preloader;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.logical.shared.ResizeEvent;
 import com.google.gwt.event.logical.shared.ResizeHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Panel;
 import com.redsponge.sponge.SpongeGame;
 
 /** Launches the GWT application. */
@@ -47,8 +52,21 @@ public class GwtLauncher extends GwtApplication {
 			}
 		////END OF CODE FOR RESIZABLE APPLICATION
 
+	@Override
+	public Preloader.PreloaderCallback getPreloaderCallback() {
+		return createPreloaderPanel(GWT.getHostPageBaseURL() + "preloadlogo.png");
+	}
+
+	@Override
+	protected void adjustMeterPanel(Panel meterPanel, Style meterStyle) {
+		meterPanel.setStyleName("gdx-meter");
+		meterPanel.addStyleName("nostripes");
+		meterStyle.setProperty("backgroundColor", "#ffbb00");
+		meterStyle.setProperty("backgroundImage", "none");
+	}
+
 		@Override
-		public ApplicationListener createApplicationListener () { 
+		public ApplicationListener createApplicationListener () {
 			return new SpongeGame();
 		}
 

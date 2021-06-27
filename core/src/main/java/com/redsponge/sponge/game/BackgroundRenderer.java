@@ -15,7 +15,7 @@ public class BackgroundRenderer extends Entity {
 
     public BackgroundRenderer() {
         super(new Vector2(0,0));
-        offsetY = -640;
+        offsetY = -60;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class BackgroundRenderer extends Entity {
 
     @Override
     public int getzIndex() {
-        return -1;
+        return -10;
     }
 }

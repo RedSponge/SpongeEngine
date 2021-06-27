@@ -1,5 +1,6 @@
 package com.redsponge.sponge.game;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
@@ -34,7 +35,7 @@ public class ObstacleSpawner extends Entity {
         super.update(delta);
         time += delta;
 
-        float spawnTime = UMath.lerp(5, 2, timeManager.getCompletedPercent());
+        float spawnTime = Interpolation.fastSlow.apply(4, 0.3f, timeManager.getCompletedPercent());
         if(time > spawnTime) {
             time -= spawnTime;
             spawnObstacle();
@@ -57,7 +58,7 @@ public class ObstacleSpawner extends Entity {
     }
 
     private void spawnObstacle() {
-        Obstacle o = new Obstacle(new Vector2(MathUtils.random(getScene().getWidth()), getScene().getHeight()), UJava.randomValue(Constants.OBSTACLE_OPTIONS));
+        Obstacle o = new Obstacle(new Vector2(MathUtils.random(20, getScene().getWidth() - 20), getScene().getHeight()), UJava.randomValue(Constants.OBSTACLE_OPTIONS), UMath.lerp(0.5f, 2.5f, timeManager.getCompletedPercent()));
         getScene().add(o);
         obstacles.add(o);
     }

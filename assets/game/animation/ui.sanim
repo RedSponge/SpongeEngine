@@ -1,0 +1,25 @@
+{
+  "atlas": "ui.atlas",
+  "animations": {
+    "indicator": {
+      "play_mode": "LOOP",
+      "frames": [
+        {
+          "frame": "indicator",
+          "idx": 1,
+          "length": 100
+        },
+        {
+          "frame": "indicator",
+          "idx": 2,
+          "length": 200
+        },
+        {
+          "frame": "indicator",
+          "idx": 3,
+          "length": 300
+        }
+      ]
+    }
+  }
+}

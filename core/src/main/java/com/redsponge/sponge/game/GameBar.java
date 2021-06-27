@@ -1,7 +1,9 @@
 package com.redsponge.sponge.game;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.DrawnComponent;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.screen.Scene;
@@ -12,6 +14,8 @@ public class GameBar extends Entity {
 
     private DrawnComponent barOff, barOn, barDecor;
     private GameTimeManager timeManager;
+    private AnimationComponent indicator;
+    private float time;
 
     public GameBar(Vector2 pos) {
         super(pos);
@@ -24,28 +28,43 @@ public class GameBar extends Entity {
         barOff = new DrawnComponent(true, true, atlas.findRegion("bar_off"));
         barOn = new DrawnComponent(true, true, atlas.findRegion("bar_on"));
         barDecor = new DrawnComponent(true, true, atlas.findRegion("bar_decor"));
+        indicator = new AnimationComponent(true, true, scene.getAssets().getAnimationGroup("ui").get("indicator").getBuiltAnimation());
+
 
         add(barOff);
         add(barOn);
         add(barDecor);
+        add(indicator);
 
         barOff.setScaleX(3).setScaleY(3);
         barOn.setScaleX(3).setScaleY(3);
         barDecor.setScaleX(3).setScaleY(3);
+        indicator.setScaleX(1).setScaleY(1);
 
         timeManager = getScene().all(new ArrayList<>(), GameTimeManager.class).get(0);
+
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
+
+        time += delta;
+
         float percent = timeManager.getCompletedPercent();
-        barOn.setScaleY(percent);
+        barOn.setScaleY(percent * 3);
         barOn.setOffsetY(barOn.getRendered().getRegionHeight() * 3 * (1 - percent));
+        indicator.setOffsetY(barOn.getRendered().getRegionHeight() * 3 * (1 - percent) - 15);
+        indicator.setOffsetX(44);
     }
 
     @Override
     public void render() {
         super.render();
+    }
+
+    @Override
+    public int getzIndex() {
+        return -5;
     }
 }

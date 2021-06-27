@@ -1,11 +1,14 @@
 package com.redsponge.sponge.game;
 
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.redsponge.sponge.SpongeGame;
 import com.redsponge.sponge.animation.AnimationNodeSystem;
 import com.redsponge.sponge.components.AnimationComponent;
 import com.redsponge.sponge.components.TimedAction;
+import com.redsponge.sponge.event.EventBus;
 import com.redsponge.sponge.game.hair.HairComponent;
 import com.redsponge.sponge.physics.PActor;
 import com.redsponge.sponge.screen.Scene;
@@ -31,6 +34,9 @@ public class Player extends PActor {
 
     private ArrayList<GrowCake> tmpCakes;
     private ArrayList<ShrinkBottle> tmpBottles;
+    private ArrayList<Obstacle> tmpObstacles;
+
+    private Sound chompSound, glugSound;
 
 
     public Player() {
@@ -39,6 +45,7 @@ public class Player extends PActor {
 
         tmpCakes = new ArrayList<>();
         tmpBottles = new ArrayList<>();
+        tmpObstacles = new ArrayList<>();
     }
 
     @Override
@@ -53,6 +60,9 @@ public class Player extends PActor {
         add(drawn);
         add(bigTimer = new TimedAction());
         add(smallTimer = new TimedAction());
+
+        chompSound = scene.getAssets().get("chomp.ogg");
+        glugSound = scene.getAssets().get("glug.ogg");
 
 //        setScale(2);
     }
@@ -90,6 +100,7 @@ public class Player extends PActor {
             if(cake.getSceneHitbox().intersects(hitbox)) {
                 cake.removeSelf();
                 this.bigTimer.setValue(bigTimeValue);
+                chompSound.play();
             }
         });
 
@@ -98,6 +109,19 @@ public class Player extends PActor {
             if(bottle.getSceneHitbox().intersects(hitbox)) {
                 bottle.removeSelf();
                 this.smallTimer.setValue(smallTimeValue);
+                glugSound.play();
+            }
+        });
+
+        tmpObstacles.clear();
+        getScene().all(tmpObstacles, Obstacle.class).forEach(obstacle -> {
+            if(obstacle.getSceneHitbox().intersects(hitbox)) {
+                if(bigTimer.isActive() && !smallTimer.isActive()) {
+                    obstacle.shatter();
+                    EventBus.getInstance().dispatch(new CameraShakeEvent(0.1f));
+                } else {
+                    die();
+                }
             }
         });
 
@@ -114,15 +138,45 @@ public class Player extends PActor {
             currentSize = requiredSize;
         }
         setScale(currentSize);
+
+        if(getYf() < -50) {
+            die();
+        }
+    }
+
+
+    private void die() {
+        EventBus.getInstance().dispatch(new PlayerDeathEvent());
     }
 
     @Override
     public void render() {
         super.render();
-        drawHitbox(SpongeGame.i().getShapeDrawer());
+        boolean bigTime = bigTimer.isActive();
+        boolean smallTime = smallTimer.isActive();
+
+        float bigTimePercent = bigTimer.getValue() / bigTimeValue;
+        float smallTimePercent = smallTimer.getValue() / smallTimeValue;
+
+        if(bigTime && smallTime) {
+            SpongeGame.i().getShapeDrawer().filledRectangle(getXf() - 8, getYf() + getHeight() + 10, 32 * bigTimePercent, 6, Color.VIOLET);
+            SpongeGame.i().getShapeDrawer().filledRectangle(getXf() - 8, getYf() + getHeight() + 17, 32 * smallTimePercent, 6, Color.ROYAL);
+        }
+        else if(bigTime) {
+            SpongeGame.i().getShapeDrawer().filledRectangle(getXf() - 8, getYf() + getHeight() + 10, 32 * bigTimePercent, 6, Color.VIOLET);
+        } else if(smallTime) {
+            SpongeGame.i().getShapeDrawer().filledRectangle(getXf() - 8, getYf() + getHeight() + 10, 32 * smallTimePercent, 6, Color.ROYAL);
+        }
     }
 
     public PlayerComponent getPlayerComponent() {
         return playerComponent;
+    }
+
+    public boolean isSmall() {
+        return smallTimer.isActive() && !bigTimer.isActive();
+    }
+
+    public static class PlayerDeathEvent {
     }
 }

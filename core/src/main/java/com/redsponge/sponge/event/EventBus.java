@@ -43,7 +43,7 @@ public class EventBus {
     }
 
     public void removeListener(Object invoked) {
-        if(cachedInvokations.containsKey(invoked)) {
+        if(!cachedInvokations.containsKey(invoked)) {
             Logger.error(this, "Tried to remove listener", invoked, "but it isn't connected!");
             return;
         }

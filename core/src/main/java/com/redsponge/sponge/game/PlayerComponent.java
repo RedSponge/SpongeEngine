@@ -1,5 +1,8 @@
 package com.redsponge.sponge.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.redsponge.sponge.entity.Component;
 import com.redsponge.sponge.entity.Entity;
 import com.redsponge.sponge.event.CollisionEvent;
@@ -25,6 +28,11 @@ public class PlayerComponent extends Component {
     private final float maxGravity = -300;
     private float gravity = 200;
 
+    private Sound gliderOpenSound;
+    private Sound gliderCloseSound;
+    private Sound gliderWorkSound;
+    private long gliderWorkId;
+
     public PlayerComponent(boolean active, boolean visible) {
         super(active, visible);
     }
@@ -38,11 +46,16 @@ public class PlayerComponent extends Component {
     public void added(Entity entity) {
         super.added(entity);
         EventBus.getInstance().registerListener(this);
+
+        gliderOpenSound = entity.getScene().getAssets().get("glider_open.ogg");
+        gliderWorkSound = entity.getScene().getAssets().get("glider_work.ogg");
+        gliderCloseSound = entity.getScene().getAssets().get("glider_close.ogg");
     }
 
     @Override
     public void removed() {
         super.removed();
+
         EventBus.getInstance().removeListener(this);
     }
 
@@ -50,6 +63,14 @@ public class PlayerComponent extends Component {
     public void update(float delta) {
         boolean wasGliding = isGliding;
         isGliding = Controls.GLIDE.isPressed();
+        if(isGliding && !wasGliding) {
+            gliderOpenSound.play(0.6f);
+            gliderWorkId = gliderWorkSound.loop(0.5f);
+        }
+        if(!isGliding && wasGliding) {
+            gliderWorkSound.stop(gliderWorkId);
+            gliderCloseSound.play(0.6f);
+        }
 
         updateVX(delta);
         updateVY(delta);
@@ -78,7 +99,8 @@ public class PlayerComponent extends Component {
             vx *= slowDownMultiplier;
             if(Math.abs(vx) < 1) vx = 0;
         }
-        ((PActor)getEntity()).moveX(vx * delta, null);
+        float shrinkMulitplier = ((Player)getEntity()).isSmall() ? 2 : 1;
+        ((PActor)getEntity()).moveX(vx * delta * shrinkMulitplier, null);
     }
 
     @EventHandler

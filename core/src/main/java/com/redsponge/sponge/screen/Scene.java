@@ -240,6 +240,12 @@ public abstract class Scene {
     }
 
     public void dispose() {
+        for (int i = 0; i < entities.size(); i++) {
+            for (Component component : entities.get(i).getComponents()) {
+                component.removeSelf();
+            }
+            entities.get(i).removeSelf();
+        }
         Assets.get().unloadScene(getName());
         rPipeline.dispose();
     }

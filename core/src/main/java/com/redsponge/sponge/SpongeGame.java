@@ -2,7 +2,9 @@ package com.redsponge.sponge;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,6 +13,8 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.game.GameScene;
+import com.redsponge.sponge.game.menu.MenuScene;
+import com.redsponge.sponge.game.win.WinScene;
 import com.redsponge.sponge.screen.Scene;
 import com.redsponge.sponge.util.Logger;
 import space.earlygrey.shapedrawer.ShapeDrawer;
@@ -33,6 +37,9 @@ public class SpongeGame implements ApplicationListener {
     private Map<Class<?>, List<Class<?>>> componentClasses;
 
     private FPSLogger fpsLogger;
+    private Scene nextScene;
+
+    private Music bgMusic;
 
     public static SpongeGame i() {
         return instance;
@@ -40,6 +47,7 @@ public class SpongeGame implements ApplicationListener {
 
     @Override
     public final void create() {
+        Gdx.input.setCatchKey(Input.Keys.SPACE, true);
         startTime = System.currentTimeMillis();
         ShaderProgram.pedantic = false;
         Logger.beginLog();
@@ -54,9 +62,14 @@ public class SpongeGame implements ApplicationListener {
         scene = null;
         fpsLogger = new FPSLogger();
 
+        bgMusic = Gdx.audio.newMusic(Gdx.files.internal("game/music/Fallice_in_Wonderland.ogg"));
+        bgMusic.setVolume(0.2f);
+        bgMusic.setLooping(true);
+        bgMusic.play();
+
         Logger.info(this, "Initializing Game");
         init();
-        setScene(new GameScene());
+        setScene(new MenuScene());
     }
 
     protected void init() {}
@@ -65,6 +78,11 @@ public class SpongeGame implements ApplicationListener {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();
+        scene.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    }
+
+    public void setNextScene(Scene nextScene) {
+        this.nextScene = nextScene;
     }
 
     private void initializeShapeDrawer() {
@@ -115,6 +133,7 @@ public class SpongeGame implements ApplicationListener {
             return;
         }
         try {
+            updateNextScene();
             final float delta = Gdx.graphics.getDeltaTime();
             scene.update(delta);
             renderScene(scene);
@@ -124,6 +143,13 @@ public class SpongeGame implements ApplicationListener {
             Gdx.app.exit();
         }
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
+    }
+
+    private void updateNextScene() {
+        if(nextScene != null) {
+            setScene(nextScene);
+            nextScene = null;
+        }
     }
 
     private void renderScene(Scene scene) {
@@ -152,6 +178,7 @@ public class SpongeGame implements ApplicationListener {
         spriteBatch.dispose();
         shapeDrawerTextures.dispose();
         Assets.get().dispose();
+        bgMusic.dispose();
     }
 
     public List<Class<?>> getEntityClasses(Class<?> entity) {

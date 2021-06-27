@@ -4,6 +4,34 @@ size: 128, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+book_badlogic
+  rotate: false
+  xy: 26, 13
+  size: 14, 18
+  orig: 14, 18
+  offset: 0, 0
+  index: -1
+book_dashni
+  rotate: false
+  xy: 106, 44
+  size: 14, 18
+  orig: 14, 18
+  offset: 0, 0
+  index: -1
+book_heart
+  rotate: false
+  xy: 42, 11
+  size: 14, 18
+  orig: 14, 18
+  offset: 0, 0
+  index: -1
+book_sponge_toast
+  rotate: false
+  xy: 58, 11
+  size: 14, 18
+  orig: 14, 18
+  offset: 0, 0
+  index: -1
 drawer
   rotate: false
   xy: 47, 31

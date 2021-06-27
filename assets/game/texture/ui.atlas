@@ -6,22 +6,43 @@ filter: Nearest, Nearest
 repeat: none
 bar_decor
   rotate: false
-  xy: 2, 2
+  xy: 2, 44
   size: 36, 204
   orig: 36, 204
   offset: 0, 0
   index: -1
 bar_off
   rotate: false
-  xy: 40, 2
+  xy: 40, 44
   size: 36, 204
   orig: 36, 204
   offset: 0, 0
   index: -1
 bar_on
   rotate: false
-  xy: 78, 2
+  xy: 78, 44
   size: 36, 204
   orig: 36, 204
   offset: 0, 0
   index: -1
+indicator
+  rotate: false
+  xy: 2, 2
+  size: 19, 40
+  orig: 19, 40
+  offset: 0, 0
+  index: 1
+indicator
+  rotate: false
+  xy: 23, 2
+  size: 19, 40
+  orig: 19, 40
+  offset: 0, 0
+  index: 2
+indicator
+  rotate: false
+  xy: 44, 2
+  size: 19, 40
+  orig: 19, 40
+  offset: 0, 0
+  index: 3

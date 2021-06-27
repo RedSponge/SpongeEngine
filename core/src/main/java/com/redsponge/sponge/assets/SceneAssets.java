@@ -66,6 +66,7 @@ public class SceneAssets implements Disposable {
             for (FileHandle soundFile : soundFiles) {
                 Logger.debug(this, "Loading sound", soundFile);
                 assetManager.load(soundFile.path(), Sound.class);
+                nameMap.put(soundFile.name(), soundFile.path());
             }
         }
     }

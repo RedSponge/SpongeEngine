@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.IntMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import java.util.HashMap;
 
 public class BloomEffect extends RenderingEffect implements Disposable, Resizable {
 
@@ -15,6 +18,8 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
     private final FitViewport drawViewport;
     private final RenderingPipeline rPipeline;
     private final float downscaleFactor;
+    private final IntMap<Runnable> renderingIds;
+    private int renderingIdCounter;
 
     public BloomEffect(boolean isActive, SpriteBatch batch, FitViewport sceneViewport, float downscaleFactor) {
         super(isActive);
@@ -28,11 +33,20 @@ public class BloomEffect extends RenderingEffect implements Disposable, Resizabl
         rPipeline = new RenderingPipeline(batch, downscaleWidth, downscaleHeight);
 
         bloomRenderings = new Array<>();
+        renderingIds = new IntMap<>();
         Effects.addGaussianBlur(rPipeline);
     }
 
-    public void addBloomRender(Runnable runnable) {
+    public int addBloomRender(Runnable runnable) {
         bloomRenderings.add(runnable);
+        renderingIds.put(renderingIdCounter, runnable);
+        return renderingIdCounter++;
+    }
+
+    public void removeRender(int renderingId) {
+        if(!bloomRenderings.removeValue(renderingIds.get(renderingId), true)) {
+            System.out.println("COULDN'T REMOVE :(");
+        }
     }
 
     @Override

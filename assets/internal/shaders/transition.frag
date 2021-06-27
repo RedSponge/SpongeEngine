@@ -21,7 +21,10 @@ uniform vec4 u_transitionColour;
 
 
 vec4 applyMask(vec4 colour) {
-    if(texture2D(u_transitionTexture, v_transitionTexCoords).r >= u_progress) {
+    if(u_progress == 0.0) return colour;
+    if(u_progress == 1.0) return u_transitionColour;
+
+    if(texture2D(u_transitionTexture, v_transitionTexCoords).r > u_progress) {
         return colour;
     }
     return u_transitionColour;

@@ -6,8 +6,8 @@ import com.redsponge.sponge.event.EventBus;
 
 public class GameTimeManager extends Entity {
 
-    private float time;
-    private float maxTime = 60;
+    private float time = 0;
+    private float maxTime = 90;
 
     public GameTimeManager() {
         super(new Vector2());
