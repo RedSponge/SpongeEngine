@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.redsponge.sponge.assets.Assets;
 import com.redsponge.sponge.screen.Scene;
@@ -69,7 +71,7 @@ public class SpongeGame implements ApplicationListener {
 
     protected void init() {}
 
-    public void setScene(TestScene scene) {
+    public void setScene(Scene scene) {
         if(this.scene != null) this.scene.dispose();
         this.scene = scene;
         scene.start();
@@ -126,11 +128,12 @@ public class SpongeGame implements ApplicationListener {
             final float delta = Gdx.graphics.getDeltaTime();
             scene.update(delta);
             renderScene(scene);
-        } catch (Exception th) {
 
+        } catch (Exception th) {
             Logger.error(this, th);
             Gdx.app.exit();
         }
+
         Gdx.graphics.setTitle("FPS: " + Gdx.graphics.getFramesPerSecond());
     }
 

@@ -64,9 +64,10 @@ public class PActor extends Entity {
         while(move != 0) {
             PSolid hit = first(PSolid.class, tmp.set(sign, 0));
             if(hit != null) {
-                Collision c = new Collision(new Vector2(sign, 0), Math.abs(amount), Math.abs(amount - move), hit, pusher);
+                Collision c = new Collision(tmp.set(sign, 0), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) onCollision.onCollision(c);
                 EventBus.getInstance().dispatch(new CollisionEvent(c));
+
                 return true;
             }
 
@@ -100,7 +101,6 @@ public class PActor extends Entity {
     }
 
 
-
     public boolean moveExactY(int amount, CollisionHandler onCollision, WorldGeometry pusher, WorldGeometry carrier) {
         int move = amount;
         int sign = (int) Math.signum(amount);
@@ -114,7 +114,7 @@ public class PActor extends Entity {
             }
 
             if(hit != null) {
-                Collision c = new Collision(tmp.set(Vector2.Y).scl(sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
+                Collision c = new Collision(tmp.set(0, sign), Math.abs(amount), Math.abs(amount - move), hit, pusher);
                 if(onCollision != null) onCollision.onCollision(c);
                 EventBus.getInstance().dispatch(new CollisionEvent(c));
                 return true;

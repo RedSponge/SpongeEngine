@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface AnimationChangeCondition {
     boolean test();
+
     static AnimationChangeConditionBuilder builder() {
         return new AnimationChangeConditionBuilder();
     }
@@ -26,30 +27,34 @@ public interface AnimationChangeCondition {
 
     class AndChangeCondition implements AnimationChangeCondition {
 
-        private AnimationChangeCondition a, b;
+        private final AnimationChangeCondition[] conditions;
 
-        public AndChangeCondition(AnimationChangeCondition a, AnimationChangeCondition b) {
-            this.a = a;
-            this.b = b;
+        public AndChangeCondition(AnimationChangeCondition... conditions) {
+            this.conditions = conditions;
         }
 
         @Override
         public boolean test() {
-            return a.test() && b.test();
+            for (AnimationChangeCondition condition : conditions) {
+                if (!condition.test()) return false;
+            }
+            return true;
         }
     }
 
     class OrChangeCondition implements AnimationChangeCondition {
-        private AnimationChangeCondition a, b;
+        private final AnimationChangeCondition[] conditions;
 
-        public OrChangeCondition(AnimationChangeCondition a, AnimationChangeCondition b) {
-            this.a = a;
-            this.b = b;
+        public OrChangeCondition(AnimationChangeCondition... conditions) {
+            this.conditions = conditions;
         }
 
         @Override
         public boolean test() {
-            return a.test() || b.test();
+            for (AnimationChangeCondition condition : conditions) {
+                if (condition.test()) return true;
+            }
+            return false;
         }
     }
 
