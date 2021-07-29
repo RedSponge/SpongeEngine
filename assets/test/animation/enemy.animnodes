@@ -1,0 +1,50 @@
+{
+  "initial": "idle",
+  "prefabs": {
+    "to_hit": {
+      "links": [
+        {
+          "to": "hit",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_on_ground"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "nodes": {
+    "idle": {
+      "links": [
+        {
+          "prefab": "to_hit"
+        }
+      ]
+    },
+    "hit": {
+      "links": [
+        {
+          "to": "idle",
+          "condition": {
+            "type": "equals",
+            "var_a": {
+              "type": "variable",
+              "name": "is_on_ground"
+            },
+            "var_b": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "atlas": "enemy.atlas",
+  "animations": {
+    "idle": {
+      "play_mode": "LOOP_PINGPONG",
+      "frames": [
+        {
+          "frame": "idle",
+          "idx": 1,
+          "length": 100
+        },
+        {
+          "frame": "idle",
+          "idx": 2,
+          "length": 100
+        },
+        {
+          "frame": "idle",
+          "idx": 3,
+          "length": 100
+        }
+      ]
+    },
+    "hit": {
+      "play_mode": "NORMAL",
+      "frames": [
+        {
+          "frame": "hit",
+          "idx": 1,
+          "length": 100
+        }
+      ]
+    }
+  }
+}
